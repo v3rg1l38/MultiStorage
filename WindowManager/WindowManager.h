@@ -7,6 +7,11 @@
 class WindowManager
 {
 public:
+	/*
+		className - name of the window class
+		hInstance - instance
+		fp - window proc function
+	*/
 	static void registerClass(const char * className,
 		HINSTANCE hInstance,
 		LRESULT __stdcall fp(HWND, UINT, WPARAM, LPARAM)
