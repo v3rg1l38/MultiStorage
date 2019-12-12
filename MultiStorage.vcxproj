@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="CSV\CSV.cpp" />
     <ClCompile Include="Database\Database.cpp" />
+    <ClCompile Include="GenericString\GenericString.cpp" />
     <ClCompile Include="ListControls\CList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WindowControls\WindowControls.cpp" />
@@ -133,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="CSV\CSV.h" />
     <ClInclude Include="Database\Database.h" />
+    <ClInclude Include="GenericString\GenericString.h" />
     <ClInclude Include="ListControls\CList.h" />
     <ClInclude Include="WindowControls\WindowControls.h" />
     <ClInclude Include="WindowManager\WindowManager.h" />
