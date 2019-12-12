@@ -10,7 +10,6 @@ void generic_string::operator=(const char * std)
 	string = std;
 }
 
-
 void generic_string::to_lowercase()
 {
 	for (auto & c : string)
