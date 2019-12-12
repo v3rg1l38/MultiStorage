@@ -16,6 +16,25 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 			break;
 
+		case WM_CREATE:
+		{
+			CLIENTCREATESTRUCT css;
+		
+			HWND clientArea = CreateWindow("MDICLIENT",
+				NULL, WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL,
+				0,
+				0,
+				0,
+				0,
+				hWnd,
+				NULL,
+				GetModuleHandle(NULL),
+				&css);
+			ShowWindow(clientArea, SW_SHOW);
+
+		}
+		break;
+
 		case WM_PAINT:
 		{
 			PAINTSTRUCT ps;
@@ -46,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 		480,
 		hInstance);
 	UpdateWindow(myWindow);
-	ShowWindow(myWindow, 1);
+	ShowWindow(myWindow, SW_MAXIMIZE);
 
 	INITCOMMONCONTROLSEX initCtrls;
 	initCtrls.dwICC = ICC_WIN95_CLASSES;

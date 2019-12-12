@@ -1,6 +1,6 @@
 #include "CList.h"
 
-HWND CList::createList(HWND parent, 
+HWND CList::createList(HWND & parent, 
 	const int & xPos, 
 	const int & yPos, 
 	const int & xSize, 
@@ -20,7 +20,7 @@ HWND CList::createList(HWND parent,
 	return hWnd;
 }
 
-int CList::insertColumn(HWND list, 
+int CList::insertColumn(HWND & list, 
 	const int & colNum, 
 	const char * colName, 
 	const int & colWidth)
@@ -37,7 +37,7 @@ int CList::insertColumn(HWND list,
 	return columnIndex;
 }
 
-int CList::insertItem(HWND list, const int & nRow)
+int CList::insertItem(HWND & list, const int & nRow)
 {
 	LVITEM lItem;
 	int itemIndex;
@@ -51,7 +51,7 @@ int CList::insertItem(HWND list, const int & nRow)
 	return itemIndex;
 }
 
-void CList::setItemText(HWND list, const char * value, const int & nRow, const int & nCol)
+void CList::setItemText(HWND & list, const char * value, const int & nRow, const int & nCol)
 {
 	LVITEM lItem;
 
@@ -65,7 +65,7 @@ void CList::setItemText(HWND list, const char * value, const int & nRow, const i
 	SendMessage(list, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
-void CList::setItemInt(HWND list, const int & val, const int & nRow, const int & nCol)
+void CList::setItemInt(HWND & list, const int & val, const int & nRow, const int & nCol)
 {
 	LVITEM lItem;
 	char buffer[MAX_PATH] = "";
@@ -81,18 +81,18 @@ void CList::setItemInt(HWND list, const int & val, const int & nRow, const int &
 	SendMessage(list, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
-void CList::setFullRowSelect(HWND list)
+void CList::setFullRowSelect(HWND & list)
 {
 	SendMessage(list, LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT);
 }
 
-void CList::clearList(HWND list)
+void CList::clearList(HWND & list)
 {
 	SendMessage(list, LVM_DELETEALLITEMS, 0, 0);
 }
 
-char * CList::getDataFromRow(HWND list, const int & row, const int & column)
+const char * CList::getDataFromRow(HWND & list, const int & row, const int & column)
 {
 	LVITEM lvItem = { 0 };
 	char buff[1024] = " ";
@@ -104,7 +104,7 @@ char * CList::getDataFromRow(HWND list, const int & row, const int & column)
 	return lvItem.pszText;
 }
 
-int CList::getDataFromRowInt(HWND list, const int & row, const int & column)
+int CList::getDataFromRowInt(HWND & list, const int & row, const int & column)
 {
 	LVITEM lvItem = { 0 };
 	char buff[1024] = " ";
@@ -115,12 +115,12 @@ int CList::getDataFromRowInt(HWND list, const int & row, const int & column)
 	SendMessage(list, LVM_GETITEMTEXT, row, (LPARAM)&lvItem);
 	return atoi(lvItem.pszText);
 }
-void CList::setVisible(HWND list, const int & row)
+void CList::setVisible(HWND  & list, const int & row)
 {
 	SendMessage(list, LVM_ENSUREVISIBLE, row, 0);
 }
 
-int CList::findItem(HWND list, const char * code)
+int CList::findItem(HWND & list, const char * code)
 {
 	LVFINDINFO findInfo;
 
@@ -131,13 +131,13 @@ int CList::findItem(HWND list, const char * code)
 	return nIndex;
 }
 
-int CList::getSelectedRow(HWND list)
+int CList::getSelectedRow(HWND & list)
 {
 	int index = SendMessage(list, LVM_GETNEXTITEM, (WPARAM)-1, (LPARAM)LVNI_SELECTED);
 	return index;
 }
 
-void CList::setSelectedRow(HWND list, const int & row)
+void CList::setSelectedRow(HWND & list, const int & row)
 {
 	LVITEM lvItem;
 	lvItem.stateMask = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
@@ -147,7 +147,7 @@ void CList::setSelectedRow(HWND list, const int & row)
 	SendMessage(list, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
 }
 
-void CList::unsetSelectedRow(HWND list, const int & row)
+void CList::unsetSelectedRow(HWND & list, const int & row)
 {
 	LVITEM lvItem;
 	lvItem.stateMask = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
@@ -157,18 +157,18 @@ void CList::unsetSelectedRow(HWND list, const int & row)
 	SendMessage(list, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
 }
 
-int CList::getItemCount(HWND list)
+int CList::getItemCount(HWND & list)
 {
 	int count = SendMessage(list, LVM_GETITEMCOUNT, 0, 0);
 	return count;
 }
 
-void CList::setBkColor(HWND list, COLORREF col)
+void CList::setBkColor(HWND & list, COLORREF col)
 {
 	SendMessage(list, LVM_SETBKCOLOR, 0, col);
 }
 
-void CList::setTxtBkColor(HWND list, COLORREF col)
+void CList::setTxtBkColor(HWND  & list, COLORREF col)
 {
 	SendMessage(list, LVM_SETTEXTBKCOLOR, 0, col);
 }

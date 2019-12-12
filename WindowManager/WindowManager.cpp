@@ -50,9 +50,6 @@ HWND WindowManager::createWindow(const char * name,
 		return 0;
 	}
 
-	std::string nName = name;
-	_windowsList.insert(std::pair<std::string, HWND>(nName, newWindow));
-
 	return newWindow;
 }
 
