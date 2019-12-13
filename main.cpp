@@ -60,10 +60,6 @@ LRESULT CALLBACK ChildProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
-	case WM_DESTROY:
-		MessageBox(NULL, "Bye", "Info", MB_OK);
-		break;
-
 	//case WM_MDIACTIVATE:
 	//	SetFocus(hEdit);
 	//	break;
@@ -95,6 +91,21 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 			break;
 
+		case WM_COMMAND:
+		{
+			switch (LOWORD(wParam))
+			{
+			case 9000:
+				WindowManager::createMDIChild(clientArea, "Proba 123", "Testing", 480, 250);
+				break;
+
+			case 9001:
+				WindowManager::createMDIChild(clientArea, "Proba 1223", "Proba", 450, 250);
+				break;
+			}
+		}
+		break;
+
 		case WM_CREATE:
 		{
 			RECT rc;
@@ -111,9 +122,6 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				NULL,
 				GetModuleHandle(NULL),
 				&css);
-
-			WindowManager::createMDIChild(clientArea, "Proba 123", "Testing", rc.right, rc.bottom);
-			WindowManager::createMDIChild(clientArea, "Proba 1223", "Proba", rc.right, rc.bottom);
 
 		}
 		break;
