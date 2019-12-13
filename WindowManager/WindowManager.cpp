@@ -53,6 +53,34 @@ HWND WindowManager::createWindow(const char * name,
 	return newWindow;
 }
 
+HWND WindowManager::createMDIChild(HWND & clientHandle, 
+	const char * title, 
+	const char * childClass,
+	const int & cX,
+	const int & cY)
+{
+	MDICREATESTRUCT mcs;
+	HWND mdiChild;
+
+	mcs.szTitle = title;
+	mcs.szClass = childClass;
+	mcs.hOwner = GetModuleHandle(NULL);
+	mcs.x = 0;
+	mcs.y = 0;
+	mcs.cx = cX;
+	mcs.cy = cY;
+	mcs.style = MDIS_ALLCHILDSTYLES;
+
+	mdiChild = reinterpret_cast<HWND>(SendMessage(clientHandle, WM_MDICREATE, 0, reinterpret_cast<long>(&mcs)));
+	if (!mdiChild)
+	{
+		MessageBox(NULL, "Unable to create MDI child", "Error", MB_OK);
+		return NULL;
+	}
+
+	return mdiChild;
+}
+
 void WindowManager::addWindowToList(const std::string & winName, const HWND windowHandle)
 {
 	_windowsList.insert(std::make_pair<std::string, HWND>(static_cast<std::string>(winName), static_cast<HWND>(windowHandle)));

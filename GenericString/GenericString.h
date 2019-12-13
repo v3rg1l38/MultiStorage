@@ -11,7 +11,6 @@ class generic_string
 	generic_string(const generic_string && gs) = delete;
 public:
 	generic_string() {}
-
 	generic_string(const std::string& str) : string(str) {}
 	generic_string(const char * str) : string(str) {}
 	void operator=(const std::string& std);

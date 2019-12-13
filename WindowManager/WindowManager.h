@@ -26,6 +26,11 @@ public:
 		HWND parent = NULL,
 		long style = WS_OVERLAPPEDWINDOW,
 		HMENU menu = NULL);
+	static HWND createMDIChild(HWND & clientHandle, 
+		const char * title, 
+		const char * childClass,
+		const int & cX,
+		const int & cY);
 	static inline HWND getWindowHandle(const std::string & winName) { return _windowsList[winName]; }
 	static inline bool destroyWindow(const std::string & winName)
 	{
