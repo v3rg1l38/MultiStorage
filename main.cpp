@@ -9,36 +9,68 @@
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
+HWND clientArea = NULL;
+
+LRESULT CALLBACK ChProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
+		SetBkMode(hdc, TRANSPARENT);
+		TextOut(hdc, 10, 20, "Proba", strlen("Proba"));
+		EndPaint(hWnd, &ps);
+	}
+	break;
+
+	default:
+		return DefMDIChildProc(hWnd, msg, wParam, lParam);
+	}
+
+	return 0;
+}
+
 LRESULT CALLBACK ChildProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
 	case WM_CREATE:
 	{
-		HFONT hfDefault;
-		HWND hEdit;
+		HWND list = CList::createList(hWnd,
+			0,
+			0,
+			400,
+			400,
+			NULL);
+		CList::setFullRowSelect(list);
 
-		// Create Edit Control
-
-		hEdit = CreateWindowEx(WS_EX_CLIENTEDGE, "EDIT", "",
-			WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL,
-			0, 0, 100, 100, hWnd, NULL, GetModuleHandle(NULL), NULL);
-		if (hEdit == NULL)
-			MessageBox(hWnd, "Could not create edit box.", "Error", MB_OK | MB_ICONERROR);
-
-		hfDefault = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-		SendMessage(hEdit, WM_SETFONT, (WPARAM)hfDefault, MAKELPARAM(FALSE, 0));
+		CList::insertColumn(list,
+			0,
+			"Code",
+			0x54);
+		CList::insertColumn(list,
+			1,
+			"Name",
+			0x124);
+		CList::insertItem(list, 9999);
+		CList::setItemText(list, "12000", 0, 0);
+		CList::setItemText(list, "Visokootporni lanac FI 10", 0, 1);
 	}
 	break;
-	case WM_SIZE:
-	{
-		RECT rcClient;
 
-		// Calculate remaining height and size edit
+	case WM_DESTROY:
+		MessageBox(NULL, "Bye", "Info", MB_OK);
+		break;
 
-		GetClientRect(hWnd, &rcClient);
-	}
-	return DefMDIChildProc(hWnd, msg, wParam, lParam);
+	//case WM_MDIACTIVATE:
+	//	SetFocus(hEdit);
+	//	break;
+
+	//case WM_SETFOCUS:
+	//	SetFocus(hEdit);
+	//	return DefMDIChildProc(hWnd, msg, wParam, lParam);
 
 	default:
 		return DefMDIChildProc(hWnd, msg, wParam, lParam);
@@ -50,7 +82,6 @@ LRESULT CALLBACK ChildProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	static int cx, cy;
-	static HWND clientArea;
 
 	switch (msg)
 	{
@@ -82,6 +113,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				&css);
 
 			WindowManager::createMDIChild(clientArea, "Proba 123", "Testing", rc.right, rc.bottom);
+			WindowManager::createMDIChild(clientArea, "Proba 1223", "Proba", rc.right, rc.bottom);
 
 		}
 		break;
@@ -98,7 +130,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 		default:
-			return DefWindowProc(hWnd, msg, wParam, lParam);
+			return DefFrameProc(hWnd, clientArea, msg, wParam, lParam);
 	}
 
 	return 0;
@@ -109,6 +141,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	MSG msg;
 	WindowManager::registerClass("MyX", hInstance, WProc);
 	WindowManager::registerClass("Testing", hInstance, ChildProc);
+	WindowManager::registerClass("Proba", hInstance, ChProc);
 	HWND myWindow = WindowManager::createWindow("MyX",
 		"MyX",
 		CW_USEDEFAULT,
@@ -117,6 +150,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 		480,
 		hInstance
 		);
+	WindowControls wc;
+	wc.initializeMenu(myWindow);
 	UpdateWindow(myWindow);
 	ShowWindow(myWindow, SW_MAXIMIZE);
 
@@ -127,8 +162,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 
 	while (GetMessage(&msg, NULL, NULL, 0))
 	{
+		if (!TranslateMDISysAccel(clientArea, &msg))
+		{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
+		}
 	}
 	
 	return static_cast<int>(msg.wParam);
