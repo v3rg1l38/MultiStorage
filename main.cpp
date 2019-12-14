@@ -111,17 +111,43 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			RECT rc;
 			GetClientRect(hWnd, &rc);
 			CLIENTCREATESTRUCT css;
-		
+
 			clientArea = CreateWindow("MDICLIENT",
 				NULL, WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
 				0,
-				0,
+				30,
 				rc.right - rc.left,
 				rc.bottom - rc.top,
 				hWnd,
 				NULL,
 				GetModuleHandle(NULL),
 				&css);
+
+			HWND hTool = CreateWindowEx(0, TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
+				hWnd, NULL, GetModuleHandle(NULL), NULL);
+			SendMessage(hTool, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
+			TBBUTTON tbb[3];
+			TBADDBITMAP tbab;
+			tbab.hInst = HINST_COMMCTRL;
+			tbab.nID = IDB_STD_SMALL_COLOR;
+			SendMessage(hTool, TB_ADDBITMAP, 0, (LPARAM)&tbab);
+			ZeroMemory(tbb, sizeof(tbb));
+			tbb[0].iBitmap = STD_FILENEW;
+			tbb[0].fsState = TBSTATE_ENABLED;
+			tbb[0].fsStyle = TBSTYLE_BUTTON;
+			tbb[0].idCommand = 9800;
+
+			tbb[1].iBitmap = STD_FILEOPEN;
+			tbb[1].fsState = TBSTATE_ENABLED;
+			tbb[1].fsStyle = TBSTYLE_BUTTON;
+			tbb[1].idCommand = 9801;
+
+			tbb[2].iBitmap = STD_FILESAVE;
+			tbb[2].fsState = TBSTATE_ENABLED;
+			tbb[2].fsStyle = TBSTYLE_BUTTON;
+			tbb[2].idCommand = 9802;
+
+			SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 
 		}
 		break;

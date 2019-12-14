@@ -72,6 +72,7 @@ HWND WindowManager::createMDIChild(HWND & clientHandle,
 	mcs.style = MDIS_ALLCHILDSTYLES;
 
 	mdiChild = reinterpret_cast<HWND>(SendMessage(clientHandle, WM_MDICREATE, 0, reinterpret_cast<long>(&mcs)));
+
 	if (!mdiChild)
 	{
 		MessageBox(NULL, "Unable to create MDI child", "Error", MB_OK);
