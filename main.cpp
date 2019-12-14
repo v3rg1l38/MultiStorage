@@ -9,7 +9,7 @@
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-HWND clientArea = NULL;
+HWND clientArea;
 
 LRESULT CALLBACK ChProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -25,6 +25,9 @@ LRESULT CALLBACK ChProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
+	case WM_SIZE:
+		return DefMDIChildProc(hWnd, msg, wParam, lParam);
+
 	default:
 		return DefMDIChildProc(hWnd, msg, wParam, lParam);
 	}
@@ -36,6 +39,28 @@ LRESULT CALLBACK ChildProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case SC_MINIMIZE:
+			ShowWindow(hWnd, SW_MINIMIZE);
+			break;
+
+		case SC_RESTORE:
+			ShowWindow(hWnd, SW_NORMAL);
+			break;
+
+		case SC_CLOSE:
+			SendMessage(hWnd, WM_CLOSE, 0, 0);
+			break;
+		}
+	}
+	break;
+
+	case WM_SIZE:
+		return DefMDIChildProc(hWnd, msg, wParam, lParam);
+
 	case WM_CREATE:
 	{
 		HWND list = CList::createList(hWnd,
@@ -59,7 +84,7 @@ LRESULT CALLBACK ChildProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		CList::setItemText(list, "Visokootporni lanac FI 10", 0, 1);
 	}
 	break;
-
+	 
 	//case WM_MDIACTIVATE:
 	//	SetFocus(hEdit);
 	//	break;
@@ -85,7 +110,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		cx = LOWORD(lParam);
 		cy = HIWORD(lParam);
 		WindowControls::setWindowSize(clientArea, cx, cy);
-		break;
+		return DefWindowProc(hWnd, msg, wParam, lParam);
 
 		case WM_DESTROY:
 			PostQuitMessage(0);
@@ -102,6 +127,14 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			case 9001:
 				WindowManager::createMDIChild(clientArea, "Proba 1223", "Proba", 450, 250);
 				break;
+
+			default:
+			{
+				HWND child = reinterpret_cast<HWND>(SendMessage(clientArea, WM_MDIGETACTIVE, 0, 0));
+				if (child)
+					SendMessage(child, WM_COMMAND, wParam, lParam);
+			}
+			break;
 			}
 		}
 		break;
@@ -113,7 +146,8 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			CLIENTCREATESTRUCT css;
 
 			clientArea = CreateWindow("MDICLIENT",
-				NULL, WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
+				NULL, 
+				WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
 				0,
 				30,
 				rc.right - rc.left,
@@ -123,7 +157,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				GetModuleHandle(NULL),
 				&css);
 
-			HWND hTool = CreateWindowEx(0, TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
+			/*HWND hTool = CreateWindowEx(0, TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
 				hWnd, NULL, GetModuleHandle(NULL), NULL);
 			SendMessage(hTool, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
 			TBBUTTON tbb[3];
@@ -147,8 +181,8 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			tbb[2].fsStyle = TBSTYLE_BUTTON;
 			tbb[2].idCommand = 9802;
 
-			SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
-
+			SendMessage(hTool, TB_AUTOSIZE, 0, 0);
+			SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);*/
 		}
 		break;
 
@@ -194,7 +228,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	initCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
 	InitCommonControlsEx(&initCtrls);
 
-	while (GetMessage(&msg, NULL, NULL, 0))
+	while (GetMessage(&msg, NULL, NULL, 0) != 0)
 	{
 		if (!TranslateMDISysAccel(clientArea, &msg))
 		{
