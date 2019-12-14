@@ -15,6 +15,24 @@ LRESULT CALLBACK ChProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case SC_MINIMIZE:
+			ShowWindow(hWnd, SW_MINIMIZE);
+			break;
+
+		case SC_RESTORE:
+			ShowWindow(hWnd, SW_NORMAL);
+			break;
+
+		case SC_CLOSE:
+			SendMessage(hWnd, WM_CLOSE, 0, 0);
+			break;
+		}
+	}
+	break;
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
@@ -206,6 +224,11 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand, int nShowWindow)
 {
+	INITCOMMONCONTROLSEX initCtrls;
+	initCtrls.dwICC = ICC_WIN95_CLASSES;
+	initCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
+	InitCommonControlsEx(&initCtrls);
+
 	MSG msg;
 	WindowManager::registerClass("MyX", hInstance, WProc);
 	WindowManager::registerClass("Testing", hInstance, ChildProc);
@@ -222,11 +245,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	wc.initializeMenu(myWindow);
 	UpdateWindow(myWindow);
 	ShowWindow(myWindow, SW_MAXIMIZE);
-
-	INITCOMMONCONTROLSEX initCtrls;
-	initCtrls.dwICC = ICC_WIN95_CLASSES;
-	initCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
-	InitCommonControlsEx(&initCtrls);
 
 	while (GetMessage(&msg, NULL, NULL, 0) != 0)
 	{
