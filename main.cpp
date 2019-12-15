@@ -3,6 +3,7 @@
 #include "WindowManager/WindowManager.h"
 #include "ListControls/CList.h"
 #include "WindowControls/WindowControls.h"
+#include "Invoice/Invoice.h"
 
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
@@ -49,11 +50,10 @@ LRESULT CALLBACK ChildProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		list = CList::createList(hWnd,
 			0,
 			0,
-			rc.right - rc.left,
-			rc.bottom - rc.top,
+			rc.right - 160,
+			rc.bottom - 150,
 			NULL);
 		CList::setFullRowSelect(list);
-		CList::setTxtBkColor(list, RGB(255, 0, 0));
 		CList::insertColumn(list,
 			0,
 			"Year",

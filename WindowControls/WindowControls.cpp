@@ -28,5 +28,10 @@ void WindowControls::initializeMenu(const HWND winHandle)
 	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&Settings");
 	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, "&Global Settings");
 
+	hSubMenu = CreatePopupMenu();
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "S&torage");
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, "&List");
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, "&Export Storage");
+
 	SetMenu(winHandle, hMenu);
 }

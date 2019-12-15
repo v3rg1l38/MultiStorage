@@ -36,6 +36,9 @@
     <ClCompile Include="GenericString\GenericString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Invoice\Invoice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ListControls\CList.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GenericString\GenericString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Invoice\Invoice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
