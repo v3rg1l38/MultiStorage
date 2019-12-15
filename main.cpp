@@ -23,8 +23,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	MSG msg;
 	WindowManager::registerClass("MyX", hInstance, WProc);
 	WindowManager::registerClass("Invoice", hInstance, InvoiceProc);
-	WindowManager::registerClass("Storage", hInstance, StorageProc);
-	HWND myWindow = WindowManager::createWindow("MyX",
+	WindowManager::registerClass("Storage", hInstance, Storage::StorageProc);
+	HWND frameWindow = WindowManager::createWindow("MyX",
 		"MyX",
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -34,9 +34,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 		);
 
 	WindowControls wc;
-	wc.initializeMenu(myWindow);
-	UpdateWindow(myWindow);
-	ShowWindow(myWindow, SW_MAXIMIZE);
+	wc.initializeMenu(frameWindow);
+	UpdateWindow(frameWindow);
+	ShowWindow(frameWindow, SW_MAXIMIZE);
 
 	while (GetMessage(&msg, NULL, NULL, 0) != 0)
 	{

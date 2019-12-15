@@ -9,6 +9,7 @@ class ClientInfo
 	std::string _address;
 	std::string _owner;
 	std::string _iban;
+	int _discount;
 
 public:
 	std::string getName() const { return _name; }
@@ -16,6 +17,7 @@ public:
 	std::string getAddress() const { return _address; }
 	std::string getOwner() const { return _owner; }
 	std::string getIban() const { return _iban; }
+	int getDiscount() const { return _discount; }
 
 	friend class ClientBuilder;
 };
