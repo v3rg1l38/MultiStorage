@@ -35,10 +35,7 @@ public:
 	ProductBuilder & retailPrice(const float & retPrice) noexcept;
 	ProductBuilder & wholesalePrice(const float & wPrice) noexcept;
 
-	static ProductBuilder build()
-	{
-		return ProductBuilder::ProductBuilder();
-	}
+	static ProductBuilder build() { return ProductBuilder::ProductBuilder(); }
 
 	operator Product()
 	{
