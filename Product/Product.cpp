@@ -35,3 +35,15 @@ ProductBuilder & ProductBuilder::wholesalePrice(const float & wPrice) noexcept
 	_product._wholesalePrice = wPrice;
 	return *this;
 }
+
+ProductBuilder & ProductBuilder::needed(const int & needed) noexcept
+{
+	_product._needed = needed;
+	return *this;
+}
+
+ProductBuilder & ProductBuilder::package(const int & package) noexcept
+{
+	_product._package = package;
+	return *this;
+}
