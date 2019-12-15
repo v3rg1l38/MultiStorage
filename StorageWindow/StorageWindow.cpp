@@ -47,6 +47,8 @@ void Storage::initilaizeWindow(const HWND & hWnd)
 	RECT rc;
 	GetClientRect(hWnd, &rc);
 	const HWND list = CList::createList(hWnd, 0, 0, rc.right - rc.left, rc.bottom - rc.top, ID_STORAGE_LIST);
+	CList::setTxtBkColor(list, RGB(69, 125, 217));
+	CList::setBkColor(list, RGB(69, 125, 217));
 	CList::insertColumn(list, CODE_COLUMN, "Code", 0x80);
 	CList::insertColumn(list, NAME_COLUMN, "Name", 0x80);
 	CList::insertColumn(list, DESCR_COLUMN, "Description", 0x80);

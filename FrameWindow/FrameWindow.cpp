@@ -24,8 +24,8 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Invoice", "Invoice", 1080, 680);
 			break;
 
-		case MENU_FILE_SAVE:
-			WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Storage", "Storage", 950, 550);
+		case MENU_STORAGE_LIST:
+			WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Storage", "Storage", 1050, 550);
 			break;
 
 		case MENU_FILE_CLOSE:
@@ -89,7 +89,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			NULL,
 			WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
 			0,
-			30,
+			0,
 			rc.right - rc.left,
 			rc.bottom - rc.top,
 			hWnd,
