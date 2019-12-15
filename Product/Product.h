@@ -28,36 +28,12 @@ public:
 
 	ProductBuilder() : pr(_product) {}
 
-	ProductBuilder& code(const std::string code) noexcept
-	{
-		_product._code = code;
-		return *this;
-	}
-	ProductBuilder& name(const std::string & name) noexcept
-	{
-		_product._name = name;
-		return *this;
-	}
-	ProductBuilder& count(const int & count) noexcept
-	{
-		_product._count = count;
-		return *this;
-	}
-	ProductBuilder& description(const std::string & description) noexcept
-	{
-		_product._description = description;
-		return *this;
-	}
-	ProductBuilder& retailPrice(const float & retPrice) noexcept
-	{
-		_product._retailPrice = retPrice;
-		return *this;
-	}
-	ProductBuilder& wholesalePrice(const float & wPrice) noexcept
-	{
-		_product._wholesalePrice = wPrice;
-		return *this;
-	}
+	ProductBuilder & code(const std::string code) noexcept;
+	ProductBuilder & name(const std::string & name) noexcept;
+	ProductBuilder & count(const int & count) noexcept;
+	ProductBuilder & description(const std::string & description) noexcept;
+	ProductBuilder & retailPrice(const float & retPrice) noexcept;
+	ProductBuilder & wholesalePrice(const float & wPrice) noexcept;
 
 	static ProductBuilder build()
 	{
