@@ -9,6 +9,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_SIZE:
 		cx = LOWORD(lParam);
 		cy = HIWORD(lParam);
+		
 		WindowControls::setWindowSize(GetDlgItem(hWnd, ID_CLIENTAREA), cx, cy);
 		break;
 
@@ -90,9 +91,8 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
 			0,
 			0,
-			0,0,
-			//rc.right - rc.left,
-			//rc.bottom - rc.top,
+			0,
+			0,
 			hWnd,
 			(HMENU)ID_CLIENTAREA,
 			GetModuleHandle(NULL),
@@ -126,17 +126,6 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		SendMessage(hTool, TB_AUTOSIZE, 0, 0);
 		SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);*/
-	}
-	break;
-
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		SetTextColor(hdc, RGB(255, 0, 0));
-		SetBkMode(hdc, TRANSPARENT);
-		TextOut(hdc, 5, 10, "Hello World", strlen("Hello World"));
-		EndPaint(hWnd, &ps);
 	}
 	break;
 

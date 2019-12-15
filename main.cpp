@@ -20,6 +20,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	initCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
 	InitCommonControlsEx(&initCtrls);
 
+	WNDCLASS wcc = {};
+	GetClassInfo(hInstance, "MDICLIENT", &wcc);
+	HBRUSH brush = CreateSolidBrush(RGB(22, 108, 145));
+	wcc.hbrBackground = brush;
+
+	if (!RegisterClass(&wcc))
+	{
+		MessageBox(NULL, "Unable to register new class", "Error", MB_OK);
+		return 0;
+	}
+
 	MSG msg;
 	WindowManager::registerClass("MyX", hInstance, WProc);
 	WindowManager::registerClass("Invoice", hInstance, InvoiceProc);
