@@ -15,24 +15,6 @@ LRESULT CALLBACK ChProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-	case WM_COMMAND:
-	{
-		switch (LOWORD(wParam))
-		{
-		case SC_MINIMIZE:
-			ShowWindow(hWnd, SW_MINIMIZE);
-			break;
-
-		case SC_RESTORE:
-			ShowWindow(hWnd, SW_NORMAL);
-			break;
-
-		case SC_CLOSE:
-			SendMessage(hWnd, WM_CLOSE, 0, 0);
-			break;
-		}
-	}
-	break;
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
@@ -55,61 +37,46 @@ LRESULT CALLBACK ChProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK ChildProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	static int cX, cY;
+	static HWND list;
+
 	switch (msg)
 	{
-	case WM_COMMAND:
-	{
-		switch (LOWORD(wParam))
-		{
-		case SC_MINIMIZE:
-			ShowWindow(hWnd, SW_MINIMIZE);
-			break;
-
-		case SC_RESTORE:
-			ShowWindow(hWnd, SW_NORMAL);
-			break;
-
-		case SC_CLOSE:
-			SendMessage(hWnd, WM_CLOSE, 0, 0);
-			break;
-		}
-	}
-	break;
-
-	case WM_SIZE:
-		return DefMDIChildProc(hWnd, msg, wParam, lParam);
-
 	case WM_CREATE:
 	{
-		HWND list = CList::createList(hWnd,
+		RECT rc;
+		GetClientRect(hWnd, &rc);
+		list = CList::createList(hWnd,
 			0,
 			0,
-			400,
-			400,
+			rc.right - rc.left,
+			rc.bottom - rc.top,
 			NULL);
 		CList::setFullRowSelect(list);
-
+		CList::setTxtBkColor(list, RGB(255, 0, 0));
 		CList::insertColumn(list,
 			0,
-			"Code",
+			"Year",
 			0x54);
 		CList::insertColumn(list,
 			1,
 			"Name",
 			0x124);
 		CList::insertItem(list, 9999);
-		CList::setItemText(list, "12000", 0, 0);
-		CList::setItemText(list, "Visokootporni lanac FI 10", 0, 1);
+		CList::insertItem(list, 9999);
+		CList::setItemText(list, "2018", 0, 0);
+		CList::setItemText(list, "Storage", 0, 1);		
+		CList::setItemText(list, "2019", 1, 0);
+		CList::setItemText(list, "Storage", 1, 1);
 	}
 	break;
-	 
-	//case WM_MDIACTIVATE:
-	//	SetFocus(hEdit);
-	//	break;
 
-	//case WM_SETFOCUS:
-	//	SetFocus(hEdit);
-	//	return DefMDIChildProc(hWnd, msg, wParam, lParam);
+	case WM_SIZE:
+	{
+		cX = LOWORD(lParam);
+		cY = HIWORD(lParam);
+	}
+	return DefMDIChildProc(hWnd, msg, wParam, lParam);
 
 	default:
 		return DefMDIChildProc(hWnd, msg, wParam, lParam);
@@ -138,13 +105,53 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			switch (LOWORD(wParam))
 			{
-			case 9000:
-				WindowManager::createMDIChild(clientArea, "Proba 123", "Testing", 480, 250);
+			case MENU_INVOICE_LIST:
+				WindowManager::createMDIChild(clientArea, "Proba 123", "Testing", 1080, 680);
 				break;
 
-			case 9001:
-				WindowManager::createMDIChild(clientArea, "Proba 1223", "Proba", 450, 250);
+			case MENU_FILE_SAVE:
+				WindowManager::createMDIChild(clientArea, "Proba 1223", "Proba", 950, 550);
 				break;
+
+			case MENU_FILE_CLOSE:
+				PostQuitMessage(0);
+				break;
+
+			case SC_MINIMIZE:
+			{
+				HWND child = reinterpret_cast<HWND>(SendMessage(clientArea, WM_MDIGETACTIVE, 0, 0));
+				if (child)
+					ShowWindow(child, SW_MINIMIZE);
+			}
+			break;
+
+			case SC_MAXIMIZE:
+			{
+				HWND child = reinterpret_cast<HWND>(SendMessage(clientArea, WM_MDIGETACTIVE, 0, 0));
+				if (child)
+					ShowWindow(child, SW_MAXIMIZE);
+			}
+			break;
+
+			case SC_RESTORE:
+			{
+				HWND child = reinterpret_cast<HWND>(SendMessage(clientArea, WM_MDIGETACTIVE, 0, 0));
+				if (child)
+					ShowWindow(child, SW_NORMAL);
+			}
+			break;
+
+			case SC_CLOSE:
+			{
+				HWND child = reinterpret_cast<HWND>(SendMessage(clientArea, WM_MDIGETACTIVE, 0, 0));
+				if (child)
+				{
+					SendMessage(child, WM_CLOSE, 0, 0);
+					child = reinterpret_cast<HWND>(SendMessage(clientArea, WM_MDIGETACTIVE, 0, 0));
+					ShowWindow(child, SW_NORMAL);
+				}
+			}
+			break;
 
 			default:
 			{
@@ -241,6 +248,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 		480,
 		hInstance
 		);
+
 	WindowControls wc;
 	wc.initializeMenu(myWindow);
 	UpdateWindow(myWindow);

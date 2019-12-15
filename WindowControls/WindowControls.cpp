@@ -13,9 +13,20 @@ void WindowControls::initializeMenu(const HWND winHandle)
 
 	hSubMenu = CreatePopupMenu();
 	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&File");
-	AppendMenu(hSubMenu, MF_STRING, 9000, "&Open");
-	AppendMenu(hSubMenu, MF_STRING, 9001, "&Save");
-	AppendMenu(hSubMenu, MF_STRING, 9002, "&Load");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, "&Open");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, "&Save");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, "&Load");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, "&Close");
+
+	hSubMenu = CreatePopupMenu();
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&Invoice");
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, "&New");
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, "&Load");
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, "L&ist");
+
+	hSubMenu = CreatePopupMenu();
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&Settings");
+	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, "&Global Settings");
 
 	SetMenu(winHandle, hMenu);
 }
