@@ -10,7 +10,9 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		cx = LOWORD(lParam);
 		cy = HIWORD(lParam);
 		
-		WindowControls::setWindowSize(GetDlgItem(hWnd, ID_CLIENTAREA), cx, cy);
+		//WindowControls::setWindowSize(GetDlgItem(hWnd, ID_CLIENTAREA), cx, cy - 30);
+		WindowControls::setWindowSize(WindowManager::getWindowHandle("TOOLBAR"), cx, 30);
+		SetWindowPos(WindowManager::getWindowHandle("CLIENT"), NULL, 0, 30, cx, cy - 30, SWP_SHOWWINDOW);
 		break;
 
 	case WM_DESTROY:
@@ -21,6 +23,10 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (LOWORD(wParam))
 		{
+		case 9800:
+			MessageBox(NULL, "Ok", "Info", MB_OK);
+			break;
+
 		case MENU_INVOICE_LIST:
 			WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Invoice", "Invoice", 1080, 680);
 			break;
@@ -82,15 +88,13 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_CREATE:
 	{
-		RECT rc;
-		GetClientRect(hWnd, &rc);
 		CLIENTCREATESTRUCT css;
 
 		HWND clientArea = CreateWindow("MDICLIENT",
 			NULL,
 			WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
 			0,
-			0,
+			30,
 			0,
 			0,
 			hWnd,
@@ -100,7 +104,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		WindowManager::addWindowToList("CLIENT", clientArea);
 
-		/*HWND hTool = CreateWindowEx(0, TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
+		HWND hTool = CreateWindowEx(0, TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
 			hWnd, NULL, GetModuleHandle(NULL), NULL);
 		SendMessage(hTool, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
 		TBBUTTON tbb[3];
@@ -125,7 +129,9 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		tbb[2].idCommand = 9802;
 
 		SendMessage(hTool, TB_AUTOSIZE, 0, 0);
-		SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);*/
+		SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
+
+		WindowManager::addWindowToList("TOOLBAR", hTool);
 	}
 	break;
 
