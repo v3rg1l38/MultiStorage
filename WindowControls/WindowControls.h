@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <string>
 
 #define MENU_FILE_OPEN 9000
 #define MENU_FILE_SAVE 9001
@@ -16,6 +17,11 @@
 class WindowControls
 {
 public:
-	static void setWindowSize(const HWND hWnd, const int & sX, const int & sY);
+	static void setWindowSize(const HWND & hWnd, const int & sX, const int & sY);
+	static std::string getEditText(const HWND & editBox);
+	static bool setEditText(const HWND & editBox, const std::string & text);
+	static void setSelectedText(const HWND & editBox, const int & start, const int & end);
+	static unsigned long getSelectedPos(const HWND & editBox);
+	static void replaceSelectedText(const HWND & editBox, const std::string & text, bool undo = true);
 	void initializeMenu(const HWND winHandle);
 };

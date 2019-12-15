@@ -14,15 +14,53 @@ HWND clientArea;
 
 LRESULT CALLBACK ChProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	static HWND edit;
+
 	switch (msg)
 	{
-	case WM_PAINT:
+	case WM_CREATE:
 	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		SetBkMode(hdc, TRANSPARENT);
-		TextOut(hdc, 10, 20, "Proba", strlen("Proba"));
-		EndPaint(hWnd, &ps);
+		edit = WindowManager::createWindow("",
+			"EDIT",
+			5,
+			30,
+			120,
+			30,
+			GetModuleHandle(NULL),
+			hWnd,
+			ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE);
+
+		WindowManager::createWindow("Push me",
+			"BUTTON",
+			140,
+			30,
+			80,
+			30,
+			GetModuleHandle(NULL),
+			hWnd,
+			BS_DEFPUSHBUTTON | WS_CHILD | WS_VISIBLE,
+			reinterpret_cast<HMENU>(9800));
+
+		WindowControls::setEditText(edit, "Ja sam mali pero");
+		SendMessage(edit, EM_SETSEL, 1, 6);
+	}
+	break;
+
+	case WM_SETFOCUS:
+		SetFocus(edit);
+		break;
+
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case 9800:
+		{
+			WindowControls::replaceSelectedText(edit, "Ajajajajaja");
+		}
+		break;
+		}
+		break;
 	}
 	break;
 
