@@ -10,7 +10,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		cx = LOWORD(lParam);
 		cy = HIWORD(lParam);
 		WindowControls::setWindowSize(GetDlgItem(hWnd, ID_CLIENTAREA), cx, cy);
-		return DefWindowProc(hWnd, msg, wParam, lParam);
+		break;
 
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -90,8 +90,9 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
 			0,
 			0,
-			rc.right - rc.left,
-			rc.bottom - rc.top,
+			0,0,
+			//rc.right - rc.left,
+			//rc.bottom - rc.top,
 			hWnd,
 			(HMENU)ID_CLIENTAREA,
 			GetModuleHandle(NULL),
