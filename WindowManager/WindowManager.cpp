@@ -53,7 +53,7 @@ HWND WindowManager::createWindow(const char * name,
 	return newWindow;
 }
 
-HWND WindowManager::createMDIChild(HWND & clientHandle, 
+HWND WindowManager::createMDIChild(const HWND & clientHandle, 
 	const char * title, 
 	const char * childClass,
 	const int & cX,
@@ -82,7 +82,7 @@ HWND WindowManager::createMDIChild(HWND & clientHandle,
 	return mdiChild;
 }
 
-void WindowManager::addWindowToList(const std::string & winName, const HWND windowHandle)
+void WindowManager::addWindowToList(const std::string & winName, const HWND & windowHandle)
 {
 	_windowsList.insert(std::make_pair<std::string, HWND>(static_cast<std::string>(winName), static_cast<HWND>(windowHandle)));
 }

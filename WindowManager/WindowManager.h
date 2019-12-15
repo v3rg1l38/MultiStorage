@@ -26,7 +26,7 @@ public:
 		HWND parent = NULL,
 		long style = WS_OVERLAPPEDWINDOW,
 		HMENU menu = NULL);
-	static HWND createMDIChild(HWND & clientHandle, 
+	static HWND createMDIChild(const HWND & clientHandle, 
 		const char * title, 
 		const char * childClass,
 		const int & cX,
@@ -36,7 +36,7 @@ public:
 	{
 		return DestroyWindow(_windowsList[winName]);
 	}
-	static void addWindowToList(const std::string & winName, const HWND windowHandle);
+	static void addWindowToList(const std::string & winName, const HWND & windowHandle);
 
 private:
 	static std::map<std::string, HWND> _windowsList;

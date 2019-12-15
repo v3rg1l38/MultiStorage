@@ -126,11 +126,14 @@
     <ClCompile Include="ClientInfo\ClientInfo.cpp" />
     <ClCompile Include="CSV\CSV.cpp" />
     <ClCompile Include="Database\Database.cpp" />
+    <ClCompile Include="FrameWindow\FrameWindow.cpp" />
     <ClCompile Include="GenericString\GenericString.cpp" />
+    <ClCompile Include="InvoiceWindow\InvoiceWindow.cpp" />
     <ClCompile Include="Invoice\Invoice.cpp" />
     <ClCompile Include="ListControls\CList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Product\Product.cpp" />
+    <ClCompile Include="StorageWindow\StorageWindow.cpp" />
     <ClCompile Include="WindowControls\WindowControls.cpp" />
     <ClCompile Include="WindowManager\WindowManager.cpp" />
   </ItemGroup>
@@ -138,10 +141,13 @@
     <ClInclude Include="ClientInfo\ClientInfo.h" />
     <ClInclude Include="CSV\CSV.h" />
     <ClInclude Include="Database\Database.h" />
+    <ClInclude Include="FrameWindow\FrameWindow.h" />
     <ClInclude Include="GenericString\GenericString.h" />
+    <ClInclude Include="InvoiceWindow\InvoiceWindow.h" />
     <ClInclude Include="Invoice\Invoice.h" />
     <ClInclude Include="ListControls\CList.h" />
     <ClInclude Include="Product\Product.h" />
+    <ClInclude Include="StorageWindow\StorageWindow.h" />
     <ClInclude Include="WindowControls\WindowControls.h" />
     <ClInclude Include="WindowManager\WindowManager.h" />
   </ItemGroup>
