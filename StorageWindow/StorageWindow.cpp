@@ -1,5 +1,6 @@
 #include "StorageWindow.h"
 
+
 LRESULT CALLBACK Storage::StorageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	static HWND edit;

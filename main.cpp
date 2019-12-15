@@ -34,14 +34,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	WindowManager::registerClass("MyX", hInstance, WProc);
 	WindowManager::registerClass("Invoice", hInstance, InvoiceProc);
 	WindowManager::registerClass("Storage", hInstance, Storage::StorageProc);
-	HWND frameWindow = WindowManager::createWindow("MyX",
+
+	//HWND frameWindow = WindowManager::createWindow("MyX",
+	//	"MyX",
+	//	CW_USEDEFAULT,
+	//	CW_USEDEFAULT,
+	//	640,
+	//	480,
+	//	hInstance
+	//	);
+	Storage st;
+
+	HWND frameWindow = CreateWindow("MyX",
 		"MyX",
+		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		640,
 		480,
-		hInstance
-		);
+		NULL,
+		NULL,
+		hInstance,
+		&st);
 
 	WindowControls wc;
 	wc.initializeMenu(frameWindow);
@@ -56,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 		DispatchMessage(&msg);
 		}
 	}
-	
+
 	return static_cast<int>(msg.wParam);
 
 }

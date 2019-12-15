@@ -14,8 +14,10 @@
 #define RETAILPRICE_COLUMN 6
 #define WHOLESALE_COLUMN 7
 
-namespace Storage
+class Storage
 {
-LRESULT CALLBACK StorageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-void initilaizeWindow(const HWND & hWnd);
-}
+	int _test;
+public:
+	static LRESULT CALLBACK StorageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	static void initilaizeWindow(const HWND & hWnd);
+};

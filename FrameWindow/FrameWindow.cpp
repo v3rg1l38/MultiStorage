@@ -1,8 +1,11 @@
 #include "FrameWindow.h"
+#include "../StorageWindow/StorageWindow.h"
 
 LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	static int cx, cy;
+	LONG_PTR ptr = GetWindowLongPtr(hWnd, GWLP_USERDATA);
+	Storage *st = reinterpret_cast<Storage*>(ptr);
 
 	switch (msg)
 	{
@@ -24,8 +27,10 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		switch (LOWORD(wParam))
 		{
 		case 9800:
-			MessageBox(NULL, "Ok", "Info", MB_OK);
-			break;
+		{
+			MessageBox(NULL, "bok", "Info", MB_OK);
+		}
+		break;
 
 		case MENU_INVOICE_LIST:
 			WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Invoice", "Invoice", 1080, 680);
@@ -86,8 +91,13 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
+
 	case WM_CREATE:
 	{
+		CREATESTRUCT *pStruct = reinterpret_cast<CREATESTRUCT*>(lParam);
+		st = reinterpret_cast<Storage*>(pStruct->lpCreateParams);
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)st);
+	
 		CLIENTCREATESTRUCT css;
 
 		HWND clientArea = CreateWindow("MDICLIENT",
