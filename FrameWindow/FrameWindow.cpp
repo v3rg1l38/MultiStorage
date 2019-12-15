@@ -104,9 +104,19 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		WindowManager::addWindowToList("CLIENT", clientArea);
 
-		HWND hTool = CreateWindowEx(0, TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
-			hWnd, NULL, GetModuleHandle(NULL), NULL);
+		HWND hTool = CreateWindowEx(0, 
+			TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 
+			0, 
+			0, 
+			0, 
+			0,
+			hWnd, 
+			NULL, 
+			GetModuleHandle(NULL), 
+			NULL);
+
 		SendMessage(hTool, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
+
 		TBBUTTON tbb[3];
 		TBADDBITMAP tbab;
 		tbab.hInst = HINST_COMMCTRL;
