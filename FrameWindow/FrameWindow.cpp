@@ -133,7 +133,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		tbb[1].fsStyle = TBSTYLE_BUTTON;
 		tbb[1].idCommand = 9801;
 
-		tbb[2].iBitmap = STD_FILESAVE;
+		tbb[2].iBitmap = STD_DELETE;
 		tbb[2].fsState = TBSTATE_ENABLED;
 		tbb[2].fsStyle = TBSTYLE_BUTTON;
 		tbb[2].idCommand = 9802;

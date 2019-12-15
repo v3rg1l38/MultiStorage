@@ -1,7 +1,6 @@
 #include <Windows.h>
 #include <CommCtrl.h>
 #include "WindowManager/WindowManager.h"
-#include "ListControls/CList.h"
 #include "WindowControls/WindowControls.h"
 #include "FrameWindow/FrameWindow.h"
 #include "InvoiceWindow/InvoiceWindow.h"
