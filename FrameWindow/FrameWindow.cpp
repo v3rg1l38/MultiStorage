@@ -1,21 +1,16 @@
 #include "FrameWindow.h"
 #include "../StorageWindow/StorageWindow.h"
 
-LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	static int cx, cy;
-	LONG_PTR ptr = GetWindowLongPtr(hWnd, GWLP_USERDATA);
-	Storage *st = reinterpret_cast<Storage*>(ptr);
-
 	switch (msg)
 	{
 	case WM_SIZE:
-		cx = LOWORD(lParam);
-		cy = HIWORD(lParam);
-		
-		//WindowControls::setWindowSize(GetDlgItem(hWnd, ID_CLIENTAREA), cx, cy - 30);
-		WindowControls::setWindowSize(WindowManager::getWindowHandle("TOOLBAR"), cx, 30);
-		SetWindowPos(WindowManager::getWindowHandle("CLIENT"), NULL, 0, 30, cx, cy - 30, SWP_SHOWWINDOW);
+		_cX = LOWORD(lParam);
+		_cY = HIWORD(lParam);
+
+		WindowControls::setWindowSize(_toolBar, _cX, 30);
+		SetWindowPos(_clientHwnd, NULL, 0, 30, _cX, _cY - 30, SWP_SHOWWINDOW);
 		break;
 
 	case WM_DESTROY:
@@ -33,11 +28,24 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 		case MENU_INVOICE_LIST:
-			WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Invoice", "Invoice", 1080, 680);
+			//WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Invoice", "Invoice", 1080, 680);
+			CreateWindowEx(WS_EX_MDICHILD, "Invoice",
+				"Invoice",
+				WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE,
+				0,
+				0,
+				640,
+				580,
+				_clientHwnd,
+				NULL,
+				GetModuleHandle(NULL),
+				NULL);
+
+
 			break;
 
 		case MENU_STORAGE_LIST:
-			WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Storage", "Storage", 1050, 550);
+			WindowManager::createMDIChild(_clientHwnd, "Storage", "Storage", 1050, 550);
 			break;
 
 		case MENU_FILE_CLOSE:
@@ -46,7 +54,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case SC_MINIMIZE:
 		{
-			HWND child = reinterpret_cast<HWND>(SendMessage(GetDlgItem(hWnd, ID_CLIENTAREA), WM_MDIGETACTIVE, 0, 0));
+			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
 			if (child)
 				ShowWindow(child, SW_MINIMIZE);
 		}
@@ -54,7 +62,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case SC_MAXIMIZE:
 		{
-			HWND child = reinterpret_cast<HWND>(SendMessage(GetDlgItem(hWnd, ID_CLIENTAREA), WM_MDIGETACTIVE, 0, 0));
+			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
 			if (child)
 				ShowWindow(child, SW_MAXIMIZE);
 		}
@@ -62,7 +70,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case SC_RESTORE:
 		{
-			HWND child = reinterpret_cast<HWND>(SendMessage(GetDlgItem(hWnd, ID_CLIENTAREA), WM_MDIGETACTIVE, 0, 0));
+			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
 			if (child)
 				ShowWindow(child, SW_NORMAL);
 		}
@@ -70,11 +78,11 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case SC_CLOSE:
 		{
-			HWND child = reinterpret_cast<HWND>(SendMessage(GetDlgItem(hWnd, ID_CLIENTAREA), WM_MDIGETACTIVE, 0, 0));
+			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
 			if (child)
 			{
 				SendMessage(child, WM_CLOSE, 0, 0);
-				child = reinterpret_cast<HWND>(SendMessage(GetDlgItem(hWnd, ID_CLIENTAREA), WM_MDIGETACTIVE, 0, 0));
+				child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
 				ShowWindow(child, SW_NORMAL);
 			}
 		}
@@ -82,7 +90,7 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		default:
 		{
-			HWND child = reinterpret_cast<HWND>(SendMessage(GetDlgItem(hWnd, ID_CLIENTAREA), WM_MDIGETACTIVE, 0, 0));
+			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
 			if (child)
 				SendMessage(child, WM_COMMAND, wParam, lParam);
 		}
@@ -91,47 +99,44 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
-
 	case WM_CREATE:
 	{
-		CREATESTRUCT *pStruct = reinterpret_cast<CREATESTRUCT*>(lParam);
-		st = reinterpret_cast<Storage*>(pStruct->lpCreateParams);
-		SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)st);
-	
-		CLIENTCREATESTRUCT css;
+		initilaizeMenu();
+		setClientAreaBackground();
 
-		HWND clientArea = CreateWindow("MDICLIENT",
+		CLIENTCREATESTRUCT css;
+		_clientHwnd = CreateWindow("MDICLIENT",
 			NULL,
-			WS_CHILD | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL | WS_VISIBLE,
+			WS_CHILD | WS_CLIPCHILDREN | WS_VISIBLE,
 			0,
 			30,
 			0,
 			0,
-			hWnd,
+			_hWnd,
 			(HMENU)ID_CLIENTAREA,
 			GetModuleHandle(NULL),
 			&css);
 
-		WindowManager::addWindowToList("CLIENT", clientArea);
+		WindowManager::addWindowToList("CLIENT", _clientHwnd);
 
-		HWND hTool = CreateWindowEx(0, 
-			TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 
-			0, 
-			0, 
-			0, 
+		_toolBar = CreateWindowEx(0,
+			TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE,
 			0,
-			hWnd, 
-			NULL, 
-			GetModuleHandle(NULL), 
+			0,
+			0,
+			0,
+			_hWnd,
+			NULL,
+			GetModuleHandle(NULL),
 			NULL);
 
-		SendMessage(hTool, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
+		SendMessage(_toolBar, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
 
 		TBBUTTON tbb[3];
 		TBADDBITMAP tbab;
 		tbab.hInst = HINST_COMMCTRL;
 		tbab.nID = IDB_STD_SMALL_COLOR;
-		SendMessage(hTool, TB_ADDBITMAP, 0, (LPARAM)&tbab);
+		SendMessage(_toolBar, TB_ADDBITMAP, 0, (LPARAM)&tbab);
 		ZeroMemory(tbb, sizeof(tbb));
 		tbb[0].iBitmap = STD_FILENEW;
 		tbb[0].fsState = TBSTATE_ENABLED;
@@ -148,16 +153,57 @@ LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		tbb[2].fsStyle = TBSTYLE_BUTTON;
 		tbb[2].idCommand = 9802;
 
-		SendMessage(hTool, TB_AUTOSIZE, 0, 0);
-		SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
+		SendMessage(_toolBar, TB_AUTOSIZE, 0, 0);
+		SendMessage(_toolBar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 
-		WindowManager::addWindowToList("TOOLBAR", hTool);
+		WindowManager::addWindowToList("TOOLBAR", _toolBar);
 	}
 	break;
 
 	default:
-		return DefFrameProc(hWnd, GetDlgItem(hWnd, ID_CLIENTAREA), msg, wParam, lParam);
+		return DefFrameProc(_hWnd, _clientHwnd, msg, wParam, lParam);
 	}
 
 	return 0;
+}
+
+void FrameWindow::initilaizeMenu()
+{
+	HMENU hMenu, hSubMenu;
+
+	hMenu = CreateMenu();
+
+	hSubMenu = CreatePopupMenu();
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&File");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, "&Open");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, "&Save");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, "&Load");
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, "&Close");
+
+	hSubMenu = CreatePopupMenu();
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&Invoice");
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, "&New");
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, "&Load");
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, "L&ist");
+
+	hSubMenu = CreatePopupMenu();
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&Settings");
+	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, "&Global Settings");
+
+	hSubMenu = CreatePopupMenu();
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "S&torage");
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, "&List");
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, "&Export Storage");
+
+	SetMenu(_hWnd, hMenu);
+}
+
+bool FrameWindow::setClientAreaBackground()
+{
+	WNDCLASS wcc = {};
+	GetClassInfo(GetModuleHandle(NULL), "MDICLIENT", &wcc);
+	HBRUSH brush = CreateSolidBrush(RGB(22, 108, 145));
+	wcc.hbrBackground = brush;
+
+	return RegisterClass(&wcc) ? true : false;
 }

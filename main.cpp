@@ -19,48 +19,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	initCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
 	InitCommonControlsEx(&initCtrls);
 
-	WNDCLASS wcc = {};
-	GetClassInfo(hInstance, "MDICLIENT", &wcc);
-	HBRUSH brush = CreateSolidBrush(RGB(22, 108, 145));
-	wcc.hbrBackground = brush;
-
-	if (!RegisterClass(&wcc))
-	{
-		MessageBox(NULL, "Unable to register new class", "Error", MB_OK);
-		return 0;
-	}
+	FrameWindow frameWindow;
+	WindowManager::registerClass("Storage", hInstance, Storage::StorageProc);
+	frameWindow.create("FrameW",
+		"MyX",
+		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+		0,
+		0,
+		1024,
+		768,
+		hInstance
+		);
+	ShowWindow(frameWindow, SW_MAXIMIZE);
 
 	MSG msg;
-	WindowManager::registerClass("MyX", hInstance, WProc);
-	WindowManager::registerClass("Invoice", hInstance, InvoiceProc);
-	WindowManager::registerClass("Storage", hInstance, Storage::StorageProc);
-
-	//HWND frameWindow = WindowManager::createWindow("MyX",
-	//	"MyX",
-	//	CW_USEDEFAULT,
-	//	CW_USEDEFAULT,
-	//	640,
-	//	480,
-	//	hInstance
-	//	);
-	Storage st;
-
-	HWND frameWindow = CreateWindow("MyX",
-		"MyX",
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		640,
-		480,
-		NULL,
-		NULL,
-		hInstance,
-		&st);
-
-	WindowControls wc;
-	wc.initializeMenu(frameWindow);
-	UpdateWindow(frameWindow);
-	ShowWindow(frameWindow, SW_MAXIMIZE);
 
 	while (GetMessage(&msg, NULL, NULL, 0) != 0)
 	{

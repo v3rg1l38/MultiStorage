@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <map>
 #include <string>
+#include "../WindowControls/WindowControls.h"
 
 class WindowManager
 {
@@ -40,4 +41,86 @@ public:
 
 private:
 	static std::map<std::string, HWND> _windowsList;
+};
+
+template<class DerWind>
+class BaseFrameWindow
+{
+public:
+	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	{
+		DerWind * ptr = nullptr;
+
+		if (msg == WM_NCCREATE)
+		{
+			CREATESTRUCT * pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+			ptr = static_cast<DerWind*>(pCreate->lpCreateParams);
+			SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(ptr));
+
+			ptr->_hWnd = hWnd;
+		}
+		else
+		{
+			ptr = reinterpret_cast<DerWind*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+		}
+
+		if (ptr)
+		{
+			return ptr->MessageHandler(msg, wParam, lParam);
+		}
+		else
+		{
+			return DefFrameProc(hWnd, GetDlgItem(hWnd, ID_CLIENTAREA), msg, wParam, lParam);
+		}
+	}
+
+	bool create(const char * className,
+		const char * windowName,
+		const long & dwStyle,
+		const int & posX,
+		const int & posY,
+		const int & sizeX,
+		const int & sizeY,
+		const HINSTANCE & hInst,
+		const HWND & parent = 0,
+		const HMENU & menu = 0
+	)
+	{
+		WNDCLASS wc = {};
+
+		wc.lpfnWndProc = DerWind::WndProc;
+		wc.hInstance = hInst;
+		wc.lpszClassName = className;
+		wc.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
+		wc.style = CS_VREDRAW | CS_HREDRAW;
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+
+		if (!RegisterClass(&wc))
+		{
+			MessageBox(NULL, "Unable to register Frame Window Class", "Error: FrameBaseClass", MB_OK | MB_ICONERROR);
+			return false;
+		}
+
+		_hWnd = CreateWindow(className,
+			windowName,
+			dwStyle,
+			posX,
+			posY,
+			sizeX,
+			sizeY,
+			parent,
+			menu,
+			hInst,
+			this);
+
+		return _hWnd ? true : false;
+	}
+
+	operator HWND() const { return _hWnd; }
+
+protected:
+	virtual LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
+	HWND _hWnd;
+	HWND _clientHwnd;
+	HWND _toolBar;
 };
