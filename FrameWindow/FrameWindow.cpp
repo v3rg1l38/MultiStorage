@@ -14,6 +14,8 @@ LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_DESTROY:
+		if(_stWind)
+			delete _stWind;
 		PostQuitMessage(0);
 		break;
 
@@ -48,8 +50,8 @@ LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			//WindowManager::createMDIChild(_clientHwnd, "Storage", "Storage", 1050, 550);
 			//StorageWindow * _stWind = new StorageWindow();
-			StorageWindow _stWind;
-			_stWind.create("StorageC",
+			_stWind = new StorageWindow();
+			_stWind->create("StorageC",
 				"Storage API",
 				0,
 				0,

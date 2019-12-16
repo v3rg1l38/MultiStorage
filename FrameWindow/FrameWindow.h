@@ -16,4 +16,5 @@ private:
 	void onCreate();
 	int _cX;
 	int _cY;
+	class StorageWindow * _stWind = nullptr;
 };

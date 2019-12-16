@@ -1,5 +1,6 @@
 ﻿  FrameWindow.cpp
-  main.cpp
   StorageWindow.cpp
+  WindowManager.cpp
+  main.cpp
   Generating Code...
   MultiStorage.vcxproj -> C:\Users\v3rg1l\source\repos\MultiStorage\Debug\MultiStorage.exe
