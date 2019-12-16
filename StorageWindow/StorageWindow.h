@@ -14,10 +14,12 @@
 #define RETAILPRICE_COLUMN 6
 #define WHOLESALE_COLUMN 7
 
-class Storage
+class StorageWindow : public MDIChildBase<StorageWindow>
 {
-	int _test;
 public:
-	static LRESULT CALLBACK StorageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	static void initilaizeWindow(const HWND & hWnd);
+	LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam);
+	void initilaizeWindow();
+
+private:
+	HWND _list;
 };

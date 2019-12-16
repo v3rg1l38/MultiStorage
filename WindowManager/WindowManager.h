@@ -91,7 +91,7 @@ public:
 		wc.lpfnWndProc = DerWind::WndProc;
 		wc.hInstance = hInst;
 		wc.lpszClassName = className;
-		wc.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
+		wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
 		wc.style = CS_VREDRAW | CS_HREDRAW;
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 
@@ -123,4 +123,85 @@ protected:
 	HWND _hWnd;
 	HWND _clientHwnd;
 	HWND _toolBar;
+};
+
+template <class MDIChild>
+class MDIChildBase
+{
+public:
+	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	{
+		MDIChild * ptr = nullptr;
+
+		if (msg == WM_NCCREATE)
+		{
+			CREATESTRUCT * pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+			ptr = static_cast<MDIChild*>(pCreate->lpCreateParams);
+			SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(ptr));
+
+			ptr->_hWnd = hWnd;
+		}
+		else
+		{
+			ptr = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+		}
+
+		if (ptr)
+		{
+			return ptr->MessageHandler(msg, wParam, lParam);
+		}
+		else
+		{
+			return DefMDIChildProc(hWnd, msg, wParam, lParam);
+		}
+	}
+
+	bool create(const char * className,
+		const char * windowName,
+		const int & posX,
+		const int & posY,
+		const int & sizeX,
+		const int & sizeY,
+		const HINSTANCE & hInst,
+		const HWND & parent = 0,
+		const HMENU & menu = 0
+	)
+	{
+		WNDCLASS wc = {};
+
+		wc.lpfnWndProc = MDIChild::WndProc;
+		wc.hInstance = hInst;
+		wc.lpszClassName = className;
+		wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
+		wc.style = CS_VREDRAW | CS_HREDRAW;
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+
+		if (!RegisterClass(&wc))
+		{
+			MessageBox(NULL, "Unable to register Frame Window Class", "Error: FrameBaseClass", MB_OK | MB_ICONERROR);
+			return false;
+		}
+
+		_hWnd = CreateWindowEx(WS_EX_MDICHILD,
+			className,
+			windowName,
+			WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE,
+			posX,
+			posY,
+			sizeX,
+			sizeY,
+			parent,
+			menu,
+			GetModuleHandle(NULL),
+			this);
+
+		return _hWnd ? true : false;
+	}
+
+	operator HWND() const { return _hWnd; }
+
+protected:
+	virtual LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
+	HWND _hWnd;
+
 };

@@ -1,10 +1,6 @@
 #include <Windows.h>
 #include <CommCtrl.h>
-#include "WindowManager/WindowManager.h"
-#include "WindowControls/WindowControls.h"
 #include "FrameWindow/FrameWindow.h"
-#include "InvoiceWindow/InvoiceWindow.h"
-#include "StorageWindow/StorageWindow.h"
 
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
@@ -20,7 +16,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	InitCommonControlsEx(&initCtrls);
 
 	FrameWindow frameWindow;
-	WindowManager::registerClass("Storage", hInstance, Storage::StorageProc);
 	frameWindow.create("FrameW",
 		"MyX",
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE,

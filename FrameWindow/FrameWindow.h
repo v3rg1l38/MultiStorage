@@ -12,6 +12,7 @@ public:
 private:
 	void initilaizeMenu();
 	bool setClientAreaBackground();
+	void onCreate();
 	int _cX;
 	int _cY;
 };
