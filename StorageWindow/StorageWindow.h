@@ -4,6 +4,7 @@
 #include "../ListControls/CList.h"
 #include "../WindowManager/WindowManager.h"
 #include "../WindowControls/WindowControls.h"
+#include "../FrameWindow/FrameWindow.h"
 
 #define CODE_COLUMN 0
 #define NAME_COLUMN 1

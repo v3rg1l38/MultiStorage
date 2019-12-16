@@ -47,8 +47,9 @@ LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 		case MENU_STORAGE_LIST:
 		{
 			//WindowManager::createMDIChild(_clientHwnd, "Storage", "Storage", 1050, 550);
-			StorageWindow sw;
-			sw.create("StorageC",
+			//StorageWindow * _stWind = new StorageWindow();
+			StorageWindow _stWind;
+			_stWind.create("StorageC",
 				"Storage API",
 				0,
 				0,
@@ -57,7 +58,7 @@ LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 				GetModuleHandle(NULL),
 				_clientHwnd);
 		}
-			break;
+		break;
 
 		case MENU_FILE_CLOSE:
 			PostQuitMessage(0);

@@ -4,6 +4,7 @@
 #include "../ListControls/CList.h"
 #include "../WindowManager/WindowManager.h"
 #include "../WindowControls/WindowControls.h"
+#include "../StorageWindow/StorageWindow.h"
 
 class FrameWindow : public BaseFrameWindow<FrameWindow>
 {

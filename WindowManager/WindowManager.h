@@ -133,27 +133,27 @@ public:
 	{
 		MDIChild * ptr = nullptr;
 
-		if (msg == WM_NCCREATE)
-		{
-			CREATESTRUCT * pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
-			ptr = static_cast<MDIChild*>(pCreate->lpCreateParams);
-			SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(ptr));
+		//if (msg == WM_NCCREATE)
+		//{
+		//	CREATESTRUCT * pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+		//	ptr = static_cast<MDIChild*>(pCreate->lpCreateParams);
+		//	SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(ptr));
 
-			ptr->_hWnd = hWnd;
-		}
-		else
-		{
-			ptr = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
-		}
-
-		if (ptr)
-		{
-			return ptr->MessageHandler(msg, wParam, lParam);
-		}
-		else
-		{
-			return DefMDIChildProc(hWnd, msg, wParam, lParam);
-		}
+		//	ptr->_hWnd = hWnd;
+		//}
+		//else
+		//{
+		//	ptr = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+		//}
+		//if (ptr)
+		//{
+		//	return ptr->MessageHandler(msg, wParam, lParam);
+		//}
+		//else
+		//{
+		//	return DefMDIChildProc(hWnd, msg, wParam, lParam);
+		//}
+		return DefMDIChildProc(hWnd, msg, wParam, lParam);
 	}
 
 	bool create(const char * className,
