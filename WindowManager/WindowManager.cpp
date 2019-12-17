@@ -2,6 +2,7 @@
 
 std::map<std::string, HWND> WindowManager::_windowsList;
 
+
 void WindowManager::registerClass(const char * className, 
 	HINSTANCE hInstance, 
 	LRESULT __stdcall fp(HWND, UINT, WPARAM, LPARAM))

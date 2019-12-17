@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <CommCtrl.h>
+#include "WindowManager/WindowManager.h"
 #include "FrameWindow/FrameWindow.h"
 
 #pragma comment(lib, "comctl32.lib")
@@ -7,6 +8,20 @@
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
+LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+
+	default:
+		return DefWindowProc(hWnd, msg, wParam, lParam);
+	}
+
+	return 0;
+}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand, int nShowWindow)
 {
@@ -14,18 +29,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	initCtrls.dwICC = ICC_WIN95_CLASSES;
 	initCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
 	InitCommonControlsEx(&initCtrls);
+	
+	FrameWindow * fWindow = WindowBase<FrameWindow>::getInstance();
 
-	FrameWindow frameWindow;
-	frameWindow.create("FrameW",
+	WindowManager::registerClass("MyX",
+		hInstance,
+		fWindow->WndProc
+	);
+
+	HWND mWindow = WindowManager::createWindow("MyX",
 		"MyX",
-		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		0,
 		0,
 		1024,
 		768,
-		hInstance
-		);
-	ShowWindow(frameWindow, SW_MAXIMIZE);
+		hInstance);
+
+	ShowWindow(mWindow, SW_NORMAL);
 
 	MSG msg;
 
@@ -39,5 +59,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	}
 
 	return static_cast<int>(msg.wParam);
+
 
 }
