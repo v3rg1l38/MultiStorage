@@ -161,7 +161,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		break;
 
-	case MENU_FILE_OPEN:
+	case MENU_STORAGE_LIST:
 	{
 		WindowManager::createMDIChild(_clientHwnd,
 			"Storage",
