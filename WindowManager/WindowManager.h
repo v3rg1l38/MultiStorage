@@ -47,13 +47,8 @@ template <class BaseWindow>
 class WindowBase
 {
 public:
-	static BaseWindow * getInstance()
-	{
-		if (!_instance)
-			_instance = new BaseWindow();
-
-		return _instance;
-	}
+	static BaseWindow * getInstance();
+	static void removeInstance();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 private:
 
@@ -63,14 +58,49 @@ private:
 	static BaseWindow * _instance;
 protected:
 	WindowBase() {}
+	~WindowBase() 
+	{ 
+		_instance = nullptr;
+	}
 	virtual LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
 	HWND _mHwnd;
 };
 
 template<class BaseWindow>
+inline BaseWindow * WindowBase<BaseWindow>::getInstance()
+{
+	if (!_instance)
+		_instance = new BaseWindow();
+
+	return _instance;
+}
+
+template<class BaseWindow>
+inline void WindowBase<BaseWindow>::removeInstance()
+{
+	_instance = nullptr;
+}
+
+template<class BaseWindow>
 inline LRESULT WindowBase<BaseWindow>::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	BaseWindow * pThis = BaseWindow::getInstance();
+
+	if (msg == WM_DESTROY)
+	{
+		if (pThis)
+		{
+			delete pThis;
+			PostQuitMessage(0);
+			return 0;
+		}
+		else
+		{
+			PostQuitMessage(0);
+			return 0;
+		}
+
+	}
 
 	if (pThis)
 	{
