@@ -66,6 +66,8 @@ protected:
 	}
 	virtual LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
 	HWND _mHwnd;
+	int _cX;
+	int _cY;
 };
 
 template<class BaseWindow>
