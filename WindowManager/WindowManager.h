@@ -48,6 +48,10 @@ class WindowBase
 {
 public:
 	static BaseWindow * getInstance();
+	static bool isCreated()
+	{
+		return _instance ? true : false;
+	}
 	static void removeInstance();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -60,11 +64,13 @@ private:
 	static BaseWindow * _instance;
 protected:
 	WindowBase() {}
-	~WindowBase() 
-	{ 
-		_instance = nullptr;
-	}
+	//~WindowBase() 
+	//{ 
+	//	_instance = nullptr;
+	//	delete this;
+	//}
 	virtual LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
+	virtual void onDestroy() = 0;
 	HWND _mHwnd;
 	int _cX;
 	int _cY;
@@ -82,6 +88,7 @@ inline BaseWindow * WindowBase<BaseWindow>::getInstance()
 template<class BaseWindow>
 inline void WindowBase<BaseWindow>::removeInstance()
 {
+	delete _instance;
 	_instance = nullptr;
 }
 
@@ -90,23 +97,13 @@ inline LRESULT WindowBase<BaseWindow>::WndProc(HWND hWnd, UINT msg, WPARAM wPara
 {
 	BaseWindow * pThis = BaseWindow::getInstance();
 
-	//if (msg == WM_DESTROY)
-	//{
-	//	if (pThis)
-	//	{
-	//		delete pThis;
-	//		PostQuitMessage(0);
-	//		return 0;
-	//	}
-	//	else
-	//	{
-	//		PostQuitMessage(0);
-	//		return 0;
-	//	}
+	if (msg == WM_DESTROY)
+	{
+		pThis->onDestroy();
+		return 0;
+	}
 
-	//}
-
-	if (pThis)
+	if (pThis != nullptr)
 	{
 		pThis->_mHwnd = hWnd;
 		return pThis->MessageHandler(msg, wParam, lParam);

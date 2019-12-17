@@ -32,6 +32,11 @@ void FrameWindow::initilaizeMenu()
 	SetMenu(_mHwnd, hMenu);
 }
 
+void FrameWindow::onDestroy()
+{
+	PostQuitMessage(0);
+}
+
 bool FrameWindow::setClientAreaBackground()
 {
 	WNDCLASS wcc = {};
@@ -168,8 +173,13 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 
 	case MENU_FILE_LOAD:
 	{
-		StorageWindow * sWindow = WindowBase<StorageWindow>::getInstance();
-		WindowControls::setWindowSize(sWindow->getHandle(), 200, 300);
+		bool sWindow = WindowBase<StorageWindow>::isCreated();
+		if (sWindow == false)
+		{
+			MessageBox(NULL, "Cant get instance", "Error", MB_OK);
+		}
+		else
+			MessageBox(NULL, "Cant getawdawd instance", "Error", MB_OK);
 	}
 	break;
 
@@ -187,11 +197,6 @@ LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-	case WM_DESTROY:
-		delete this;
-		PostQuitMessage(0);
-		break;
-
 	case WM_CREATE:
 	{
 		this->onCreate();

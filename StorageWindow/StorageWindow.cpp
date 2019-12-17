@@ -113,6 +113,11 @@ void StorageWindow::onCreate()
 	}
 }
 
+void StorageWindow::onDestroy()
+{
+	StorageWindow::removeInstance();
+}
+
 void StorageWindow::onResize(LPARAM lParam)
 {
 	_cX = LOWORD(lParam);

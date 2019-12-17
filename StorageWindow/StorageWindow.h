@@ -18,6 +18,7 @@ class StorageWindow : public WindowBase<StorageWindow>
 public:
 	LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam);
 	HWND getListHandle() const { return _listHandle; }
+	virtual void onDestroy();
 
 private:
 	void onCreate();

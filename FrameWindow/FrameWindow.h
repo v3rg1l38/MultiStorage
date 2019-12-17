@@ -11,6 +11,8 @@ class FrameWindow : public WindowBase<FrameWindow>
 public:
 	LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam);
 	HWND getClientHandle() const { return _clientHwnd; }
+	virtual void onDestroy();
+
 private:
 	bool setClientAreaBackground();
 	void initilaizeMenu();
