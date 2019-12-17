@@ -2,26 +2,13 @@
 #include <CommCtrl.h>
 #include "WindowManager/WindowManager.h"
 #include "FrameWindow/FrameWindow.h"
+#include "StorageWindow/StorageWindow.h"
 
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-LRESULT CALLBACK WProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch (msg)
-	{
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-
-	default:
-		return DefWindowProc(hWnd, msg, wParam, lParam);
-	}
-
-	return 0;
-}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand, int nShowWindow)
 {
@@ -31,6 +18,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 	InitCommonControlsEx(&initCtrls);
 	
 	FrameWindow * fWindow = WindowBase<FrameWindow>::getInstance();
+	StorageWindow * sWindow = WindowBase<StorageWindow>::getInstance();
+	WindowManager::registerClass("Storage",
+		hInstance,
+		sWindow->WndProc);
 
 	WindowManager::registerClass("MyX",
 		hInstance,
@@ -51,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 
 	while (GetMessage(&msg, NULL, NULL, 0) != 0)
 	{
-		if (!TranslateMDISysAccel(WindowManager::getWindowHandle("CLIENT"), &msg))
+		if (!TranslateMDISysAccel(fWindow->getClientHandle(), &msg))
 		{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);

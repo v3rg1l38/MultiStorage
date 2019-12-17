@@ -1,3 +1,4 @@
+#include "StorageWindow.h"
 //#include "StorageWindow.h"
 //
 //LRESULT StorageWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
@@ -56,3 +57,19 @@
 //		CList::setItemText(_list, "8.50", i, WHOLESALE_COLUMN);
 //	}
 //}
+
+LRESULT StorageWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_DESTROY:
+		delete this;
+		StorageWindow::removeInstance();
+		return DefMDIChildProc(_mHwnd, msg, wParam, lParam);
+
+	default:
+		return DefMDIChildProc(_mHwnd, msg, wParam, lParam);
+	}
+
+	return 0;
+}

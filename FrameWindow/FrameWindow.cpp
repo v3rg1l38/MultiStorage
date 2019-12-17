@@ -1,131 +1,6 @@
 #include "FrameWindow.h"
+#include "../StorageWindow/StorageWindow.h"
 
-//#include "FrameWindow.h"
-//#include "../StorageWindow/StorageWindow.h"
-//
-//LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
-//{
-//	switch (msg)
-//	{
-//	case WM_SIZE:
-//		_cX = LOWORD(lParam);
-//		_cY = HIWORD(lParam);
-//
-//		WindowControls::setWindowSize(_toolBar, _cX, 30);
-//		SetWindowPos(_clientHwnd, NULL, 0, 30, _cX, _cY - 30, SWP_SHOWWINDOW);
-//		break;
-//
-//	case WM_DESTROY:
-//		PostQuitMessage(0);
-//		break;
-//
-//	case WM_COMMAND:
-//	{
-//		switch (LOWORD(wParam))
-//		{
-//		case 9800:
-//		{
-//			MessageBox(NULL, "bok", "Info", MB_OK);
-//		}
-//		break;
-//
-//		case MENU_INVOICE_LIST:
-//			//WindowManager::createMDIChild(GetDlgItem(hWnd, ID_CLIENTAREA), "Invoice", "Invoice", 1080, 680);
-//			CreateWindowEx(WS_EX_MDICHILD, "Invoice",
-//				"Invoice",
-//				WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE,
-//				0,
-//				0,
-//				640,
-//				580,
-//				_clientHwnd,
-//				NULL,
-//				GetModuleHandle(NULL),
-//				NULL);
-//
-//
-//			break;
-//
-//		case MENU_STORAGE_LIST:
-//		{
-//			//WindowManager::createMDIChild(_clientHwnd, "Storage", "Storage", 1050, 550);
-//			//StorageWindow * _stWind = new StorageWindow();
-//			_stWind = new StorageWindow();
-//			_stWind->create("StorageC",
-//				"Storage API",
-//				0,
-//				0,
-//				640,
-//				480,
-//				GetModuleHandle(NULL),
-//				_clientHwnd);
-//		}
-//		break;
-//
-//		case MENU_FILE_CLOSE:
-//			PostQuitMessage(0);
-//			break;
-//
-//		case SC_MINIMIZE:
-//		{
-//			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
-//			if (child)
-//				ShowWindow(child, SW_MINIMIZE);
-//		}
-//		break;
-//
-//		case SC_MAXIMIZE:
-//		{
-//			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
-//			if (child)
-//				ShowWindow(child, SW_MAXIMIZE);
-//		}
-//		break;
-//
-//		case SC_RESTORE:
-//		{
-//			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
-//			if (child)
-//				ShowWindow(child, SW_NORMAL);
-//		}
-//		break;
-//
-//		case SC_CLOSE:
-//		{
-//			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
-//			if (child)
-//			{
-//				SendMessage(child, WM_CLOSE, 0, 0);
-//				child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
-//				ShowWindow(child, SW_NORMAL);
-//			}
-//		}
-//		break;
-//
-//		default:
-//		{
-//			HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
-//			if (child)
-//				SendMessage(child, WM_COMMAND, wParam, lParam);
-//		}
-//		break;
-//		}
-//	}
-//	break;
-//
-//	case WM_CREATE:
-//	{
-//		onCreate();
-//	}
-//	break;
-//
-//	default:
-//		return DefFrameProc(_hWnd, _clientHwnd, msg, wParam, lParam);
-//	}
-//
-//	return 0;
-//}
-//
 void FrameWindow::initilaizeMenu()
 {
 	HMENU hMenu, hSubMenu;
@@ -236,13 +111,96 @@ void FrameWindow::onChangeSize(LPARAM lParam)
 	SetWindowPos(_clientHwnd, NULL, 0, 30, _cX, _cY - 30, SWP_SHOWWINDOW);
 }
 
+void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
+{
+	switch (LOWORD(wParam))
+	{
+	case SC_MINIMIZE:
+	{
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		if (child)
+			ShowWindow(child, SW_MINIMIZE);
+	}
+	break;
+
+	case SC_MAXIMIZE:
+	{
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		if (child)
+			ShowWindow(child, SW_MAXIMIZE);
+	}
+	break;
+
+	case SC_RESTORE:
+	{
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		if (child)
+			ShowWindow(child, SW_NORMAL);
+	}
+	break;
+
+	case SC_CLOSE:
+	{
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		if (child)
+		{
+			SendMessage(child, WM_CLOSE, 0, 0);
+			child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+			ShowWindow(child, SW_NORMAL);
+		}
+	}
+	break;
+
+	case MENU_FILE_CLOSE:
+		delete this;
+		PostQuitMessage(0);
+		break;
+
+	case MENU_FILE_OPEN:
+	{
+		WindowManager::createMDIChild(_clientHwnd,
+			"Storage",
+			"Storage",
+			640,
+			480);
+	}
+	break;
+
+	case MENU_FILE_LOAD:
+	{
+		StorageWindow * sWindow = WindowBase<StorageWindow>::getInstance();
+		WindowControls::setWindowSize(sWindow->getHandle(), 200, 300);
+	}
+	break;
+
+	default:
+	{
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		if (child)
+			SendMessage(child, WM_COMMAND, wParam, lParam);
+	}
+	break;
+	}
+}
+
 LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_DESTROY:
+		delete this;
+		PostQuitMessage(0);
+		break;
+
 	case WM_CREATE:
 	{
 		this->onCreate();
+	}
+	break;
+
+	case WM_COMMAND:
+	{
+		commandHandler(wParam, lParam);
 	}
 	break;
 

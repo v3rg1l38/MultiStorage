@@ -50,6 +50,8 @@ public:
 	static BaseWindow * getInstance();
 	static void removeInstance();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+	HWND getHandle() const { return _mHwnd; }
 private:
 
 	WindowBase(const WindowBase &) = delete;
@@ -86,21 +88,21 @@ inline LRESULT WindowBase<BaseWindow>::WndProc(HWND hWnd, UINT msg, WPARAM wPara
 {
 	BaseWindow * pThis = BaseWindow::getInstance();
 
-	if (msg == WM_DESTROY)
-	{
-		if (pThis)
-		{
-			delete pThis;
-			PostQuitMessage(0);
-			return 0;
-		}
-		else
-		{
-			PostQuitMessage(0);
-			return 0;
-		}
+	//if (msg == WM_DESTROY)
+	//{
+	//	if (pThis)
+	//	{
+	//		delete pThis;
+	//		PostQuitMessage(0);
+	//		return 0;
+	//	}
+	//	else
+	//	{
+	//		PostQuitMessage(0);
+	//		return 0;
+	//	}
 
-	}
+	//}
 
 	if (pThis)
 	{

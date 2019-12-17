@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include "../WindowManager/WindowManager.h"
 
 #define CODE_COLUMN 0
 #define NAME_COLUMN 1
@@ -10,3 +11,11 @@
 #define NEEDED_COLUMN 5
 #define RETAILPRICE_COLUMN 6
 #define WHOLESALE_COLUMN 7
+
+class StorageWindow : public WindowBase<StorageWindow>
+{
+public:
+	LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam);
+
+private:
+};
