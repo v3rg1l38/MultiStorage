@@ -4,6 +4,7 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+
 	case WM_SIZE:
 		onResize(lParam);
 		return DefMDIChildProc(_mHwnd, msg, wParam, lParam);
