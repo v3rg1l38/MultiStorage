@@ -138,5 +138,85 @@ void BaseFrameWindow<Window>::createWindow(const char * name,
 		return;
 	}
 
-	this->_mHwnd = newFrame;
+	_mHwnd = newFrame;
+}
+
+template <class MDIChild>
+class BaseMDIChild
+{
+public:
+	static LRESULT CALLBACK ChildWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	void createMDIChild(const char * className,
+		const char * name,
+		const int & x = CW_USEDEFAULT,
+		const int & y = CW_USEDEFAULT,
+		const int & cX = CW_USEDEFAULT,
+		const int & cY = CW_USEDEFAULT,
+		HINSTANCE hInst = GetModuleHandle(NULL),
+		HWND parent = NULL,
+		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+		HMENU menu = NULL);
+
+private:
+	virtual LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
+	HWND _mHwnd; // Window Handle;
+	int _cX;
+	int _cY;
+};
+
+template<class MDIChild>
+inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	MDIChild * pData = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+
+	if (pData)
+	{
+		pData->_mHwnd = hWnd;
+		return pData->MDICProc(msg, wParam, lParam);
+	}
+	else
+		return DefMDIChildProc(hWnd, msg, wParam, lParam);
+}
+
+template<class MDIChild>
+inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className, const char * name, const int & x, const int & y, const int & cX, const int & cY, HINSTANCE hInst, HWND parent, long style, HMENU menu)
+{
+	WNDCLASS wc = {};
+	if (!GetClassInfo(GetModuleHandle(NULL), className, &wc))
+	{
+		wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wc.style = CS_VREDRAW | CS_HREDRAW;
+		wc.hInstance = GetModuleHandle(NULL);
+		wc.lpszClassName = className;
+		wc.lpfnWndProc = MDIChild::ChildWndProc;
+		
+		if (!RegisterClass(&wc))
+		{
+			MessageBox(NULL, "Unable to create MDI Child Class", "Error", MB_OK | MB_ICONERROR);
+			return;
+		}
+
+		HWND mdiChild = CreateWindowEx(WS_EX_MDICHILD,
+			className,
+			name,
+			style,
+			x,
+			y,
+			cX,
+			cY,
+			parent,
+			menu,
+			hInst,
+			NULL);
+
+		if (!mdiChild)
+		{
+			MessageBox(NULL, "Unable to create MDI Child Window", "Error", MB_OK | MB_ICONERROR);
+			return;
+		}
+		SetWindowLongPtr(mdiChild, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+		_mHwnd = mdiChild;
+	}
 }
