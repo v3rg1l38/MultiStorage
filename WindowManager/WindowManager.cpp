@@ -33,7 +33,8 @@ HWND WindowManager::createWindow(const char * name,
 	long style,
 	HMENU menu)
 {
-	HWND newWindow = CreateWindow(className,
+	HWND newWindow = CreateWindowEx(0,
+		className,
 		name,
 		style,
 		x,
@@ -87,3 +88,5 @@ void WindowManager::addWindowToList(const std::string & winName, const HWND & wi
 {
 	_windowsList.insert(std::make_pair<std::string, HWND>(static_cast<std::string>(winName), static_cast<HWND>(windowHandle)));
 }
+
+

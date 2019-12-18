@@ -53,7 +53,7 @@ void FrameWindow::onCreate()
 	setClientAreaBackground();
 
 	CLIENTCREATESTRUCT css;
-	_clientHwnd = CreateWindow("MDICLIENT",
+	_clientArea = CreateWindow("MDICLIENT",
 		NULL,
 		WS_CHILD | WS_CLIPCHILDREN | WS_VISIBLE,
 		0,
@@ -65,9 +65,7 @@ void FrameWindow::onCreate()
 		GetModuleHandle(NULL),
 		&css);
 
-	WindowManager::addWindowToList("CLIENT", _clientHwnd);
-
-	_toolBar = CreateWindowEx(0,
+	_toolbar = CreateWindowEx(0,
 		TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE,
 		0,
 		0,
@@ -78,13 +76,13 @@ void FrameWindow::onCreate()
 		GetModuleHandle(NULL),
 		NULL);
 
-	SendMessage(_toolBar, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
+	SendMessage(_toolbar, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
 
 	TBBUTTON tbb[3];
 	TBADDBITMAP tbab;
 	tbab.hInst = HINST_COMMCTRL;
 	tbab.nID = IDB_STD_SMALL_COLOR;
-	SendMessage(_toolBar, TB_ADDBITMAP, 0, (LPARAM)&tbab);
+	SendMessage(_toolbar, TB_ADDBITMAP, 0, (LPARAM)&tbab);
 	ZeroMemory(tbb, sizeof(tbb));
 	tbb[0].iBitmap = STD_FILENEW;
 	tbb[0].fsState = TBSTATE_ENABLED;
@@ -101,10 +99,8 @@ void FrameWindow::onCreate()
 	tbb[2].fsStyle = TBSTYLE_BUTTON;
 	tbb[2].idCommand = 9802;
 
-	SendMessage(_toolBar, TB_AUTOSIZE, 0, 0);
-	SendMessage(_toolBar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
-
-	WindowManager::addWindowToList("TOOLBAR", _toolBar);
+	SendMessage(_toolbar, TB_AUTOSIZE, 0, 0);
+	SendMessage(_toolbar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 }
 
 void FrameWindow::onChangeSize(LPARAM lParam)
@@ -112,8 +108,8 @@ void FrameWindow::onChangeSize(LPARAM lParam)
 	_cX = LOWORD(lParam);
 	_cY = HIWORD(lParam);
 	
-	WindowControls::setWindowSize(_toolBar, _cX, 30);
-	SetWindowPos(_clientHwnd, NULL, 0, 30, _cX, _cY - 30, SWP_SHOWWINDOW);
+	WindowControls::setWindowSize(_toolbar, _cX, 30);
+	SetWindowPos(_clientArea, NULL, 0, 30, _cX, _cY - 30, SWP_SHOWWINDOW);
 }
 
 void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
@@ -122,7 +118,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	{
 	case SC_MINIMIZE:
 	{
-		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
 		if (child)
 			ShowWindow(child, SW_MINIMIZE);
 	}
@@ -130,7 +126,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 
 	case SC_MAXIMIZE:
 	{
-		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
 		if (child)
 			ShowWindow(child, SW_MAXIMIZE);
 	}
@@ -138,7 +134,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 
 	case SC_RESTORE:
 	{
-		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
 		if (child)
 			ShowWindow(child, SW_NORMAL);
 	}
@@ -146,11 +142,11 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 
 	case SC_CLOSE:
 	{
-		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
 		if (child)
 		{
 			SendMessage(child, WM_CLOSE, 0, 0);
-			child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+			child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
 			ShowWindow(child, SW_NORMAL);
 		}
 	}
@@ -163,7 +159,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 
 	case MENU_STORAGE_LIST:
 	{
-		WindowManager::createMDIChild(_clientHwnd,
+		WindowManager::createMDIChild(_clientArea,
 			"Storage",
 			"Storage",
 			640,
@@ -171,21 +167,10 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
-	case MENU_FILE_LOAD:
-	{
-		bool sWindow = WindowBase<StorageWindow>::isCreated();
-		if (sWindow == false)
-		{
-			MessageBox(NULL, "Cant get instance", "Error", MB_OK);
-		}
-		else
-			MessageBox(NULL, "Cant getawdawd instance", "Error", MB_OK);
-	}
-	break;
 
 	default:
 	{
-		HWND child = reinterpret_cast<HWND>(SendMessage(_clientHwnd, WM_MDIGETACTIVE, 0, 0));
+		HWND child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
 		if (child)
 			SendMessage(child, WM_COMMAND, wParam, lParam);
 	}
@@ -193,7 +178,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	}
 }
 
-LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT FrameWindow::FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
@@ -202,6 +187,10 @@ LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 		this->onCreate();
 	}
 	break;
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
 
 	case WM_COMMAND:
 	{
@@ -214,7 +203,7 @@ LRESULT FrameWindow::MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam)
 	break;
 
 	default:
-		return DefFrameProc(_mHwnd, _clientHwnd, msg, wParam, lParam);
+		return DefFrameProc(_mHwnd, _clientArea, msg, wParam, lParam);
 	}
 
 	return 0;

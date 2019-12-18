@@ -19,19 +19,19 @@ public:
 	);
 	static HWND createWindow(const char * name,
 		const char * className,
-		const int & x,
-		const int & y,
-		const int & cX,
-		const int & cY,
-		HINSTANCE hInst,
+		const int & x = CW_USEDEFAULT,
+		const int & y = CW_USEDEFAULT,
+		const int & cX = CW_USEDEFAULT,
+		const int & cY = CW_USEDEFAULT,
+		HINSTANCE hInst = GetModuleHandle(NULL),
 		HWND parent = NULL,
-		long style = WS_OVERLAPPEDWINDOW,
+		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		HMENU menu = NULL);
 	static HWND createMDIChild(const HWND & clientHandle, 
 		const char * title, 
 		const char * childClass,
-		const int & cX,
-		const int & cY);
+		const int & cX = CW_USEDEFAULT,
+		const int & cY = CW_USEDEFAULT);
 	static inline HWND getWindowHandle(const std::string & winName) { return _windowsList[winName]; }
 	static inline bool destroyWindow(const std::string & winName)
 	{
@@ -43,74 +43,100 @@ private:
 	static std::map<std::string, HWND> _windowsList;
 };
 
-template <class BaseWindow>
-class WindowBase
+template<class Window>
+class BaseFrameWindow
 {
 public:
-	static BaseWindow * getInstance();
-	static bool isCreated()
-	{
-		return _instance ? true : false;
-	}
-	static void removeInstance();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	void createWindow(const char * name,
+		const int & x = CW_USEDEFAULT,
+		const int & y = CW_USEDEFAULT,
+		const int & cX = CW_USEDEFAULT,
+		const int & cY = CW_USEDEFAULT,
+		HINSTANCE hInst = GetModuleHandle(NULL),
+		HWND parent = NULL,
+		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+		HMENU menu = NULL);
 
-	HWND getHandle() const { return _mHwnd; }
-private:
-
-	WindowBase(const WindowBase &) = delete;
-	WindowBase & operator=(const WindowBase &) = delete;
-
-	static BaseWindow * _instance;
+	HWND getWindowHandle() const { return _mHwnd; }
+	HWND getClientArea() const { return _clientArea; }
 protected:
-	WindowBase() {}
-	//~WindowBase() 
-	//{ 
-	//	_instance = nullptr;
-	//	delete this;
-	//}
-	virtual LRESULT CALLBACK MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
-	virtual void onDestroy() = 0;
-	HWND _mHwnd;
+	virtual LRESULT CALLBACK FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
+	HWND _mHwnd; // Frame window Handle
+	HWND _clientArea; // MDICLIENT Handle
+	HWND _toolbar;
 	int _cX;
 	int _cY;
 };
 
-template<class BaseWindow>
-inline BaseWindow * WindowBase<BaseWindow>::getInstance()
+template<class Window>
+LRESULT BaseFrameWindow<Window>::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if (!_instance)
-		_instance = new BaseWindow();
+	Window * pData = nullptr;
 
-	return _instance;
-}
-
-template<class BaseWindow>
-inline void WindowBase<BaseWindow>::removeInstance()
-{
-	delete _instance;
-	_instance = nullptr;
-}
-
-template<class BaseWindow>
-inline LRESULT WindowBase<BaseWindow>::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	BaseWindow * pThis = BaseWindow::getInstance();
-
-	if (msg == WM_DESTROY)
+	if (msg == WM_NCCREATE)
 	{
-		pThis->onDestroy();
-		return 0;
+		CREATESTRUCT * cStruct = reinterpret_cast<CREATESTRUCT*>(lParam);
+		pData = reinterpret_cast<Window*>(cStruct->lpCreateParams);
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pData));
+
+		pData->_mHwnd = hWnd;
+	}
+	else
+	{
+		pData = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 	}
 
-	if (pThis != nullptr)
-	{
-		pThis->_mHwnd = hWnd;
-		return pThis->MessageHandler(msg, wParam, lParam);
-	}
+	if (pData)
+		return pData->FrameWndProc(msg, wParam, lParam);
 	else
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-template<typename T> T*
-WindowBase<T>::_instance = nullptr;
+template<class Window>
+void BaseFrameWindow<Window>::createWindow(const char * name, 
+	const int & x, 
+	const int & y, 
+	const int & cX, 
+	const int & cY, 
+	HINSTANCE hInst, 
+	HWND parent, 
+	long style, 
+	HMENU menu)
+{
+	WNDCLASS wc = {};
+
+	wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hInstance = GetModuleHandle(NULL);
+	wc.lpszClassName = "FrameWindow";
+	wc.lpfnWndProc = Window::WndProc;
+	wc.style = CS_VREDRAW | CS_HREDRAW;
+
+	if (!RegisterClass(&wc))
+	{
+		MessageBox(NULL, "Unable to register Frame Window class", "Error: BaseFrameWindow", MB_ICONERROR | MB_OK);
+		return;
+	}
+
+	HWND newFrame = CreateWindowEx(0,
+		"FrameWindow",
+		name,
+		style,
+		x,
+		y,
+		cX,
+		cY,
+		parent,
+		menu,
+		hInst,
+		this);
+
+	if (!newFrame)
+	{
+		MessageBox(NULL, "Unable to create Frame Window", "Error: BaseFrameWindow", MB_ICONERROR | MB_OK);
+		return;
+	}
+
+	this->_mHwnd = newFrame;
+}
