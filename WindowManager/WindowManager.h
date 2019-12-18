@@ -157,7 +157,7 @@ public:
 		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		HMENU menu = NULL);
 
-private:
+protected:
 	virtual LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
 	HWND _mHwnd; // Window Handle;
 	int _cX;
