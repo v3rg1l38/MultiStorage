@@ -152,18 +152,10 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
-	case MENU_FILE_CLOSE:
-		delete this;
-		PostQuitMessage(0);
-		break;
-
 	case MENU_STORAGE_LIST:
 	{
-		WindowManager::createMDIChild(_clientArea,
-			"Storage",
-			"Storage",
-			640,
-			480);
+		StorageWindow *storWind = new StorageWindow();
+		storWind->createMDIChild("Storage", "Storage", _clientArea);
 	}
 	break;
 
@@ -187,6 +179,7 @@ LRESULT FrameWindow::FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		this->onCreate();
 	}
 	break;
+
 
 	case WM_DESTROY:
 		PostQuitMessage(0);

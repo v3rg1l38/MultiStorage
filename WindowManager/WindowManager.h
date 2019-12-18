@@ -53,10 +53,10 @@ public:
 		const int & y = CW_USEDEFAULT,
 		const int & cX = CW_USEDEFAULT,
 		const int & cY = CW_USEDEFAULT,
-		HINSTANCE hInst = GetModuleHandle(NULL),
-		HWND parent = NULL,
-		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		HMENU menu = NULL);
+		const HINSTANCE & hInst = GetModuleHandle(NULL),
+		const HWND & parent = NULL,
+		const long & style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+		const HMENU & menu = NULL);
 
 	HWND getWindowHandle() const { return _mHwnd; }
 	HWND getClientArea() const { return _clientArea; }
@@ -99,10 +99,10 @@ void BaseFrameWindow<Window>::createWindow(const char * name,
 	const int & y, 
 	const int & cX, 
 	const int & cY, 
-	HINSTANCE hInst, 
-	HWND parent, 
-	long style, 
-	HMENU menu)
+	const HINSTANCE & hInst, 
+	const HWND & parent, 
+	const long & style, 
+	const HMENU & menu)
 {
 	WNDCLASS wc = {};
 
@@ -148,16 +148,17 @@ public:
 	static LRESULT CALLBACK ChildWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	void createMDIChild(const char * className,
 		const char * name,
+		const HWND & parent = NULL,
 		const int & x = CW_USEDEFAULT,
 		const int & y = CW_USEDEFAULT,
 		const int & cX = CW_USEDEFAULT,
 		const int & cY = CW_USEDEFAULT,
-		HINSTANCE hInst = GetModuleHandle(NULL),
-		HWND parent = NULL,
-		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		HMENU menu = NULL);
+		const HINSTANCE & hInst = GetModuleHandle(NULL),
+		const long & style = WS_OVERLAPPEDWINDOW,
+		const HMENU & menu = NULL);
 
 protected:
+	virtual void onCreate() = 0;
 	virtual LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
 	HWND _mHwnd; // Window Handle;
 	int _cX;
@@ -171,7 +172,6 @@ inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM 
 
 	if (pData)
 	{
-		pData->_mHwnd = hWnd;
 		return pData->MDICProc(msg, wParam, lParam);
 	}
 	else
@@ -179,7 +179,16 @@ inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM 
 }
 
 template<class MDIChild>
-inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className, const char * name, const int & x, const int & y, const int & cX, const int & cY, HINSTANCE hInst, HWND parent, long style, HMENU menu)
+inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className, 
+	const char * name, 
+	const HWND & parent, 
+	const int & x, 
+	const int & y, 
+	const int & cX, 
+	const int & cY, 
+	const HINSTANCE & hInst, 
+	const long & style, 
+	const HMENU & menu)
 {
 	WNDCLASS wc = {};
 	if (!GetClassInfo(GetModuleHandle(NULL), className, &wc))
@@ -208,7 +217,7 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className, const
 			parent,
 			menu,
 			hInst,
-			NULL);
+			this);
 
 		if (!mdiChild)
 		{
