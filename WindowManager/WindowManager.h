@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include "../WindowControls/WindowControls.h"
+#include <vector>
 
 class WindowManager
 {
@@ -67,6 +68,7 @@ protected:
 	HWND _toolbar;
 	int _cX;
 	int _cY;
+	std::vector<HWND> _children;
 };
 
 template<class Window>
@@ -181,6 +183,12 @@ inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM 
 		{
 			pData->setReady();
 			pData->onCreate();
+		}
+		if (msg == WM_DESTROY)
+		{
+			delete pData;
+			SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
+			return DefMDIChildProc(hWnd, msg, wParam, lParam);
 		}
 
 		return pData->MDICProc(msg, wParam, lParam);

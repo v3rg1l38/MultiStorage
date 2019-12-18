@@ -1,5 +1,7 @@
 #include "FrameWindow.h"
+#include <memory>
 #include "../StorageWindow/StorageWindow.h"
+#include "../InvoiceWindow/InvoiceWindow.h"
 
 void FrameWindow::initilaizeMenu()
 {
@@ -30,11 +32,6 @@ void FrameWindow::initilaizeMenu()
 	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, "&Export Storage");
 
 	SetMenu(_mHwnd, hMenu);
-}
-
-void FrameWindow::onDestroy()
-{
-	PostQuitMessage(0);
 }
 
 bool FrameWindow::setClientAreaBackground()
@@ -159,6 +156,12 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
+	case MENU_INVOICE_LIST:
+	{
+		InvoiceWindow * invoiceWind = new InvoiceWindow();
+		invoiceWind->createMDIChild("Invoice", "Invoice", _clientArea);
+	}
+	break;
 
 	default:
 	{
@@ -179,7 +182,6 @@ LRESULT FrameWindow::FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		this->onCreate();
 	}
 	break;
-
 
 	case WM_DESTROY:
 		PostQuitMessage(0);

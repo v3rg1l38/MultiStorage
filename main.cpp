@@ -12,17 +12,19 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand, int nShowWindow)
 {
-	FrameWindow newWindow;
-	newWindow.createWindow("Proba");
+	FrameWindow * newWindow = new FrameWindow();
+	newWindow->createWindow("Proba");
 
 	MSG msg;
 
 	while (GetMessage(&msg, NULL, 0, 0) != 0)
 	{
+		if(!TranslateMDISysAccel(newWindow->getClientArea(), &msg))
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
 
-	
+	delete newWindow;
+
 	return static_cast<int>(msg.wParam);
 }
