@@ -4,6 +4,25 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		RECT rc;
+		HBRUSH hBrush;
+		HDC hdc = BeginPaint(_mHwnd, &ps);
+		GetClientRect(_mHwnd, &rc);
+		hBrush = CreateSolidBrush(RGB(200, 235, 250));
+		FillRect(hdc, &rc, hBrush);
+		DeleteObject(hBrush);
+		POINT apt;
+		apt.x = 10;
+		apt.y = 20;
+		Rectangle(hdc, 10, 10, 200, 200);
+	
+		ReleaseDC(_mHwnd, hdc);
+	}
+	break;
+
 	default:
 		return DefMDIChildProc(_mHwnd, msg, wParam, lParam);
 	}
@@ -25,8 +44,8 @@ void InvoiceWindow::onCreate()
 	for (unsigned int i = 0; i < 8; ++i)
 	{
 	CreateWindowEx(0,
-		"EDIT",
-		"",
+		TEXT("EDIT"),
+		TEXT(""),
 		ES_AUTOVSCROLL | WS_CHILD | WS_VISIBLE,
 		5,
 		startY + (50 * i),
@@ -40,8 +59,8 @@ void InvoiceWindow::onCreate()
 	for (unsigned int i = 0; i < 8; ++i)
 	{
 		CreateWindowEx(0,
-			"EDIT",
-			"",
+			TEXT("EDIT"),
+			TEXT(""),
 			ES_AUTOVSCROLL | WS_CHILD | WS_VISIBLE,
 			200,
 			startY + (50 * i),

@@ -15,6 +15,10 @@
 #define MENU_STORAGE_EXPORT 9009
 #define ID_CLIENTAREA 9010
 #define ID_STORAGE_LIST	9011
+#define MENU_FILE 0
+#define MENU_INVOICE 1
+#define MENU_SETTINGS 2
+#define MENU_STORAGE 3
 
 class WindowControls
 {

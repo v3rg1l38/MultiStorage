@@ -165,7 +165,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	case MENU_INVOICE_LIST:
 	{
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
-		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea);
+		invoiceWind->createMDIChild(TEXT("Proba"), TEXT("Proba"), _clientArea);
 	}
 	break;
 
@@ -185,7 +185,7 @@ LRESULT FrameWindow::FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 	{
-		this->onCreate();
+		onCreate();
 	}
 	break;
 
