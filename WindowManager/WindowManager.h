@@ -1,5 +1,5 @@
 #pragma once
-
+#define UNICODE
 #include <Windows.h>
 #include <map>
 #include <string>
@@ -14,12 +14,12 @@ public:
 		hInstance - instance
 		fp - window proc function
 	*/
-	static void registerClass(const char * className,
+	static void registerClass(const TCHAR * className,
 		HINSTANCE hInstance,
 		LRESULT __stdcall fp(HWND, UINT, WPARAM, LPARAM)
 	);
-	static HWND createWindow(const char * name,
-		const char * className,
+	static HWND createWindow(const TCHAR * name,
+		const TCHAR * className,
 		const int & x = CW_USEDEFAULT,
 		const int & y = CW_USEDEFAULT,
 		const int & cX = CW_USEDEFAULT,
@@ -29,8 +29,8 @@ public:
 		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		HMENU menu = NULL);
 	static HWND createMDIChild(const HWND & clientHandle, 
-		const char * title, 
-		const char * childClass,
+		const TCHAR * title,
+		const TCHAR * childClass,
 		const int & cX = CW_USEDEFAULT,
 		const int & cY = CW_USEDEFAULT);
 	static inline HWND getWindowHandle(const std::string & winName) { return _windowsList[winName]; }
@@ -49,7 +49,7 @@ class BaseFrameWindow
 {
 public:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	void createWindow(const char * name,
+	void createWindow(const TCHAR * name,
 		const int & x = CW_USEDEFAULT,
 		const int & y = CW_USEDEFAULT,
 		const int & cX = CW_USEDEFAULT,
@@ -104,7 +104,7 @@ LRESULT BaseFrameWindow<Window>::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPA
 }
 
 template<class Window>
-void BaseFrameWindow<Window>::createWindow(const char * name, 
+void BaseFrameWindow<Window>::createWindow(const TCHAR * name,
 	const int & x, 
 	const int & y, 
 	const int & cX, 
@@ -119,18 +119,18 @@ void BaseFrameWindow<Window>::createWindow(const char * name,
 	wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hInstance = GetModuleHandle(NULL);
-	wc.lpszClassName = "FrameWindow";
+	wc.lpszClassName = TEXT("FrameWindow");
 	wc.lpfnWndProc = Window::WndProc;
 	wc.style = CS_VREDRAW | CS_HREDRAW;
 
 	if (!RegisterClass(&wc))
 	{
-		MessageBox(NULL, "Unable to register Frame Window class", "Error: BaseFrameWindow", MB_ICONERROR | MB_OK);
+		MessageBox(NULL, TEXT("Unable to register Frame Window class"), TEXT("Error: BaseFrameWindow"), MB_ICONERROR | MB_OK);
 		return;
 	}
 
 	HWND newFrame = CreateWindowEx(0,
-		"FrameWindow",
+		TEXT("FrameWindow"),
 		name,
 		style,
 		x,
@@ -144,7 +144,7 @@ void BaseFrameWindow<Window>::createWindow(const char * name,
 
 	if (!newFrame)
 	{
-		MessageBox(NULL, "Unable to create Frame Window", "Error: BaseFrameWindow", MB_ICONERROR | MB_OK);
+		MessageBox(NULL, TEXT("Unable to create Frame Window"), TEXT("Error: BaseFrameWindow"), MB_ICONERROR | MB_OK);
 		return;
 	}
 
@@ -156,8 +156,8 @@ class BaseMDIChild
 {
 public:
 	static LRESULT CALLBACK ChildWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	void createMDIChild(const char * className,
-		const char * name,
+	void createMDIChild(const TCHAR * className,
+		const TCHAR * name,
 		const HWND & parent = NULL,
 		const int & x = CW_USEDEFAULT,
 		const int & y = CW_USEDEFAULT,
@@ -210,8 +210,8 @@ inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM 
 }
 
 template<class MDIChild>
-inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className, 
-	const char * name, 
+inline void BaseMDIChild<MDIChild>::createMDIChild(const TCHAR * className,
+	const TCHAR * name,
 	const HWND & parent, 
 	const int & x, 
 	const int & y, 
@@ -233,7 +233,7 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className,
 
 		if (!RegisterClass(&wc))
 		{
-			MessageBox(NULL, "Unable to create MDI Child Class", "Error", MB_OK | MB_ICONERROR);
+			MessageBox(NULL, TEXT("Unable to create MDI Child Class"), TEXT("Error"), MB_OK | MB_ICONERROR);
 			return;
 		}
 	}
@@ -251,7 +251,7 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className,
 
 	if (!mdiChild)
 	{
-		MessageBox(NULL, "Unable to create MDI Child Window", "Error", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, TEXT("Unable to create MDI Child Window"), TEXT("Error"), MB_OK | MB_ICONERROR);
 		return;
 	}
 

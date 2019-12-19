@@ -3,7 +3,7 @@
 std::map<std::string, HWND> WindowManager::_windowsList;
 
 
-void WindowManager::registerClass(const char * className, 
+void WindowManager::registerClass(const TCHAR * className,
 	HINSTANCE hInstance, 
 	LRESULT __stdcall fp(HWND, UINT, WPARAM, LPARAM))
 {
@@ -17,13 +17,13 @@ void WindowManager::registerClass(const char * className,
 
 	if (!RegisterClass(&wc))
 	{
-		MessageBox(NULL, "Unable to register Window Class", "Error", MB_ICONERROR | MB_OK);
+		MessageBox(NULL, TEXT("Unable to register Window Class"), TEXT("Error"), MB_ICONERROR | MB_OK);
 		return;
 	}
 }
 
-HWND WindowManager::createWindow(const char * name, 
-	const char * className, 
+HWND WindowManager::createWindow(const TCHAR * name,
+	const TCHAR * className,
 	const int & x, 
 	const int & y, 
 	const int & cX, 
@@ -48,7 +48,7 @@ HWND WindowManager::createWindow(const char * name,
 
 	if (!newWindow)
 	{
-		MessageBox(NULL, "Unable to create Window", "Error", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, TEXT("Unable to create Window"), TEXT("Error"), MB_OK | MB_ICONERROR);
 		return 0;
 	}
 
@@ -56,8 +56,8 @@ HWND WindowManager::createWindow(const char * name,
 }
 
 HWND WindowManager::createMDIChild(const HWND & clientHandle, 
-	const char * title, 
-	const char * childClass,
+	const TCHAR * title,
+	const TCHAR * childClass,
 	const int & cX,
 	const int & cY)
 {
@@ -77,7 +77,7 @@ HWND WindowManager::createMDIChild(const HWND & clientHandle,
 
 	if (!mdiChild)
 	{
-		MessageBox(NULL, "Unable to create MDI child", "Error", MB_OK);
+		MessageBox(NULL, TEXT("Unable to create MDI child"), TEXT("Error"), MB_OK);
 		return NULL;
 	}
 

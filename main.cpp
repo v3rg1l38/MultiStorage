@@ -1,3 +1,4 @@
+#define UNICODE
 #include <Windows.h>
 #include <CommCtrl.h>
 #include "WindowManager/WindowManager.h"
@@ -10,11 +11,11 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand, int nShowWindow)
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czCommand, int nShowWindow)
 {
 	FrameWindow * newWindow = new FrameWindow();
-	newWindow->createWindow("Proba");
-
+	newWindow->createWindow(TEXT("Proba"));
+	
 	MSG msg;
 
 	while (GetMessage(&msg, NULL, 0, 0) != 0)

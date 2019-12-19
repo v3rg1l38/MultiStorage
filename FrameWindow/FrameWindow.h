@@ -1,5 +1,5 @@
 #pragma once
-
+#define UNICODE
 #include <Windows.h>
 #include <CommCtrl.h>
 #include "../WindowManager/WindowManager.h"

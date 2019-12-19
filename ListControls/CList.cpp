@@ -7,7 +7,7 @@ HWND CList::createList(const HWND & parent,
 	const int & ySize,
 	const int & menu)
 {
-	HWND hWnd = CreateWindow(WC_LISTVIEW, "", WS_CHILD | LVS_REPORT | WS_VISIBLE | WS_BORDER,
+	HWND hWnd = CreateWindow(WC_LISTVIEW, TEXT(""), WS_CHILD | LVS_REPORT | WS_VISIBLE | WS_BORDER,
 		xPos,
 		yPos,
 		xSize,
@@ -22,7 +22,7 @@ HWND CList::createList(const HWND & parent,
 
 int CList::insertColumn(const HWND & list,
 	const int & colNum, 
-	const char * colName, 
+	const TCHAR * colName,
 	const int & colWidth)
 {
 	LVCOLUMN lCol;
@@ -32,7 +32,7 @@ int CList::insertColumn(const HWND & list,
 
 	lCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 	lCol.cx = colWidth;
-	lCol.pszText = const_cast<LPSTR>(colName);
+	lCol.pszText = const_cast<TCHAR*>(colName);
 	columnIndex = SendMessage(list, LVM_INSERTCOLUMN, colNum, reinterpret_cast<LPARAM>(&lCol));
 	return columnIndex;
 }
@@ -51,7 +51,7 @@ int CList::insertItem(const HWND & list, const int & nRow)
 	return itemIndex;
 }
 
-void CList::setItemText(const HWND & list, const char * value, const int & nRow, const int & nCol)
+void CList::setItemText(const HWND & list, const TCHAR * value, const int & nRow, const int & nCol)
 {
 	LVITEM lItem;
 
@@ -61,14 +61,14 @@ void CList::setItemText(const HWND & list, const char * value, const int & nRow,
 
 	lItem.iItem = nRow;
 	lItem.iSubItem = nCol;
-	lItem.pszText = const_cast<LPSTR>(value);
+	lItem.pszText = const_cast<TCHAR*>(value);
 	SendMessage(list, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
 void CList::setItemInt(const HWND & list, const int & val, const int & nRow, const int & nCol)
 {
 	LVITEM lItem;
-	char buffer[MAX_PATH] = "";
+	TCHAR buffer[MAX_PATH] = TEXT("");
 
 	memset(&lItem, 0, sizeof(lItem));
 	lItem.cchTextMax = 512;
@@ -76,7 +76,7 @@ void CList::setItemInt(const HWND & list, const int & val, const int & nRow, con
 
 	lItem.iItem = nRow;
 	lItem.iSubItem = nCol;
-	sprintf_s(buffer, MAX_PATH, "%d", val);
+	_snwprintf_s(buffer, MAX_PATH, TEXT("%d"), val);
 	lItem.pszText = buffer;
 	SendMessage(list, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
@@ -92,10 +92,10 @@ void CList::clearList(const HWND & list)
 	SendMessage(list, LVM_DELETEALLITEMS, 0, 0);
 }
 
-const char * CList::getDataFromRow(const HWND & list, const int & row, const int & column)
+const TCHAR * CList::getDataFromRow(const HWND & list, const int & row, const int & column)
 {
 	LVITEM lvItem = { 0 };
-	char buff[1024] = " ";
+	TCHAR buff[1024] = TEXT(" ");
 	lvItem.mask = LVIF_TEXT;
 	lvItem.pszText = buff;
 	lvItem.cchTextMax = 1024;
@@ -107,20 +107,20 @@ const char * CList::getDataFromRow(const HWND & list, const int & row, const int
 int CList::getDataFromRowInt(const HWND & list, const int & row, const int & column)
 {
 	LVITEM lvItem = { 0 };
-	char buff[1024] = " ";
+	TCHAR buff[1024] = TEXT(" ");
 	lvItem.mask = LVIF_TEXT;
 	lvItem.pszText = buff;
 	lvItem.cchTextMax = 1024;
 	lvItem.iSubItem = column;
 	SendMessage(list, LVM_GETITEMTEXT, row, (LPARAM)&lvItem);
-	return atoi(lvItem.pszText);
+	return _wtoi(lvItem.pszText);
 }
 void CList::setVisible(const HWND  & list, const int & row)
 {
 	SendMessage(list, LVM_ENSUREVISIBLE, row, 0);
 }
 
-int CList::findItem(const HWND & list, const char * code)
+int CList::findItem(const HWND & list, const TCHAR * code)
 {
 	LVFINDINFO findInfo;
 

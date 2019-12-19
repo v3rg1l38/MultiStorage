@@ -10,26 +10,26 @@ void FrameWindow::initilaizeMenu()
 	hMenu = CreateMenu();
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&File");
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, "&Open");
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, "&Save");
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, "&Load");
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, "&Close");
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("&File"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, TEXT("&Open"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, TEXT("&Save"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, TEXT("&Load"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, TEXT("&Close"));
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&Invoice");
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, "&New");
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, "&Load");
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, "L&ist");
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("&Invoice"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, TEXT("&New"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, TEXT("&Load"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, TEXT("L&ist"));
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "&Settings");
-	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, "&Global Settings");
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("&Settings"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, TEXT("&Global Settings"));
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), "S&torage");
-	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, "&List");
-	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, "&Export Storage");
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("S&torage"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, TEXT("&List"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, TEXT("&Export Storage"));
 
 	SetMenu(_mHwnd, hMenu);
 }
@@ -37,7 +37,7 @@ void FrameWindow::initilaizeMenu()
 bool FrameWindow::setClientAreaBackground()
 {
 	WNDCLASS wcc = {};
-	GetClassInfo(GetModuleHandle(NULL), "MDICLIENT", &wcc);
+	GetClassInfo(GetModuleHandle(NULL), TEXT("MDICLIENT"), &wcc);
 	HBRUSH brush = CreateSolidBrush(RGB(22, 108, 145));
 	wcc.hbrBackground = brush;
 
@@ -50,7 +50,7 @@ void FrameWindow::onCreate()
 	setClientAreaBackground();
 
 	CLIENTCREATESTRUCT css;
-	_clientArea = CreateWindow("MDICLIENT",
+	_clientArea = CreateWindow(TEXT("MDICLIENT"),
 		NULL,
 		WS_CHILD | WS_CLIPCHILDREN | WS_VISIBLE,
 		0,
@@ -158,14 +158,14 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	case MENU_STORAGE_LIST:
 	{
 		StorageWindow *storWind = new StorageWindow();
-		storWind->createMDIChild("Storage", "Storage", _clientArea);
+		storWind->createMDIChild(TEXT("Storage"), TEXT("Storage"), _clientArea);
 	}
 	break;
 
 	case MENU_INVOICE_LIST:
 	{
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
-		invoiceWind->createMDIChild("Invoice", "Invoice", _clientArea);
+		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea);
 	}
 	break;
 
@@ -188,14 +188,6 @@ LRESULT FrameWindow::FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		this->onCreate();
 	}
 	break;
-	//case WM_DESTROY:
-	//{
-	//	DestroyWindow(_clientArea);
-	//	delete reinterpret_cast<FrameWindow*>(GetWindowLongPtr(_mHwnd, GWLP_USERDATA));
-	//	SetWindowLongPtr(_mHwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
-	//	PostQuitMessage(0);
-	//}
-	//break;
 
 	case WM_COMMAND:
 	{
