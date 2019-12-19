@@ -1,2 +1,8 @@
 ﻿  FrameWindow.cpp
+  InvoiceWindow.cpp
+c:\users\v3rg1l\source\repos\multistorage\multistorage\invoicewindow\invoicewindow.cpp(9): warning C4065: switch statement contains 'default' but no 'case' labels
+  StorageWindow.cpp
+  WindowManager.cpp
+  main.cpp
+  Generating Code...
   MultiStorage.vcxproj -> C:\Users\v3rg1l\source\repos\MultiStorage\Debug\MultiStorage.exe

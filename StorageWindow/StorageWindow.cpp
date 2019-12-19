@@ -4,6 +4,16 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_CREATE:
+		onCreate();
+		break;
+
+	case WM_DESTROY:
+	{
+		MessageBox(NULL, TEXT("Destroying MDI Child"), TEXT("Info"), MB_OK);
+		delete reinterpret_cast<StorageWindow*>(GetWindowLongPtr(_mHwnd, GWLP_USERDATA));
+	}
+	break;
 
 	case WM_SIZE:
 		onResize(lParam);

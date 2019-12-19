@@ -175,24 +175,23 @@ protected:
 template<class MDIChild>
 inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	MDIChild * pData = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+	//MDIChild * pData = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+	MDIChild * pData;
 
-	if (pData)
+	if (msg == WM_NCCREATE)
 	{
-		if (!pData->isReady())
-		{
-			pData->setReady();
-			pData->onCreate();
-		}
-		if (msg == WM_DESTROY)
-		{
-			delete pData;
-			SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
-			return DefMDIChildProc(hWnd, msg, wParam, lParam);
-		}
-
-		return pData->MDICProc(msg, wParam, lParam);
+		CREATESTRUCT * cStruct = reinterpret_cast<CREATESTRUCT*>(lParam);
+		MDICREATESTRUCT * mStruct = reinterpret_cast<MDICREATESTRUCT*>(cStruct->lpCreateParams);
+		pData = reinterpret_cast<MDIChild*>(mStruct->lParam);
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pData));
+		pData->_mHwnd = hWnd;
 	}
+	else
+	{
+		pData = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+	}
+	if (pData)
+		return pData->MDICProc(msg, wParam, lParam);
 	else
 		return DefMDIChildProc(hWnd, msg, wParam, lParam);
 }
@@ -226,8 +225,7 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className,
 		}
 	}
 	
-	HWND mdiChild = CreateWindowEx(WS_EX_MDICHILD,
-		className,
+	HWND mdiChild = CreateMDIWindow(className,
 		name,
 		style,
 		x,
@@ -235,16 +233,28 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className,
 		cX,
 		cY,
 		parent,
-		menu,
 		hInst,
-		this);
+		reinterpret_cast<LPARAM>(this));
+
+	//HWND mdiChild = CreateWindowEx(WS_EX_MDICHILD,
+	//	className,
+	//	name,
+	//	style,
+	//	x,
+	//	y,
+	//	cX,
+	//	cY,
+	//	parent,
+	//	menu,
+	//	hInst,
+	//	this);
 
 	if (!mdiChild)
 	{
 		MessageBox(NULL, "Unable to create MDI Child Window", "Error", MB_OK | MB_ICONERROR);
 		return;
 	}
-	SetWindowLongPtr(mdiChild, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+	//SetWindowLongPtr(mdiChild, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
 	_mHwnd = mdiChild;
 	_parentFrame = GetParent(parent);
