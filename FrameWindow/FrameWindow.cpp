@@ -113,6 +113,12 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 {
 	switch (LOWORD(wParam))
 	{
+
+	case MENU_FILE_CLOSE:
+		DestroyWindow(_clientArea);
+		PostQuitMessage(0);
+		break;
+
 	case SC_MINIMIZE:
 	{
 		HWND child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
@@ -182,10 +188,14 @@ LRESULT FrameWindow::FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		this->onCreate();
 	}
 	break;
-
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
+	//case WM_DESTROY:
+	//{
+	//	DestroyWindow(_clientArea);
+	//	delete reinterpret_cast<FrameWindow*>(GetWindowLongPtr(_mHwnd, GWLP_USERDATA));
+	//	SetWindowLongPtr(_mHwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
+	//	PostQuitMessage(0);
+	//}
+	//break;
 
 	case WM_COMMAND:
 	{

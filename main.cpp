@@ -24,7 +24,5 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR czCommand
 		DispatchMessage(&msg);
 	}
 
-	delete newWindow;
-
 	return static_cast<int>(msg.wParam);
 }

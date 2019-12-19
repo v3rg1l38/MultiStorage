@@ -84,6 +84,14 @@ LRESULT BaseFrameWindow<Window>::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPA
 
 		pData->_mHwnd = hWnd;
 	}
+	else if (msg == WM_DESTROY)
+	{
+		DestroyWindow(GetWindow(hWnd, GW_CHILD));
+		delete reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
+		pData = nullptr;
+		PostQuitMessage(0);
+	}
 	else
 	{
 		pData = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
@@ -186,6 +194,13 @@ inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM 
 		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pData));
 		pData->_mHwnd = hWnd;
 	}
+	else if (msg == WM_DESTROY)
+	{
+		MessageBox(NULL, TEXT("Destroying MDI Child"), TEXT("Info"), MB_OK);
+		delete reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
+		pData = nullptr;
+	}
 	else
 	{
 		pData = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
@@ -236,25 +251,11 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const char * className,
 		hInst,
 		reinterpret_cast<LPARAM>(this));
 
-	//HWND mdiChild = CreateWindowEx(WS_EX_MDICHILD,
-	//	className,
-	//	name,
-	//	style,
-	//	x,
-	//	y,
-	//	cX,
-	//	cY,
-	//	parent,
-	//	menu,
-	//	hInst,
-	//	this);
-
 	if (!mdiChild)
 	{
 		MessageBox(NULL, "Unable to create MDI Child Window", "Error", MB_OK | MB_ICONERROR);
 		return;
 	}
-	//SetWindowLongPtr(mdiChild, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
 	_mHwnd = mdiChild;
 	_parentFrame = GetParent(parent);
