@@ -196,7 +196,6 @@ inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM 
 	}
 	else if (msg == WM_DESTROY)
 	{
-		MessageBox(NULL, TEXT("Destroying MDI Child"), TEXT("Info"), MB_OK);
 		delete reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
 		pData = nullptr;
