@@ -183,7 +183,6 @@ protected:
 template<class MDIChild>
 inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	//MDIChild * pData = reinterpret_cast<MDIChild*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 	MDIChild * pData;
 
 	if (msg == WM_NCCREATE)
