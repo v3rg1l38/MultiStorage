@@ -159,12 +159,12 @@ public:
 	void createMDIChild(const TCHAR * className,
 		const TCHAR * name,
 		const HWND & parent = NULL,
+		const long & style = WS_OVERLAPPEDWINDOW,
 		const int & x = CW_USEDEFAULT,
 		const int & y = CW_USEDEFAULT,
 		const int & cX = CW_USEDEFAULT,
 		const int & cY = CW_USEDEFAULT,
 		const HINSTANCE & hInst = GetModuleHandle(NULL),
-		const long & style = WS_OVERLAPPEDWINDOW,
 		const HMENU & menu = NULL);
 	bool isReady() const { return _isReady; }
 	void setReady() { _isReady = true; }
@@ -213,12 +213,12 @@ template<class MDIChild>
 inline void BaseMDIChild<MDIChild>::createMDIChild(const TCHAR * className,
 	const TCHAR * name,
 	const HWND & parent, 
+	const long & style, 
 	const int & x, 
 	const int & y, 
 	const int & cX, 
 	const int & cY, 
 	const HINSTANCE & hInst, 
-	const long & style, 
 	const HMENU & menu)
 {
 	WNDCLASS wc = {};
