@@ -89,4 +89,24 @@ void WindowManager::addWindowToList(const std::string & winName, const HWND & wi
 	_windowsList.insert(std::make_pair<std::string, HWND>(static_cast<std::string>(winName), static_cast<HWND>(windowHandle)));
 }
 
+void MenuControl::DisableMenu(const HWND & window, const int & menuNumber, const int & subMenu)
+{
+	HMENU hMenu, hSubMenu;
+	HWND parent = GetParent(GetParent(window));
+	hMenu = GetMenu(parent);
 
+	hSubMenu = GetSubMenu(hMenu, menuNumber);
+	EnableMenuItem(hSubMenu, subMenu, MF_BYCOMMAND | MF_GRAYED);
+	DrawMenuBar(parent);
+}
+
+void MenuControl::EnableMenu(const HWND & window, const int & menuNumber, const int & subMenu)
+{
+	HMENU hMenu, hSubMenu;
+	HWND parent = GetParent(GetParent(window));
+	hMenu = GetMenu(parent);
+
+	hSubMenu = GetSubMenu(hMenu, menuNumber);
+	EnableMenuItem(hSubMenu, subMenu, MF_BYCOMMAND | MF_ENABLED);
+	DrawMenuBar(parent);
+}

@@ -1,5 +1,6 @@
 #pragma once
 #define UNICODE
+
 #include <Windows.h>
 #include <map>
 #include <string>
@@ -68,7 +69,6 @@ protected:
 	HWND _toolbar;
 	int _cX;
 	int _cY;
-	std::vector<HWND> _children;
 };
 
 template<class Window>
@@ -171,7 +171,6 @@ public:
 	HWND getWindowHandle() const { return _mHwnd; }
 
 protected:
-	virtual void onCreate() = 0;
 	virtual LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
 	HWND _mHwnd; // Window Handle;
 	HWND _parentFrame; // Parent Frame Window not the MDICLIENT Window
@@ -259,3 +258,10 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const TCHAR * className,
 	_parentFrame = GetParent(parent);
 
 }
+
+class MenuControl 
+{
+public:
+	void DisableMenu(const HWND & window, const int & menuNumber, const int & subMenu);
+	void EnableMenu(const HWND & window, const int & menuNumber, const int & subMenu);
+};

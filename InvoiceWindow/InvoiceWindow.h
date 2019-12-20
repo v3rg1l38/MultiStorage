@@ -1,5 +1,6 @@
 #pragma once
 #define UNICODE
+
 #include <Windows.h>
 #include "../ListControls/CList.h"
 #include "../WindowManager/WindowManager.h"

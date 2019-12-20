@@ -10,28 +10,16 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_CLOSE:
 	{
-		unsigned int FLAG = MF_ENABLED;
-		HMENU hMenu, hSubMenu;
-		HWND parent = GetParent(GetParent(_mHwnd));
-		hMenu = GetMenu(parent);
-
-		hSubMenu = GetSubMenu(hMenu, MENU_STORAGE);
-		EnableMenuItem(hSubMenu, MENU_STORAGE_LIST, MF_BYCOMMAND | FLAG);
-		DrawMenuBar(parent);
+		MenuControl mc;
+		mc.EnableMenu(_mHwnd, MENU_STORAGE, MENU_STORAGE_LIST);
 		DestroyWindow(_mHwnd);
 	}
 	break;
 
 	case WM_MDIACTIVATE:
 	{
-		unsigned int FLAG = MF_GRAYED;
-		HMENU hMenu, hSubMenu;
-		HWND parent = GetParent(GetParent(_mHwnd));
-		hMenu = GetMenu(parent);
-	
-		hSubMenu = GetSubMenu(hMenu, MENU_STORAGE);
-		EnableMenuItem(hSubMenu, MENU_STORAGE_LIST, MF_BYCOMMAND | FLAG);
-		DrawMenuBar(parent);
+		MenuControl mc;
+		mc.DisableMenu(_mHwnd, MENU_STORAGE, MENU_STORAGE_LIST);
 	}
 	break;
 
