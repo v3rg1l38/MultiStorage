@@ -7,44 +7,6 @@
 #include "../WindowControls/WindowControls.h"
 #include <vector>
 
-class WindowManager
-{
-public:
-	/*
-		className - name of the window class
-		hInstance - instance
-		fp - window proc function
-	*/
-	static void registerClass(const TCHAR * className,
-		HINSTANCE hInstance,
-		LRESULT __stdcall fp(HWND, UINT, WPARAM, LPARAM)
-	);
-	static HWND createWindow(const TCHAR * name,
-		const TCHAR * className,
-		const int & x = CW_USEDEFAULT,
-		const int & y = CW_USEDEFAULT,
-		const int & cX = CW_USEDEFAULT,
-		const int & cY = CW_USEDEFAULT,
-		HINSTANCE hInst = GetModuleHandle(NULL),
-		HWND parent = NULL,
-		long style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		HMENU menu = NULL);
-	static HWND createMDIChild(const HWND & clientHandle, 
-		const TCHAR * title,
-		const TCHAR * childClass,
-		const int & cX = CW_USEDEFAULT,
-		const int & cY = CW_USEDEFAULT);
-	static inline HWND getWindowHandle(const std::string & winName) { return _windowsList[winName]; }
-	static inline bool destroyWindow(const std::string & winName)
-	{
-		return DestroyWindow(_windowsList[winName]);
-	}
-	static void addWindowToList(const std::string & winName, const HWND & windowHandle);
-
-private:
-	static std::map<std::string, HWND> _windowsList;
-};
-
 template<class Window>
 class BaseFrameWindow
 {
@@ -265,3 +227,9 @@ public:
 	void DisableMenu(const HWND & window, const int & menuNumber, const int & subMenu);
 	void EnableMenu(const HWND & window, const int & menuNumber, const int & subMenu);
 };
+
+template <class Window>
+Window * getWindowData(const HWND & window)
+{
+	return reinterpret_cast<Window*>(GetWindowLongPtr(window, GWLP_USERDATA));
+}

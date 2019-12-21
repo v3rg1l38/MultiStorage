@@ -9,8 +9,6 @@
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-
-
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czCommand, int nShowWindow)
 {
 	FrameWindow * frameWindow = new FrameWindow();
