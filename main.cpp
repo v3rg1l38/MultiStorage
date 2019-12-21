@@ -13,14 +13,14 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czCommand, int nShowWindow)
 {
-	FrameWindow * newWindow = new FrameWindow();
-	newWindow->createWindow(TEXT("Proba"));
+	FrameWindow * frameWindow = new FrameWindow();
+	frameWindow->createWindow(TEXT("Proba"));
 	
 	MSG msg;
 
 	while (GetMessage(&msg, NULL, 0, 0) != 0)
 	{
-		if(!TranslateMDISysAccel(newWindow->getClientArea(), &msg))
+		if(!TranslateMDISysAccel(frameWindow->getClientArea(), &msg))
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
