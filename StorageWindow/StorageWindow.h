@@ -5,14 +5,14 @@
 #include "../ListControls/CList.h"
 #include "../WindowManager/WindowManager.h"
 
-#define CODE_COLUMN 0
-#define NAME_COLUMN 1
-#define DESCR_COLUMN 2
-#define COUNT_COLUMN 3
-#define PACKAGE_COLUMN 4
-#define NEEDED_COLUMN 5
-#define RETAILPRICE_COLUMN 6
-#define WHOLESALE_COLUMN 7
+#define COLUMN_CODE 0
+#define COLUMN_NAME 1
+#define COLUMN_DESCRIPTION 2
+#define COLUMN_COUNT 3
+#define COLUMN_PACKAGE 4
+#define COLUMN_NEEDED 5
+#define COLUMN_RETAILPRICE 6
+#define COLUMN_WHOLESALEPRICE 7
 
 class StorageWindow : public BaseMDIChild<StorageWindow>
 {

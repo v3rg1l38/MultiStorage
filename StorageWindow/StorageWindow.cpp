@@ -8,6 +8,17 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		onCreate();
 		break;
 
+	//case WM_NOTIFY:
+	//{
+	//	switch ((reinterpret_cast<LPNMHDR>(lParam))->code)
+	//	{
+	//	case NM_CLICK:
+	//		CList::getDataFromRow(_listHandle, 0, COUNT_COLUMN);
+	//	}
+	//	break;
+	//}
+	//break;
+
 	case WM_CLOSE:
 	{
 		MenuControl mc;
@@ -41,27 +52,27 @@ void StorageWindow::onCreate()
 	_listHandle = CList::createList(_mHwnd, 0, 0, rc.right - rc.left, rc.bottom - rc.top, ID_STORAGE_LIST);
 	CList::setTxtBkColor(_listHandle, RGB(179, 248, 255));
 	CList::setBkColor(_listHandle, RGB(179, 248, 255));
-	CList::insertColumn(_listHandle, CODE_COLUMN, TEXT("Code"), 0x80);
-	CList::insertColumn(_listHandle, NAME_COLUMN, TEXT("Name"), 0x120);
-	CList::insertColumn(_listHandle, DESCR_COLUMN, TEXT("Description"), 0x80);
-	CList::insertColumn(_listHandle, COUNT_COLUMN, TEXT("Count"), 0x80);
-	CList::insertColumn(_listHandle, PACKAGE_COLUMN, TEXT("Package"), 0x80);
-	CList::insertColumn(_listHandle, NEEDED_COLUMN, TEXT("Needed"), 0x80);
-	CList::insertColumn(_listHandle, RETAILPRICE_COLUMN, TEXT("Retail Price"), 0x80);
-	CList::insertColumn(_listHandle, WHOLESALE_COLUMN, TEXT("Wholesale Price"), 0x80);
+	CList::insertColumn(_listHandle, COLUMN_CODE, TEXT("Code"), 0x80);
+	CList::insertColumn(_listHandle, COLUMN_NAME, TEXT("Name"), 0x120);
+	CList::insertColumn(_listHandle, COLUMN_DESCRIPTION, TEXT("Description"), 0x80);
+	CList::insertColumn(_listHandle, COLUMN_COUNT, TEXT("Count"), 0x80);
+	CList::insertColumn(_listHandle, COLUMN_PACKAGE, TEXT("Package"), 0x80);
+	CList::insertColumn(_listHandle, COLUMN_NEEDED, TEXT("Needed"), 0x80);
+	CList::insertColumn(_listHandle, COLUMN_RETAILPRICE, TEXT("Retail Price"), 0x80);
+	CList::insertColumn(_listHandle, COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
 	CList::setFullRowSelect(_listHandle);
 
 	for (size_t i = 0; i < 200; ++i)
 	{
 		CList::insertItem(_listHandle, 9999999);
-		CList::setItemInt(_listHandle, i + 1, i, CODE_COLUMN);
-		CList::setItemText(_listHandle, TEXT("Visokootporni lanac FI 10"), i, NAME_COLUMN);
-		CList::setItemText(_listHandle, TEXT("Lanac FI 10"), i, DESCR_COLUMN);
-		CList::setItemInt(_listHandle, i * 20, i, COUNT_COLUMN);
-		CList::setItemInt(_listHandle, i * 10, i, PACKAGE_COLUMN);
-		CList::setItemInt(_listHandle, i * 5, i, NEEDED_COLUMN);
-		CList::setItemText(_listHandle, TEXT("10.02"), i, RETAILPRICE_COLUMN);
-		CList::setItemText(_listHandle, TEXT("8.50"), i, WHOLESALE_COLUMN);
+		CList::setItemInt(_listHandle, i + 1, i, COLUMN_CODE);
+		CList::setItemText(_listHandle, TEXT("Visokootporni lanac FI 10"), i, COLUMN_NAME);
+		CList::setItemText(_listHandle, TEXT("Lanac FI 10"), i, COLUMN_DESCRIPTION);
+		CList::setItemInt(_listHandle, i * 20, i, COLUMN_COUNT);
+		CList::setItemInt(_listHandle, i * 10, i, COLUMN_PACKAGE);
+		CList::setItemInt(_listHandle, i * 5, i, COLUMN_NEEDED);
+		CList::setItemText(_listHandle, TEXT("10.02"), i, COLUMN_RETAILPRICE);
+		CList::setItemText(_listHandle, TEXT("8.50"), i, COLUMN_WHOLESALEPRICE);
 	}
 }
 
