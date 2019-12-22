@@ -48,8 +48,7 @@ HWND ListView::createList(const HWND & parent,
 	return hWnd;
 }
 
-int ListView::insertColumn(const HWND & list,
-	const int & colNum,
+int ListView::insertColumn(const int & colNum,
 	const TCHAR * colName,
 	const int & colWidth)
 {
@@ -61,11 +60,11 @@ int ListView::insertColumn(const HWND & list,
 	lCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 	lCol.cx = colWidth;
 	lCol.pszText = const_cast<TCHAR*>(colName);
-	columnIndex = SendMessage(list, LVM_INSERTCOLUMN, colNum, reinterpret_cast<LPARAM>(&lCol));
+	columnIndex = SendMessage(_listHandle, LVM_INSERTCOLUMN, colNum, reinterpret_cast<LPARAM>(&lCol));
 	return columnIndex;
 }
 
-int ListView::insertItem(const HWND & list, const int & nRow)
+int ListView::insertItem(const int & nRow)
 {
 	LVITEM lItem;
 	int itemIndex;
@@ -75,11 +74,11 @@ int ListView::insertItem(const HWND & list, const int & nRow)
 	lItem.mask = LVCF_TEXT;
 
 	lItem.iItem = nRow;
-	itemIndex = SendMessage(list, LVM_INSERTITEM, 0, reinterpret_cast<LPARAM>(&lItem));
+	itemIndex = SendMessage(_listHandle, LVM_INSERTITEM, 0, reinterpret_cast<LPARAM>(&lItem));
 	return itemIndex;
 }
 
-void ListView::setItemText(const HWND & list, const TCHAR * value, const int & nRow, const int & nCol)
+void ListView::setItemText(const TCHAR * value, const int & nRow, const int & nCol)
 {
 	LVITEM lItem;
 
@@ -90,10 +89,10 @@ void ListView::setItemText(const HWND & list, const TCHAR * value, const int & n
 	lItem.iItem = nRow;
 	lItem.iSubItem = nCol;
 	lItem.pszText = const_cast<TCHAR*>(value);
-	SendMessage(list, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
+	SendMessage(_listHandle, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
-void ListView::setItemInt(const HWND & list, const int & val, const int & nRow, const int & nCol)
+void ListView::setItemInt(const int & val, const int & nRow, const int & nCol)
 {
 	LVITEM lItem;
 	TCHAR buffer[MAX_PATH] = TEXT("");
@@ -106,21 +105,21 @@ void ListView::setItemInt(const HWND & list, const int & val, const int & nRow, 
 	lItem.iSubItem = nCol;
 	_snwprintf_s(buffer, MAX_PATH, TEXT("%d"), val);
 	lItem.pszText = buffer;
-	SendMessage(list, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
+	SendMessage(_listHandle, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
-void ListView::setFullRowSelect(const HWND & list)
+void ListView::setFullRowSelect()
 {
-	SendMessage(list, LVM_SETEXTENDEDLISTVIEWSTYLE,
+	SendMessage(_listHandle, LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT);
 }
 
-void ListView::clearList(const HWND & list)
+void ListView::clearList()
 {
-	SendMessage(list, LVM_DELETEALLITEMS, 0, 0);
+	SendMessage(_listHandle, LVM_DELETEALLITEMS, 0, 0);
 }
 
-const TCHAR * ListView::getDataFromRow(const HWND & list, const int & row, const int & column)
+const TCHAR * ListView::getDataFromRow(const int & row, const int & column)
 {
 	LVITEM lvItem = { 0 };
 	TCHAR buff[1024] = TEXT(" ");
@@ -128,11 +127,11 @@ const TCHAR * ListView::getDataFromRow(const HWND & list, const int & row, const
 	lvItem.pszText = buff;
 	lvItem.cchTextMax = 1024;
 	lvItem.iSubItem = column;
-	SendMessage(list, LVM_GETITEMTEXT, row, (LPARAM)&lvItem);
+	SendMessage(_listHandle, LVM_GETITEMTEXT, row, reinterpret_cast<LPARAM>(&lvItem));
 	return lvItem.pszText;
 }
 
-int ListView::getDataFromRowInt(const HWND & list, const int & row, const int & column)
+int ListView::getDataFromRowInt(const int & row, const int & column)
 {
 	LVITEM lvItem = { 0 };
 	TCHAR buff[1024] = TEXT(" ");
@@ -140,63 +139,63 @@ int ListView::getDataFromRowInt(const HWND & list, const int & row, const int & 
 	lvItem.pszText = buff;
 	lvItem.cchTextMax = 1024;
 	lvItem.iSubItem = column;
-	SendMessage(list, LVM_GETITEMTEXT, row, (LPARAM)&lvItem);
+	SendMessage(_listHandle, LVM_GETITEMTEXT, row, reinterpret_cast<LPARAM>(&lvItem));
 	return _wtoi(lvItem.pszText);
 }
-void ListView::setVisible(const HWND  & list, const int & row)
+void ListView::setVisible(const int & row)
 {
-	SendMessage(list, LVM_ENSUREVISIBLE, row, 0);
+	SendMessage(_listHandle, LVM_ENSUREVISIBLE, row, 0);
 }
 
-int ListView::findItem(const HWND & list, const TCHAR * code)
+int ListView::findItem(const TCHAR * code)
 {
 	LVFINDINFO findInfo;
 
 	findInfo.flags = LVFI_STRING;
 	findInfo.psz = code;
 
-	int nIndex = SendMessage(list, LVM_FINDITEM, (WPARAM)-1, (LPARAM)&findInfo);
+	int nIndex = SendMessage(_listHandle, LVM_FINDITEM, static_cast<WPARAM>(-1), reinterpret_cast<LPARAM>(&findInfo));
 	return nIndex;
 }
 
-int ListView::getSelectedRow(const HWND & list)
+int ListView::getSelectedRow()
 {
-	int index = SendMessage(list, LVM_GETNEXTITEM, (WPARAM)-1, (LPARAM)LVNI_SELECTED);
+	int index = SendMessage(_listHandle, LVM_GETNEXTITEM, static_cast<WPARAM>(-1), static_cast<LPARAM>(LVNI_SELECTED));
 	return index;
 }
 
-void ListView::setSelectedRow(const HWND & list, const int & row)
+void ListView::setSelectedRow(const int & row)
 {
 	LVITEM lvItem;
 	lvItem.stateMask = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
 	lvItem.state = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
 	lvItem.mask = LVIF_STATE;
 
-	SendMessage(list, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
+	SendMessage(_listHandle, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
 }
 
-void ListView::unsetSelectedRow(const HWND & list, const int & row)
+void ListView::unsetSelectedRow(const int & row)
 {
 	LVITEM lvItem;
 	lvItem.stateMask = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
 	lvItem.state = 0;
 	lvItem.mask = LVIF_STATE;
 
-	SendMessage(list, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
+	SendMessage(_listHandle, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
 }
 
-int ListView::getItemCount(const HWND & list)
+int ListView::getItemCount()
 {
-	int count = SendMessage(list, LVM_GETITEMCOUNT, 0, 0);
+	int count = SendMessage(_listHandle, LVM_GETITEMCOUNT, 0, 0);
 	return count;
 }
 
-void ListView::setBkColor(const HWND & list, COLORREF col)
+void ListView::setBkColor(COLORREF col)
 {
-	SendMessage(list, LVM_SETBKCOLOR, 0, col);
+	SendMessage(_listHandle, LVM_SETBKCOLOR, 0, col);
 }
 
-void ListView::setTxtBkColor(const HWND  & list, COLORREF col)
+void ListView::setTxtBkColor(COLORREF col)
 {
-	SendMessage(list, LVM_SETTEXTBKCOLOR, 0, col);
+	SendMessage(_listHandle, LVM_SETTEXTBKCOLOR, 0, col);
 }
