@@ -16,7 +16,9 @@ public:
 
 private:
 	std::vector<Edit> _editBoxes;
+	int _startTablePos;
 	int _tablePos;
+	std::vector<int> _columns;
 	void onCreate();
 	void onPaint();
 	void onResize();
