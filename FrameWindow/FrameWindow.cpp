@@ -165,7 +165,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	case MENU_INVOICE_LIST:
 	{
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
-		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea, WS_OVERLAPPEDWINDOW | WS_VSCROLL);
+		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea);
 	}
 	break;
 
