@@ -15,8 +15,11 @@ public:
 	virtual LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:
+	std::vector<Edit> _editBoxes;
+	int _tablePos;
 	void onCreate();
 	void onPaint();
+	void onResize();
 	InvoiceWindow(const InvoiceWindow &) = delete;
 	InvoiceWindow & operator=(const InvoiceWindow &) = delete;
 };

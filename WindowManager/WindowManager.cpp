@@ -226,10 +226,10 @@ HWND Button::createButton(const HWND & parent,
 	return button;
 }
 
-HWND Edit::createEdit(const HWND & parent, 
+Edit::Edit(const HWND & parent, 
 	const TCHAR * text, 
 	const int & posX, 
-	const int & posY,
+	const int & posY, 
 	const int & sizeX, 
 	const int & sizeY, 
 	const HMENU & menu, 
@@ -248,5 +248,10 @@ HWND Edit::createEdit(const HWND & parent,
 		GetModuleHandle(NULL),
 		NULL);
 
-	return edit;
+	_editHandle = edit;
+	_posX = posX;
+	_posY = posY;
+	_width = sizeX;
+	_height = sizeY;
 }
+

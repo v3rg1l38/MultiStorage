@@ -294,8 +294,7 @@ private:
 class Edit
 {
 public:
-	Edit() {}
-	HWND createEdit(const HWND & parent,
+	Edit(const HWND & parent,
 		const TCHAR * text,
 		const int & posX,
 		const int & posY,
@@ -304,8 +303,17 @@ public:
 		const HMENU & menu = NULL,
 		const long & style = ES_AUTOHSCROLL | WS_BORDER | WS_CHILD | WS_VISIBLE);
 
+	HWND getHandle() const { return _editHandle; }
+	int getPosX() const { return _posX; }
+	int getPosY() const { return _posY; }
+	int getWidth() const { return _width; }
+	int getHeight() const { return _height; }
+	void setPosY(const int & posY) noexcept { _posY = posY; }
 private:
 
-	Edit(const Edit &) = delete;
-	Edit & operator=(const Edit &) = delete;
+	HWND _editHandle;
+	int _posX;
+	int _posY;
+	int _width;
+	int _height;
 };
