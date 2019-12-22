@@ -210,9 +210,6 @@ HWND Button::createButton(const HWND & parent,
 	const HMENU & menu,
 	const long & style)
 {
-	if (_buttonHandle)
-		return _buttonHandle;
-
 	HWND button = CreateWindowEx(0,
 		TEXT("BUTTON"),
 		name,
@@ -226,15 +223,18 @@ HWND Button::createButton(const HWND & parent,
 		GetModuleHandle(NULL),
 		NULL);
 	
-	_buttonHandle = button;
 	return button;
 }
 
-HWND Edit::createEdit(const HWND & parent, const TCHAR * text, const int & posX, const int & posY, const int & sizeX, const int & sizeY, const HMENU & menu, const long & style)
+HWND Edit::createEdit(const HWND & parent, 
+	const TCHAR * text, 
+	const int & posX, 
+	const int & posY,
+	const int & sizeX, 
+	const int & sizeY, 
+	const HMENU & menu, 
+	const long & style)
 {
-	if (_editHandle)
-		return _editHandle;
-
 	HWND edit = CreateWindowEx(0,
 		TEXT("EDIT"),
 		text,
@@ -248,6 +248,5 @@ HWND Edit::createEdit(const HWND & parent, const TCHAR * text, const int & posX,
 		GetModuleHandle(NULL),
 		NULL);
 
-	_editHandle = edit;
 	return edit;
 }

@@ -285,12 +285,10 @@ public:
 		const int & sizeY,
 		const HMENU & menu = NULL,
 		const long & style = BS_DEFPUSHBUTTON | WS_VISIBLE | WS_CHILD);
-	HWND getButton() const { return _buttonHandle; }
 
 private:
 	Button(const Button &) = delete;
 	Button & operator=(const Button &) = delete;
-	HWND _buttonHandle = 0;
 };
 
 class Edit
@@ -310,5 +308,4 @@ private:
 
 	Edit(const Edit &) = delete;
 	Edit & operator=(const Edit &) = delete;
-	HWND _editHandle = 0;
 };
