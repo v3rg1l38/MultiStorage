@@ -29,7 +29,6 @@ HWND ListView::createList(const HWND & parent,
 	const int & ySize,
 	const int & menu)
 {
-	// Makes sure you can have only one ListView inside each instance of the class
 	if (_listHandle)
 		return _listHandle;
 
@@ -44,7 +43,6 @@ HWND ListView::createList(const HWND & parent,
 		NULL);
 
 	_listHandle = hWnd;
-
 	return hWnd;
 }
 
@@ -230,4 +228,26 @@ HWND Button::createButton(const HWND & parent,
 	
 	_buttonHandle = button;
 	return button;
+}
+
+HWND Edit::createEdit(const HWND & parent, const TCHAR * text, const int & posX, const int & posY, const int & sizeX, const int & sizeY, const HMENU & menu, const long & style)
+{
+	if (_editHandle)
+		return _editHandle;
+
+	HWND edit = CreateWindowEx(0,
+		TEXT("EDIT"),
+		text,
+		style,
+		posX,
+		posY,
+		sizeX,
+		sizeY,
+		parent,
+		menu,
+		GetModuleHandle(NULL),
+		NULL);
+
+	_editHandle = edit;
+	return edit;
 }

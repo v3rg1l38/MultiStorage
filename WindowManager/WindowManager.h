@@ -268,7 +268,7 @@ private:
 	ListView(const ListView &) = delete;
 	ListView & operator=(const ListView &) = delete;
 
-	HWND _listHandle;
+	HWND _listHandle = 0;
 	int _rowSelected = -1;
 	int _oldRowSelected = -1;
 };
@@ -277,11 +277,38 @@ class Button
 {
 public:
 	Button() {}
-	HWND createButton();
+	HWND createButton(const HWND & parent,
+		const TCHAR * name, 
+		const int & posX,
+		const int & posY,
+		const int & sizeX,
+		const int & sizeY,
+		const HMENU & menu = NULL,
+		const long & style = BS_DEFPUSHBUTTON | WS_VISIBLE | WS_CHILD);
 	HWND getButton() const { return _buttonHandle; }
 
 private:
 	Button(const Button &) = delete;
 	Button & operator=(const Button &) = delete;
-	HWND _buttonHandle;
+	HWND _buttonHandle = 0;
+};
+
+class Edit
+{
+public:
+	Edit() {}
+	HWND createEdit(const HWND & parent,
+		const TCHAR * text,
+		const int & posX,
+		const int & posY,
+		const int & sizeX,
+		const int & sizeY,
+		const HMENU & menu = NULL,
+		const long & style = ES_AUTOVSCROLL | WS_CHILD | WS_VISIBLE);
+
+private:
+
+	Edit(const Edit &) = delete;
+	Edit & operator=(const Edit &) = delete;
+	HWND _editHandle = 0;
 };
