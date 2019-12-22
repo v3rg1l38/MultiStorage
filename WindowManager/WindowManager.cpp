@@ -202,3 +202,32 @@ void ListView::setTxtBkColor(COLORREF col)
 {
 	SendMessage(_listHandle, LVM_SETTEXTBKCOLOR, 0, col);
 }
+
+HWND Button::createButton(const HWND & parent, 
+	const TCHAR * name, 
+	const int & posX, 
+	const int & posY, 
+	const int & sizeX, 
+	const int & sizeY,
+	const HMENU & menu,
+	const long & style)
+{
+	if (_buttonHandle)
+		return _buttonHandle;
+
+	HWND button = CreateWindowEx(0,
+		TEXT("BUTTON"),
+		name,
+		style,
+		posX,
+		posY,
+		sizeX,
+		sizeY,
+		parent,
+		menu,
+		GetModuleHandle(NULL),
+		NULL);
+	
+	_buttonHandle = button;
+	return button;
+}

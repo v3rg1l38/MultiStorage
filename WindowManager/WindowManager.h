@@ -272,3 +272,16 @@ private:
 	int _rowSelected = -1;
 	int _oldRowSelected = -1;
 };
+
+class Button
+{
+public:
+	Button() {}
+	HWND createButton();
+	HWND getButton() const { return _buttonHandle; }
+
+private:
+	Button(const Button &) = delete;
+	Button & operator=(const Button &) = delete;
+	HWND _buttonHandle;
+};
