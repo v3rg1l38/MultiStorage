@@ -17,10 +17,9 @@ class StorageWindow : public BaseMDIChild<StorageWindow>
 {
 public:
 	LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam);
-	HWND getListHandle() const { return _listHandle; }
 
 private:
 	void onCreate();
 	void onResize(LPARAM lParam);
-	HWND _listHandle;
+	ListView _listView;
 };

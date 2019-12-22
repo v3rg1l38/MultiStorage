@@ -29,6 +29,10 @@ HWND ListView::createList(const HWND & parent,
 	const int & ySize,
 	const int & menu)
 {
+	// Makes sure you can have only one ListView inside each instance of the class
+	if (_listHandle)
+		return _listHandle;
+
 	HWND hWnd = CreateWindow(WC_LISTVIEW, TEXT(""), WS_CHILD | LVS_REPORT | WS_VISIBLE | WS_BORDER,
 		xPos,
 		yPos,
@@ -38,6 +42,8 @@ HWND ListView::createList(const HWND & parent,
 		(HMENU)menu,
 		(HINSTANCE)GetModuleHandle(NULL),
 		NULL);
+
+	_listHandle = hWnd;
 
 	return hWnd;
 }

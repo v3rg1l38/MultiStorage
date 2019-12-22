@@ -260,4 +260,8 @@ public:
 	int getItemCount(const HWND & list);
 	void setBkColor(const HWND & list, COLORREF col);
 	void setTxtBkColor(const HWND & list, COLORREF col);
+	HWND getListHandle() const { return _listHandle; }
+
+private:
+	HWND _listHandle;
 };
