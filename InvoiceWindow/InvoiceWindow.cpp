@@ -51,12 +51,20 @@ void InvoiceWindow::onPaint()
 {
 	PAINTSTRUCT ps;
 	RECT rc;
-	HBRUSH hBack = CreateSolidBrush(RGB(5, 193, 245));
+	HBRUSH prodBack = CreateSolidBrush(RGB(5, 193, 245));
+	HBRUSH cliBack = CreateSolidBrush(RGB(107, 187, 209));
+
 	HDC hdc = BeginPaint(_mHwnd, &ps);
 	GetClientRect(_mHwnd, &rc);
+
 	FillRect(hdc, &rc, reinterpret_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH)));
-	SelectObject(hdc, hBack);
+
+	SelectObject(hdc, prodBack);
 	Rectangle(hdc, _columns.at(0), _tablePos - 22, _columns.at(6) + 80, _tablePos);
+
+	SelectObject(hdc, cliBack);
+	Rectangle(hdc, rc.left, rc.top, rc.right, _tablePos - 20);
+
 	SetBkMode(hdc, TRANSPARENT);
 	TextOut(hdc, _columns.at(0), _tablePos - 20, TEXT("Code"), lstrlen(TEXT("Code")));
 	TextOut(hdc, _columns.at(1), _tablePos - 20, TEXT("Name"), lstrlen(TEXT("Name")));
@@ -65,7 +73,9 @@ void InvoiceWindow::onPaint()
 	TextOut(hdc, _columns.at(4), _tablePos - 20, TEXT("Retail Pr."), lstrlen(TEXT("Retail Pr.")));
 	TextOut(hdc, _columns.at(5), _tablePos - 20, TEXT("Wholes Pr."), lstrlen(TEXT("Wholes Pr.")));
 	TextOut(hdc, _columns.at(6), _tablePos - 20, TEXT("Discount"), lstrlen(TEXT("Discount")));
-	DeleteObject(hBack);
+
+	DeleteObject(prodBack);
+	DeleteObject(cliBack);
 	EndPaint(_mHwnd, &ps);
 }
 
