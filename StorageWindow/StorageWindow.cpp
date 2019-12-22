@@ -25,7 +25,7 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		mc.EnableMenu(_mHwnd, MENU_STORAGE, MENU_STORAGE_LIST);
 		DestroyWindow(_mHwnd);
 	}
-	break;
+	return 0;
 
 	case WM_MDIACTIVATE:
 	{

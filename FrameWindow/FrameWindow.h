@@ -9,9 +9,13 @@
 class FrameWindow : public BaseFrameWindow<FrameWindow>
 {
 public:
+	FrameWindow() {}
 	LRESULT CALLBACK FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:
+	FrameWindow(const FrameWindow &) = delete;
+	FrameWindow & operator=(const FrameWindow &) = delete;
+
 	bool setClientAreaBackground();
 	void initilaizeMenu();
 	void onCreate();

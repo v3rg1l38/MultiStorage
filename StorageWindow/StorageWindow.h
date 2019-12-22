@@ -16,9 +16,13 @@
 class StorageWindow : public BaseMDIChild<StorageWindow>
 {
 public:
+	StorageWindow() {}
 	LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:
+	StorageWindow(const StorageWindow &) = delete;
+	StorageWindow & operator=(const StorageWindow &) = delete;
+
 	void onCreate();
 	void onResize(LPARAM lParam);
 	ListView _listView;

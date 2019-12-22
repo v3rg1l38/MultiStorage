@@ -238,6 +238,7 @@ Window * getWindowData(const HWND & window)
 class ListView
 {
 public:
+	ListView() {}
 	HWND createList(const HWND & parent,
 		const int & xPos,
 		const int & yPos,
@@ -263,5 +264,11 @@ public:
 	HWND getListHandle() const { return _listHandle; }
 
 private:
+
+	ListView(const ListView &) = delete;
+	ListView & operator=(const ListView &) = delete;
+
 	HWND _listHandle;
+	int _rowSelected = -1;
+	int _oldRowSelected = -1;
 };

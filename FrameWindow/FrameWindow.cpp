@@ -148,9 +148,9 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 		HWND child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
 		if (child)
 		{
+			ShowWindow(child, SW_NORMAL);
 			SendMessage(child, WM_CLOSE, 0, 0);
 			child = reinterpret_cast<HWND>(SendMessage(_clientArea, WM_MDIGETACTIVE, 0, 0));
-			ShowWindow(child, SW_NORMAL);
 		}
 	}
 	break;

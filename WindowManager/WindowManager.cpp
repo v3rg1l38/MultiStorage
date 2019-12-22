@@ -171,6 +171,9 @@ void ListView::setSelectedRow(const int & row)
 	lvItem.state = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
 	lvItem.mask = LVIF_STATE;
 
+	_oldRowSelected = _rowSelected;
+	_rowSelected = row;
+
 	SendMessage(_listHandle, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
 }
 
