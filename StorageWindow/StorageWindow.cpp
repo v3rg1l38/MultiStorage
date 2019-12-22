@@ -48,31 +48,32 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 void StorageWindow::onCreate()
 {
 	RECT rc;
+	ListView lV;
 	GetClientRect(_mHwnd, &rc);
-	_listHandle = CList::createList(_mHwnd, 0, 0, rc.right - rc.left, rc.bottom - rc.top, ID_STORAGE_LIST);
-	CList::setTxtBkColor(_listHandle, RGB(179, 248, 255));
-	CList::setBkColor(_listHandle, RGB(179, 248, 255));
-	CList::insertColumn(_listHandle, COLUMN_CODE, TEXT("Code"), 0x80);
-	CList::insertColumn(_listHandle, COLUMN_NAME, TEXT("Name"), 0x120);
-	CList::insertColumn(_listHandle, COLUMN_DESCRIPTION, TEXT("Description"), 0x80);
-	CList::insertColumn(_listHandle, COLUMN_COUNT, TEXT("Count"), 0x80);
-	CList::insertColumn(_listHandle, COLUMN_PACKAGE, TEXT("Package"), 0x80);
-	CList::insertColumn(_listHandle, COLUMN_NEEDED, TEXT("Needed"), 0x80);
-	CList::insertColumn(_listHandle, COLUMN_RETAILPRICE, TEXT("Retail Price"), 0x80);
-	CList::insertColumn(_listHandle, COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
-	CList::setFullRowSelect(_listHandle);
+	_listHandle = lV.createList(_mHwnd, 0, 0, rc.right - rc.left, rc.bottom - rc.top, ID_STORAGE_LIST);
+	lV.setTxtBkColor(_listHandle, RGB(179, 248, 255));
+	lV.setBkColor(_listHandle, RGB(179, 248, 255));
+	lV.insertColumn(_listHandle, COLUMN_CODE, TEXT("Code"), 0x80);
+	lV.insertColumn(_listHandle, COLUMN_NAME, TEXT("Name"), 0x120);
+	lV.insertColumn(_listHandle, COLUMN_DESCRIPTION, TEXT("Description"), 0x80);
+	lV.insertColumn(_listHandle, COLUMN_COUNT, TEXT("Count"), 0x80);
+	lV.insertColumn(_listHandle, COLUMN_PACKAGE, TEXT("Package"), 0x80);
+	lV.insertColumn(_listHandle, COLUMN_NEEDED, TEXT("Needed"), 0x80);
+	lV.insertColumn(_listHandle, COLUMN_RETAILPRICE, TEXT("Retail Price"), 0x80);
+	lV.insertColumn(_listHandle, COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
+	lV.setFullRowSelect(_listHandle);
 
 	for (size_t i = 0; i < 200; ++i)
 	{
-		CList::insertItem(_listHandle, 9999999);
-		CList::setItemInt(_listHandle, i + 1, i, COLUMN_CODE);
-		CList::setItemText(_listHandle, TEXT("Visokootporni lanac FI 10"), i, COLUMN_NAME);
-		CList::setItemText(_listHandle, TEXT("Lanac FI 10"), i, COLUMN_DESCRIPTION);
-		CList::setItemInt(_listHandle, i * 20, i, COLUMN_COUNT);
-		CList::setItemInt(_listHandle, i * 10, i, COLUMN_PACKAGE);
-		CList::setItemInt(_listHandle, i * 5, i, COLUMN_NEEDED);
-		CList::setItemText(_listHandle, TEXT("10.02"), i, COLUMN_RETAILPRICE);
-		CList::setItemText(_listHandle, TEXT("8.50"), i, COLUMN_WHOLESALEPRICE);
+		lV.insertItem(_listHandle, 9999999);
+		lV.setItemInt(_listHandle, i + 1, i, COLUMN_CODE);
+		lV.setItemText(_listHandle, TEXT("Visokootporni lanac FI 10"), i, COLUMN_NAME);
+		lV.setItemText(_listHandle, TEXT("Lanac FI 10"), i, COLUMN_DESCRIPTION);
+		lV.setItemInt(_listHandle, i * 20, i, COLUMN_COUNT);
+		lV.setItemInt(_listHandle, i * 10, i, COLUMN_PACKAGE);
+		lV.setItemInt(_listHandle, i * 5, i, COLUMN_NEEDED);
+		lV.setItemText(_listHandle, TEXT("10.02"), i, COLUMN_RETAILPRICE);
+		lV.setItemText(_listHandle, TEXT("8.50"), i, COLUMN_WHOLESALEPRICE);
 	}
 }
 

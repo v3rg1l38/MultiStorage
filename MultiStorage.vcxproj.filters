@@ -21,9 +21,6 @@
     <ClCompile Include="WindowControls\WindowControls.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ListControls\CList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WindowManager\WindowManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -56,9 +53,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ListControls\CList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WindowControls\WindowControls.h">
       <Filter>Header Files</Filter>
     </ClInclude>

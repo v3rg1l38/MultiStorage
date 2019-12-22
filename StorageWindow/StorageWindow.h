@@ -2,7 +2,6 @@
 #define UNICODE
 
 #include <Windows.h>
-#include "../ListControls/CList.h"
 #include "../WindowManager/WindowManager.h"
 
 #define COLUMN_CODE 0

@@ -130,7 +130,6 @@
     <ClCompile Include="GenericString\GenericString.cpp" />
     <ClCompile Include="InvoiceWindow\InvoiceWindow.cpp" />
     <ClCompile Include="Invoice\Invoice.cpp" />
-    <ClCompile Include="ListControls\CList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Product\Product.cpp" />
     <ClCompile Include="StorageWindow\StorageWindow.cpp" />
@@ -145,7 +144,6 @@
     <ClInclude Include="GenericString\GenericString.h" />
     <ClInclude Include="InvoiceWindow\InvoiceWindow.h" />
     <ClInclude Include="Invoice\Invoice.h" />
-    <ClInclude Include="ListControls\CList.h" />
     <ClInclude Include="Product\Product.h" />
     <ClInclude Include="StorageWindow\StorageWindow.h" />
     <ClInclude Include="WindowControls\WindowControls.h" />

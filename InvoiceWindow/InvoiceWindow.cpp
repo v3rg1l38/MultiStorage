@@ -13,12 +13,9 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		GetClientRect(_mHwnd, &rc);
 		hBrush = CreateSolidBrush(RGB(200, 235, 250));
 		FillRect(hdc, &rc, hBrush);
+		SelectObject(hdc, hBrush);
+		Rectangle(hdc, 10, 10, 350, 150);
 		DeleteObject(hBrush);
-		POINT apt;
-		apt.x = 10;
-		apt.y = 20;
-		Rectangle(hdc, 10, 10, 200, 200);
-	
 		ReleaseDC(_mHwnd, hdc);
 	}
 	break;

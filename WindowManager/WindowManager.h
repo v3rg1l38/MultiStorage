@@ -2,6 +2,7 @@
 #define UNICODE
 
 #include <Windows.h>
+#include <CommCtrl.h>
 #include <map>
 #include <string>
 #include "../WindowControls/WindowControls.h"
@@ -233,3 +234,30 @@ Window * getWindowData(const HWND & window)
 {
 	return reinterpret_cast<Window*>(GetWindowLongPtr(window, GWLP_USERDATA));
 }
+
+class ListView
+{
+public:
+	HWND createList(const HWND & parent,
+		const int & xPos,
+		const int & yPos,
+		const int & xSize,
+		const int & ySize,
+		const int & menu);
+	int insertColumn(const HWND & list, const int & colNum, const TCHAR * colName, const int & colWidth);
+	int insertItem(const HWND & list, const int & nRow);
+	void setItemText(const HWND  & list, const TCHAR * value, const int & nRow, const int & nCol);
+	void setItemInt(const HWND & list, const int & val, const int & nRow, const int & nCol);
+	void setFullRowSelect(const HWND & list);
+	void clearList(const HWND  & list);
+	const TCHAR * getDataFromRow(const HWND & list, const int & row, const int & column);
+	int getDataFromRowInt(const HWND & list, const int & row, const int & column);
+	void setVisible(const HWND & list, const int & row);
+	int findItem(const HWND & list, const TCHAR * code);
+	int getSelectedRow(const HWND & list);
+	void setSelectedRow(const HWND & list, const int & row);
+	void unsetSelectedRow(const HWND & list, const int & row);
+	int getItemCount(const HWND & list);
+	void setBkColor(const HWND & list, COLORREF col);
+	void setTxtBkColor(const HWND & list, COLORREF col);
+};

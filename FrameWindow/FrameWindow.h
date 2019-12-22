@@ -5,7 +5,6 @@
 #include <CommCtrl.h>
 #include "../WindowManager/WindowManager.h"
 #include "../WindowControls/WindowControls.h"
-#include "../ListControls/CList.h"
 
 class FrameWindow : public BaseFrameWindow<FrameWindow>
 {
