@@ -304,7 +304,7 @@ public:
 		const int & sizeX,
 		const int & sizeY,
 		const HMENU & menu = NULL,
-		const long & style = ES_AUTOVSCROLL | WS_CHILD | WS_VISIBLE);
+		const long & style = ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE);
 
 private:
 

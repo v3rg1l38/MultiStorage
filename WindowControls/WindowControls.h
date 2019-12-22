@@ -29,5 +29,4 @@ public:
 	static void setSelectedText(const HWND & editBox, const int & start, const int & end);
 	static unsigned long getSelectedPos(const HWND & editBox);
 	static void replaceSelectedText(const HWND & editBox, const std::string & text, bool undo = true);
-	void initializeMenu(const HWND winHandle);
 };

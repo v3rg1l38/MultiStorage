@@ -8,14 +8,17 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		PAINTSTRUCT ps;
 		RECT rc;
-		HBRUSH hBrush;
 		HDC hdc = BeginPaint(_mHwnd, &ps);
+		SetWindowExtEx(hdc, 2480, 3508, NULL);
+		SetViewportExtEx(hdc, 500, 500, NULL);
+		SetViewportOrgEx(hdc, 0, _cY, NULL);
+
 		GetClientRect(_mHwnd, &rc);
-		hBrush = CreateSolidBrush(RGB(200, 235, 250));
-		FillRect(hdc, &rc, hBrush);
-		SelectObject(hdc, hBrush);
-		Rectangle(hdc, 10, 10, 350, 150);
-		DeleteObject(hBrush);
+		Rectangle(hdc, 
+			10, 
+			10, 
+			1000, 
+			rc.bottom - 40);
 		ReleaseDC(_mHwnd, hdc);
 	}
 	break;
