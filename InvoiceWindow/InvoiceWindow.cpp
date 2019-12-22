@@ -9,6 +9,21 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		onPaint();
 		break;
 
+	case WM_CLOSE:
+	{
+		MenuControl mc;
+		mc.EnableMenu(_mHwnd, MENU_INVOICE, MENU_INVOICE_LIST);
+		DestroyWindow(_mHwnd);
+	}
+	return 0;
+
+	case WM_MDIACTIVATE:
+	{
+		MenuControl mc;
+		mc.DisableMenu(_mHwnd, MENU_INVOICE, MENU_INVOICE_LIST);
+	}
+	break;
+
 	case WM_CREATE:
 		onCreate();
 		break;
