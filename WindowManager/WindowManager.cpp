@@ -201,31 +201,6 @@ void ListView::setTxtBkColor(COLORREF col)
 	SendMessage(_listHandle, LVM_SETTEXTBKCOLOR, 0, col);
 }
 
-HWND Button::createButton(const HWND & parent, 
-	const TCHAR * name, 
-	const int & posX, 
-	const int & posY, 
-	const int & sizeX, 
-	const int & sizeY,
-	const HMENU & menu,
-	const long & style)
-{
-	HWND button = CreateWindowEx(0,
-		TEXT("BUTTON"),
-		name,
-		style,
-		posX,
-		posY,
-		sizeX,
-		sizeY,
-		parent,
-		menu,
-		GetModuleHandle(NULL),
-		NULL);
-	
-	return button;
-}
-
 Edit::Edit(const HWND & parent, 
 	const TCHAR * text, 
 	const int & posX, 
@@ -339,4 +314,33 @@ void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam)
 		ScrollWindow(window, 0, _vertPos - _si.nPos, NULL, NULL);
 		InvalidateRect(window, NULL, false);
 	}
+}
+
+Button::Button(const HWND & parent, 
+	const TCHAR * name, 
+	const int & posX, 
+	const int & posY, 
+	const int & sizeX, 
+	const int & sizeY, 
+	const HMENU & menu, 
+	const long & style)
+{
+	HWND button = CreateWindowEx(0,
+		TEXT("BUTTON"),
+		name,
+		style,
+		posX,
+		posY,
+		sizeX,
+		sizeY,
+		parent,
+		menu,
+		GetModuleHandle(NULL),
+		NULL);
+
+	_buttonHandle = button;
+	_posX = posX;
+	_posY = posY;
+	_width = sizeX;
+	_height = sizeY;
 }

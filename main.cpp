@@ -29,5 +29,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czComma
 		}
 	}
 
+	//while (GetMessage(&msg, NULL, 0, 0) != 0)
+	//{
+	//	if (!TranslateMDISysAccel(frameWindow->getClientArea(), &msg))
+	//	{
+	//		TranslateMessage(&msg);
+	//		DispatchMessage(&msg);
+	//	}
+	//}
 	return static_cast<int>(msg.wParam);
 }

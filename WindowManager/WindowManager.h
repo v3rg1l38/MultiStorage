@@ -276,9 +276,8 @@ private:
 class Button
 {
 public:
-	Button() {}
-	HWND createButton(const HWND & parent,
-		const TCHAR * name, 
+	Button(const HWND & parent,
+		const TCHAR * name,
 		const int & posX,
 		const int & posY,
 		const int & sizeX,
@@ -286,9 +285,18 @@ public:
 		const HMENU & menu = NULL,
 		const long & style = BS_DEFPUSHBUTTON | WS_VISIBLE | WS_CHILD);
 
+	HWND getButtonHandle() const { return _buttonHandle; }
+	int getPosX() const { return _posX; }
+	int getPosY() const { return _posY; }
+	int getWidth() const { return _width; }
+	int getHeight() const { return _height; }
+
 private:
-	Button(const Button &) = delete;
-	Button & operator=(const Button &) = delete;
+	HWND _buttonHandle;
+	int _posX;
+	int _posY;
+	int _width;
+	int _height;
 };
 
 class Edit
@@ -308,7 +316,6 @@ public:
 	int getPosY() const { return _posY; }
 	int getWidth() const { return _width; }
 	int getHeight() const { return _height; }
-	void setPosY(const int & posY) noexcept { _posY = posY; }
 
 private:
 

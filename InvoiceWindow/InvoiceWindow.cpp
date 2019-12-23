@@ -62,17 +62,16 @@ void InvoiceWindow::onCreate()
 	_startTablePos = tableStart;
 	_columns = { 0, 120, 440, 500, 580, 660, 740 };
 
-	for (size_t i = 0; i < 20; ++i)
+	for (int i = 20; i >= 0; --i)
 	{
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 0, tableStart + (20 * i), 120, 20); // Code
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 120, tableStart + (20 * i), 320, 20); // Name
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 440, tableStart + (20 * i), 60, 20); // Unit
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 500, tableStart + (20 * i), 80, 20); // Count
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 580, tableStart + (20 * i), 80, 20); // Retail price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 660, tableStart + (20 * i), 80, 20); // Wholesale price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 740, tableStart + (20 * i), 80, 20); // Discount
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(6), tableStart + (20 * i), 80, 20); // Discount
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(5), tableStart + (20 * i), 80, 20); // Wholesale price
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(4), tableStart + (20 * i), 80, 20); // Retail price
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(3), tableStart + (20 * i), 80, 20); // Count
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(2), tableStart + (20 * i), 60, 20); // Unit
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(1), tableStart + (20 * i), 320, 20); // Name
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(0), tableStart + (20 * i), 120, 20); // Code
 	}
-
 }
 
 void InvoiceWindow::onPaint()
