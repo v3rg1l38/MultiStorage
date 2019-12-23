@@ -255,3 +255,88 @@ Edit::Edit(const HWND & parent,
 	_height = sizeY;
 }
 
+void ScrollBar::setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize)
+{
+	_si.cbSize = sizeof(SCROLLINFO);
+	_si.fMask = SIF_RANGE | SIF_PAGE;
+	_si.nMin = min;
+	_si.nMax = max;
+	_si.nPage = pageSize;
+
+	SetScrollInfo(window, SB_VERT, &_si, true);
+}
+
+void ScrollBar::setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize)
+{
+	_si.cbSize = sizeof(SCROLLINFO);
+	_si.fMask = SIF_RANGE | SIF_PAGE;
+	_si.nMin = min;
+	_si.nMax = max;
+	_si.nPage = pageSize;
+
+	SetScrollInfo(window, SB_HORZ, &_si, true);
+}
+
+void ScrollBar::getVertScrollInfo(const HWND & window)
+{
+	_si.cbSize = sizeof(SCROLLBARINFO);
+	_si.fMask = SIF_ALL;
+	GetScrollInfo(window, SB_VERT, &_si);
+}
+
+void ScrollBar::getHorzScrollInfo(const HWND & window)
+{
+	_si.cbSize = sizeof(SCROLLBARINFO);
+	_si.fMask = SIF_ALL;
+	GetScrollInfo(window, SB_HORZ, &_si);
+}
+
+void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam)
+{
+	getVertScrollInfo(window);
+	_vertPos = _si.nPos;
+
+	switch (LOWORD(wParam))
+	{
+	case SB_TOP:
+		_si.nPos = _si.nMin;
+		break;
+
+	case SB_BOTTOM:
+		_si.nPos = _si.nMax;
+		break;
+
+	case SB_LINEUP:
+		_si.nPos -= 1;
+		break;
+
+	case SB_LINEDOWN:
+		_si.nPos += 1;
+		break;
+
+	case SB_PAGEUP:
+		_si.nPos -= _si.nPage;
+		break;
+
+	case SB_PAGEDOWN:
+		_si.nPos += _si.nPage;
+		break;
+
+	case SB_THUMBTRACK:
+		_si.nPos = _si.nTrackPos;
+		break;
+
+	default:
+		break;
+	}
+
+	_si.fMask = SIF_POS;
+	SetScrollInfo(window, SB_VERT, &_si, true);
+	GetScrollInfo(window, SB_VERT, &_si);
+
+	if (_si.nPos != _vertPos)
+	{
+		ScrollWindow(window, 0, _vertPos - _si.nPos, NULL, NULL);
+		UpdateWindow(window);
+	}
+}

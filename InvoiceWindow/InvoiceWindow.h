@@ -8,7 +8,8 @@
 #define INVOICE_CLIENT_NAME 8001
 #define INVOICE_NUMBER 8002
 
-class InvoiceWindow : public BaseMDIChild<InvoiceWindow>
+class InvoiceWindow : public BaseMDIChild<InvoiceWindow>,
+					  public ScrollBar
 {
 public:
 	InvoiceWindow() {}

@@ -30,6 +30,10 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		onCreate();
 		break;
 
+	case WM_VSCROLL:
+		onVertScroll(_mHwnd, wParam);
+		break;
+
 	case WM_SIZE:
 		_cX = LOWORD(lParam);
 		_cY = HIWORD(lParam);
@@ -75,7 +79,6 @@ void InvoiceWindow::onPaint()
 {
 	PAINTSTRUCT ps;
 	RECT rc;
-
 	HDC hdc = BeginPaint(_mHwnd, &ps);
 	GetClientRect(_mHwnd, &rc);
 
@@ -85,7 +88,7 @@ void InvoiceWindow::onPaint()
 	Rectangle(hdc, _columns.at(0), _tablePos - 22, _columns.at(6) + 80, _tablePos);
 
 	SelectObject(hdc, _cliBack);
-	Rectangle(hdc, rc.left, rc.top, rc.right, _tablePos - 20);
+	Rectangle(hdc, 0, 0, _cX, _tablePos - 20);
 
 	SetBkMode(hdc, TRANSPARENT);
 	TextOut(hdc, _columns.at(0), _tablePos - 20, TEXT("Code"), lstrlen(TEXT("Code")));
@@ -105,6 +108,8 @@ void InvoiceWindow::onResize()
 	GetClientRect(_mHwnd, &rc);
 	const int startOfTable = rc.bottom - 160;
 	_tablePos = startOfTable;
+
+	setVertScroll(_mHwnd, 0, _cY, 40 / _cY);
 
 	for (size_t i = 0; i < _editBoxes.size(); ++i)
 	{

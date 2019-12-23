@@ -323,6 +323,15 @@ class ScrollBar
 {
 public:
 
-private:
+	void setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize);
+	void setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize);
+	void getVertScrollInfo(const HWND & window);
+	void getHorzScrollInfo(const HWND & window);
+	void onVertScroll(const HWND & window, WPARAM wParam);
+
+
+protected:
 	SCROLLINFO _si;
+	int _vertPos;
+	int _horzPost;
 };
