@@ -103,9 +103,9 @@ void InvoiceWindow::onResize()
 
 	for (size_t i = 0; i < _editBoxes.size(); ++i)
 	{
-	int y = _editBoxes.at(i).getPosY();
-	int diff = (y - _startTablePos);
-	int difM = diff / 20;
+	const int y = _editBoxes.at(i).getPosY();
+	const int diff = (y - _startTablePos);
+	const int difM = diff / 20;
 
 	SetWindowPos(_editBoxes.at(i).getHandle(),
 		NULL,
