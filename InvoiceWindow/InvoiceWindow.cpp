@@ -26,6 +26,13 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
+	case WM_CTLCOLORSTATIC:
+	{
+		HDC hdc = (HDC)wParam;
+		SetBkMode(hdc, TRANSPARENT);
+	}
+	return reinterpret_cast<int>(GetStockObject(NULL_BRUSH));
+
 	case WM_MOUSEWHEEL:
 		onMouseWheelScroll(_mHwnd, wParam);
 		break;
@@ -122,6 +129,9 @@ void InvoiceWindow::onResize()
 
 void InvoiceWindow::createInputFields()
 {
+	RECT rc;
+	GetClientRect(_mHwnd, &rc);
+
 	// Product fields
 	for (int i = 20; i >= 0; --i)
 	{
@@ -141,5 +151,10 @@ void InvoiceWindow::createInputFields()
 			_columns.at(0), _tablePos + (20 * i), 120, 20, reinterpret_cast<HMENU>(COLUMN_ID_CODE + i))); // Code
 	}
 
-	Edit p1(_mHwnd, TEXT(""), 10, 20, 120, 20);
+	StaticText sOib(_mHwnd, TEXT("OIB"), 20, 20, 120, 20);
+	Edit eOib(_mHwnd, TEXT(""), 10, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_OIB));
+	StaticText sName(_mHwnd, TEXT("Name"), 20, 65, 120, 20);
+	Edit eName(_mHwnd, TEXT(""), 10, 85, 120, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_NAME));
+	StaticText sInvNumber(_mHwnd, TEXT("Invoice Number"), rc.right - 140, 20, 120, 20);
+	Edit eInvNumber(_mHwnd, TEXT(""), rc.right - 140, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_NUMBER));
 }

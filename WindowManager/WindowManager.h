@@ -346,3 +346,23 @@ protected:
 	int _iAcumDelta;
 	unsigned long _ulScrollLines;
 };
+
+class StaticText
+{
+public:
+	StaticText(const HWND & parent,
+		const TCHAR * text,
+		const int & posX,
+		const int & posY,
+		const int & sizeX,
+		const int & sizeY,
+		const HMENU & menu = NULL,
+		const long & style = WS_CHILD | WS_VISIBLE);
+
+	HWND getStaticHandle() const { return _staticHandle; }
+
+private:
+	StaticText(const StaticText &) = delete;
+	StaticText & operator=(const StaticText &) = delete;
+	HWND _staticHandle;
+};

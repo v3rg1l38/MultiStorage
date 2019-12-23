@@ -11,6 +11,10 @@
 #define COLUMN_ID_WHOLEPR 500
 #define COLUMN_ID_UNIT 600
 #define COLUMN_ID_DISCOUNT 700
+#define INPUT_CLIENT_OIB 800
+#define INPUT_CLIENT_NAME 801
+#define INPUT_INVOICE_NUMBER 802
+#define INPUT_INVOICE_DATE 803
 
 class InvoiceWindow : public BaseMDIChild<InvoiceWindow>,
 					  public ScrollBar

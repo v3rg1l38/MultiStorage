@@ -372,3 +372,28 @@ Button::Button(const HWND & parent,
 	_width = sizeX;
 	_height = sizeY;
 }
+
+StaticText::StaticText(const HWND & parent, 
+	const TCHAR * text, 
+	const int & posX, 
+	const int & posY, 
+	const int & sizeX, 
+	const int & sizeY, 
+	const HMENU & menu, 
+	const long & style)
+{
+	HWND staticText = CreateWindowEx(0,
+		TEXT("STATIC"),
+		text,
+		style,
+		posX,
+		posY,
+		sizeX,
+		sizeY,
+		parent,
+		menu,
+		GetModuleHandle(NULL),
+		NULL);
+
+	_staticHandle = staticText;
+}
