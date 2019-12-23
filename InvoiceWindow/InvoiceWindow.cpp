@@ -154,7 +154,7 @@ void InvoiceWindow::createInputFields()
 	StaticText sOib(_mHwnd, TEXT("OIB"), 20, 20, 120, 20);
 	Edit eOib(_mHwnd, TEXT(""), 10, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_OIB));
 	StaticText sName(_mHwnd, TEXT("Name"), 20, 65, 120, 20);
-	Edit eName(_mHwnd, TEXT(""), 10, 85, 120, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_NAME));
+	Edit eName(_mHwnd, TEXT(""), 10, 85, 280, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_NAME));
 	StaticText sInvNumber(_mHwnd, TEXT("Invoice Number"), rc.right - 140, 20, 120, 20);
 	Edit eInvNumber(_mHwnd, TEXT(""), rc.right - 140, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_NUMBER));
 }
