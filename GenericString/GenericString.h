@@ -2,6 +2,10 @@
 
 #include <string>
 #include <iostream>
+#include <codecvt>
+
+std::wstring convertToWString(const char * string);
+std::string convertToString(const wchar_t * string);
 
 class generic_string
 {
