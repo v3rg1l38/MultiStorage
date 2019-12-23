@@ -27,6 +27,7 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		onCreate();
 		break;
+
 	case WM_SIZE:
 		_cX = LOWORD(lParam);
 		_cY = HIWORD(lParam);
