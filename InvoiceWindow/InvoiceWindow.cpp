@@ -157,4 +157,6 @@ void InvoiceWindow::createInputFields()
 	Edit eName(_mHwnd, TEXT(""), 10, 85, 280, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_NAME));
 	StaticText sInvNumber(_mHwnd, TEXT("Invoice Number"), rc.right - 140, 20, 120, 20);
 	Edit eInvNumber(_mHwnd, TEXT(""), rc.right - 140, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_NUMBER));
+	StaticText sDate(_mHwnd, TEXT("Date"), rc.right - 140, 60, 120, 20);
+	Edit eDate(_mHwnd, TEXT(""), rc.right - 140, 80, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_DATE));
 }
