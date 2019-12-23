@@ -316,6 +316,34 @@ void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam)
 	}
 }
 
+void ScrollBar::onSettingChange()
+{
+	SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &_ulScrollLines, 0);
+	if (_ulScrollLines)
+		_iDeltaPerLine = WHEEL_DELTA / _ulScrollLines;
+	else
+		_iDeltaPerLine = 0;
+}
+
+void ScrollBar::onMouseWheelScroll(const HWND & window, WPARAM wParam)
+{
+	if (_iDeltaPerLine == 0)
+		return;
+
+	_iAcumDelta += static_cast<short>(HIWORD(wParam));
+
+	while (_iAcumDelta >= _iDeltaPerLine)
+	{
+		SendMessage(window, WM_VSCROLL, SB_LINEUP, 0);
+		_iAcumDelta -= _iDeltaPerLine / 4;
+	}
+	while (_iAcumDelta <= -_iDeltaPerLine)
+	{
+		SendMessage(window, WM_VSCROLL, SB_LINEDOWN, 0);
+		_iAcumDelta += _iDeltaPerLine / 4;
+	}
+}
+
 Button::Button(const HWND & parent, 
 	const TCHAR * name, 
 	const int & posX, 

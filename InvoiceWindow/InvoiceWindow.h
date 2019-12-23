@@ -25,6 +25,7 @@ private:
 	void onCreate();
 	void onPaint();
 	void onResize();
+	void createInputFields();
 	InvoiceWindow(const InvoiceWindow &) = delete;
 	InvoiceWindow & operator=(const InvoiceWindow &) = delete;
 };

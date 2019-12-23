@@ -335,10 +335,14 @@ public:
 	void getVertScrollInfo(const HWND & window);
 	void getHorzScrollInfo(const HWND & window);
 	void onVertScroll(const HWND & window, WPARAM wParam);
-
+	void onSettingChange(); // WM_SETTINGCHANGE
+	void onMouseWheelScroll(const HWND & window, WPARAM wParam);
 
 protected:
 	SCROLLINFO _si;
 	int _vertPos;
 	int _horzPost;
+	int _iDeltaPerLine;
+	int _iAcumDelta;
+	unsigned long _ulScrollLines;
 };

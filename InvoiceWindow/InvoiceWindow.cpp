@@ -26,8 +26,15 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
+	case WM_MOUSEWHEEL:
+		onMouseWheelScroll(_mHwnd, wParam);
+		break;
+
 	case WM_CREATE:
 		onCreate();
+	
+	case WM_SETTINGCHANGE:
+		onSettingChange();
 		break;
 
 	case WM_VSCROLL:
@@ -49,29 +56,16 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 void InvoiceWindow::onCreate()
 {
-	RECT rc;
 	_prodBack = CreateSolidBrush(RGB(5, 193, 245));
 	_cliBack = CreateSolidBrush(RGB(107, 187, 209));
 	LONG lStyle = GetWindowLongPtr(_mHwnd, GWL_STYLE);
 	lStyle &= ~(WS_THICKFRAME | WS_MAXIMIZEBOX);
 	SetWindowLongPtr(_mHwnd, GWL_STYLE, lStyle);
 
-	GetClientRect(_mHwnd, &rc);
-	const int tableStart = _cY;
-	_tablePos = tableStart;
-	_startTablePos = tableStart;
+	_tablePos = _cY;
 	_columns = { 0, 120, 440, 500, 580, 660, 740 };
+	createInputFields();
 
-	for (int i = 20; i >= 0; --i)
-	{
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(6), tableStart + (20 * i), 80, 20); // Discount
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(5), tableStart + (20 * i), 80, 20); // Wholesale price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(4), tableStart + (20 * i), 80, 20); // Retail price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(3), tableStart + (20 * i), 80, 20); // Count
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(2), tableStart + (20 * i), 60, 20); // Unit
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(1), tableStart + (20 * i), 320, 20); // Name
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(0), tableStart + (20 * i), 120, 20); // Code
-	}
 }
 
 void InvoiceWindow::onPaint()
@@ -124,4 +118,19 @@ void InvoiceWindow::onResize()
 		SWP_NOSIZE);
 	}
 
+}
+
+void InvoiceWindow::createInputFields()
+{
+	// Product fields
+	for (int i = 20; i >= 0; --i)
+	{
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(6), _tablePos + (20 * i), 80, 20); // Discount
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(5), _tablePos + (20 * i), 80, 20); // Wholesale price
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(4), _tablePos + (20 * i), 80, 20); // Retail price
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(3), _tablePos + (20 * i), 80, 20); // Count
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(2), _tablePos + (20 * i), 60, 20); // Unit
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(1), _tablePos + (20 * i), 320, 20); // Name
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(0), _tablePos + (20 * i), 120, 20); // Code
+	}
 }
