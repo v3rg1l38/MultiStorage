@@ -100,7 +100,8 @@ void InvoiceWindow::onResize()
 	const int startOfTable = rc.bottom - 160;
 	_tablePos = startOfTable;
 
-	setVertScroll(_mHwnd, 0, _cY + _editBoxes.size() / 2, 20 / _cY);
+	if(_cY)
+		setVertScroll(_mHwnd, 0, _cY + _editBoxes.size() / 2, 20 / _cY);
 
 	for (size_t i = 0; i < _editBoxes.size(); ++i)
 	{
@@ -141,6 +142,4 @@ void InvoiceWindow::createInputFields()
 	}
 
 	Edit p1(_mHwnd, TEXT(""), 10, 20, 120, 20);
-
-	SetDlgItemText(_mHwnd, COLUMN_ID_CODE + 2, L"Proba");
 }
