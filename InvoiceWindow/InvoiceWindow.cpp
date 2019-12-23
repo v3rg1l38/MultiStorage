@@ -75,7 +75,6 @@ void InvoiceWindow::onPaint()
 	GetClientRect(_mHwnd, &rc);
 	HDC hdc = BeginPaint(_mHwnd, &ps);
 
-	FillRect(hdc, &rc, reinterpret_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH)));
 	SelectObject(hdc, _prodBack);
 	Rectangle(hdc, _columns.at(0), (_tablePos - 22) - _vertPos, _columns.at(6) + 80, _tablePos - _vertPos);
 
@@ -125,12 +124,14 @@ void InvoiceWindow::createInputFields()
 	// Product fields
 	for (int i = 20; i >= 0; --i)
 	{
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(6), _tablePos + (20 * i), 80, 20); // Discount
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(5), _tablePos + (20 * i), 80, 20); // Wholesale price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(4), _tablePos + (20 * i), 80, 20); // Retail price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(3), _tablePos + (20 * i), 80, 20); // Count
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(2), _tablePos + (20 * i), 60, 20); // Unit
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(1), _tablePos + (20 * i), 320, 20); // Name
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), _columns.at(0), _tablePos + (20 * i), 120, 20); // Code
+		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), _columns.at(6), _tablePos + (20 * i), 80, 20)); // Discount
+		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), _columns.at(5), _tablePos + (20 * i), 80, 20)); // Wholesale price
+		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), _columns.at(4), _tablePos + (20 * i), 80, 20)); // Retail price
+		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), _columns.at(3), _tablePos + (20 * i), 80, 20)); // Count
+		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), _columns.at(2), _tablePos + (20 * i), 60, 20)); // Unit
+		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), _columns.at(1), _tablePos + (20 * i), 320, 20)); // Name
+		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), _columns.at(0), _tablePos + (20 * i), 120, 20)); // Code
 	}
+
+	Edit p1(_mHwnd, TEXT(""), 10, 20, 120, 20);
 }
