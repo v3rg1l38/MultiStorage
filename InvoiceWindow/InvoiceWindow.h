@@ -4,9 +4,13 @@
 #include <Windows.h>
 #include "../WindowManager/WindowManager.h"
 
-#define INVOICE_OIB 8000
-#define INVOICE_CLIENT_NAME 8001
-#define INVOICE_NUMBER 8002
+#define COLUMN_ID_CODE 100
+#define COLUMN_ID_NAME 200
+#define COLUMN_ID_COUNT 300
+#define COLUMN_ID_RETAILPR 400
+#define COLUMN_ID_WHOLEPR 500
+#define COLUMN_ID_UNIT 600
+#define COLUMN_ID_DISCOUNT 700
 
 class InvoiceWindow : public BaseMDIChild<InvoiceWindow>,
 					  public ScrollBar
