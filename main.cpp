@@ -19,9 +19,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czComma
 
 	while (GetMessage(&msg, NULL, 0, 0) != 0)
 	{
-		if(!TranslateMDISysAccel(frameWindow->getWindowHandle(), &msg))
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (!TranslateMDISysAccel(frameWindow->getClientArea(), &msg))
+		{
+			if (!IsDialogMessage(GetWindow(frameWindow->getClientArea(), GW_CHILD), &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
 	}
 
 	return static_cast<int>(msg.wParam);

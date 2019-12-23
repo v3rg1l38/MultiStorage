@@ -301,7 +301,7 @@ public:
 		const int & sizeX,
 		const int & sizeY,
 		const HMENU & menu = NULL,
-		const long & style = ES_AUTOHSCROLL | WS_BORDER | WS_CHILD | WS_VISIBLE);
+		const long & style = ES_AUTOHSCROLL | WS_BORDER | WS_CHILD | WS_VISIBLE | WS_TABSTOP);
 
 	HWND getHandle() const { return _editHandle; }
 	int getPosX() const { return _posX; }
