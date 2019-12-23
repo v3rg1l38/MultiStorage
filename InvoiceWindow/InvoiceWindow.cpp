@@ -62,7 +62,7 @@ void InvoiceWindow::onCreate()
 	_startTablePos = tableStart;
 	_columns = { 0, 120, 440, 500, 580, 660, 740 };
 
-	for (size_t i = 0; i < 14; ++i)
+	for (size_t i = 0; i < 20; ++i)
 	{
 		_editBoxes.emplace_back(_mHwnd, TEXT(""), 0, tableStart + (20 * i), 120, 20); // Code
 		_editBoxes.emplace_back(_mHwnd, TEXT(""), 120, tableStart + (20 * i), 320, 20); // Name
@@ -79,25 +79,24 @@ void InvoiceWindow::onPaint()
 {
 	PAINTSTRUCT ps;
 	RECT rc;
-	HDC hdc = BeginPaint(_mHwnd, &ps);
 	GetClientRect(_mHwnd, &rc);
+	HDC hdc = BeginPaint(_mHwnd, &ps);
 
 	FillRect(hdc, &rc, reinterpret_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH)));
-
 	SelectObject(hdc, _prodBack);
-	Rectangle(hdc, _columns.at(0), _tablePos - 22, _columns.at(6) + 80, _tablePos);
+	Rectangle(hdc, _columns.at(0), (_tablePos - 22) - _vertPos, _columns.at(6) + 80, _tablePos - _vertPos);
 
 	SelectObject(hdc, _cliBack);
-	Rectangle(hdc, 0, 0, _cX, _tablePos - 20);
+	Rectangle(hdc, 0, 0, _cX, _tablePos - 20 - _vertPos);
 
 	SetBkMode(hdc, TRANSPARENT);
-	TextOut(hdc, _columns.at(0), _tablePos - 20, TEXT("Code"), lstrlen(TEXT("Code")));
-	TextOut(hdc, _columns.at(1), _tablePos - 20, TEXT("Name"), lstrlen(TEXT("Name")));
-	TextOut(hdc, _columns.at(2), _tablePos - 20, TEXT("Unit"), lstrlen(TEXT("Unit")));
-	TextOut(hdc, _columns.at(3), _tablePos - 20, TEXT("Count"), lstrlen(TEXT("Count")));
-	TextOut(hdc, _columns.at(4), _tablePos - 20, TEXT("Retail Pr."), lstrlen(TEXT("Retail Pr.")));
-	TextOut(hdc, _columns.at(5), _tablePos - 20, TEXT("Wholes Pr."), lstrlen(TEXT("Wholes Pr.")));
-	TextOut(hdc, _columns.at(6), _tablePos - 20, TEXT("Discount"), lstrlen(TEXT("Discount")));
+	TextOut(hdc, _columns.at(0), _tablePos - 20 - _vertPos, TEXT("Code"), lstrlen(TEXT("Code")));
+	TextOut(hdc, _columns.at(1), _tablePos - 20 - _vertPos, TEXT("Name"), lstrlen(TEXT("Name")));
+	TextOut(hdc, _columns.at(2), _tablePos - 20 - _vertPos, TEXT("Unit"), lstrlen(TEXT("Unit")));
+	TextOut(hdc, _columns.at(3), _tablePos - 20 - _vertPos, TEXT("Count"), lstrlen(TEXT("Count")));
+	TextOut(hdc, _columns.at(4), _tablePos - 20 - _vertPos, TEXT("Retail Pr."), lstrlen(TEXT("Retail Pr.")));
+	TextOut(hdc, _columns.at(5), _tablePos - 20 - _vertPos, TEXT("Wholes Pr."), lstrlen(TEXT("Wholes Pr.")));
+	TextOut(hdc, _columns.at(6), _tablePos - 20 - _vertPos, TEXT("Discount"), lstrlen(TEXT("Discount")));
 
 	EndPaint(_mHwnd, &ps);
 }
@@ -109,7 +108,7 @@ void InvoiceWindow::onResize()
 	const int startOfTable = rc.bottom - 160;
 	_tablePos = startOfTable;
 
-	setVertScroll(_mHwnd, 0, _cY, 40 / _cY);
+	setVertScroll(_mHwnd, 0, _cY + _editBoxes.size() / 2, 20 / _cY);
 
 	for (size_t i = 0; i < _editBoxes.size(); ++i)
 	{
