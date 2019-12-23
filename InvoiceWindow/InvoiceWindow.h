@@ -3,7 +3,7 @@
 
 #include <Windows.h>
 #include "../WindowManager/WindowManager.h"
-
+#include <mysql/jdbc.h>
 #define COLUMN_ID_CODE 100
 #define COLUMN_ID_NAME 200
 #define COLUMN_ID_COUNT 300
