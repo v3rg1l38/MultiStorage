@@ -13,7 +13,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czComma
 {
 	FrameWindow * frameWindow = new FrameWindow();
 	frameWindow->createWindow(TEXT("Proba"));
-	
+	ShowWindow(frameWindow->getWindowHandle(), SW_MAXIMIZE);
+
 	MSG msg;
 
 	while (GetMessage(&msg, NULL, 0, 0) != 0)

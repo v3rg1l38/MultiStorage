@@ -309,6 +309,7 @@ public:
 	int getWidth() const { return _width; }
 	int getHeight() const { return _height; }
 	void setPosY(const int & posY) noexcept { _posY = posY; }
+
 private:
 
 	HWND _editHandle;
@@ -316,4 +317,12 @@ private:
 	int _posY;
 	int _width;
 	int _height;
+};
+
+class ScrollBar
+{
+public:
+
+private:
+	SCROLLINFO _si;
 };

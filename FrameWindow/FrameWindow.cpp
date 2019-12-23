@@ -34,20 +34,15 @@ void FrameWindow::initilaizeMenu()
 	SetMenu(_mHwnd, hMenu);
 }
 
-bool FrameWindow::setClientAreaBackground()
+void FrameWindow::setClientAreaBackground()
 {
-	WNDCLASS wcc = {};
-	GetClassInfo(GetModuleHandle(NULL), TEXT("MDICLIENT"), &wcc);
 	HBRUSH brush = CreateSolidBrush(RGB(22, 108, 145));
-	wcc.hbrBackground = brush;
-
-	return RegisterClass(&wcc) ? true : false;
+	SetClassLongPtr(_clientArea, GCL_HBRBACKGROUND, reinterpret_cast<LONG_PTR>(brush));
 }
 
 void FrameWindow::onCreate()
 {
 	initilaizeMenu();
-	setClientAreaBackground();
 
 	CLIENTCREATESTRUCT css;
 	_clientArea = CreateWindow(TEXT("MDICLIENT"),
@@ -61,6 +56,8 @@ void FrameWindow::onCreate()
 		(HMENU)ID_CLIENTAREA,
 		GetModuleHandle(NULL),
 		&css);
+
+	setClientAreaBackground();
 
 	_toolbar = CreateWindowEx(0,
 		TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE,
@@ -165,7 +162,14 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	case MENU_INVOICE_LIST:
 	{
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
-		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea);
+		invoiceWind->createMDIChild(TEXT("Invoice"), 
+			TEXT("Invoice"), 
+			_clientArea,
+			WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CHILD | WS_VSCROLL,
+			CW_USEDEFAULT,
+			CW_USEDEFAULT,
+			854,
+			420);
 	}
 	break;
 

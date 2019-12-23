@@ -13,6 +13,8 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		MenuControl mc;
 		mc.EnableMenu(_mHwnd, MENU_INVOICE, MENU_INVOICE_LIST);
+		DeleteObject(_prodBack);
+		DeleteObject(_cliBack);
 		DestroyWindow(_mHwnd);
 	}
 	return 0;
@@ -44,6 +46,12 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 void InvoiceWindow::onCreate()
 {
 	RECT rc;
+	_prodBack = CreateSolidBrush(RGB(5, 193, 245));
+	_cliBack = CreateSolidBrush(RGB(107, 187, 209));
+	LONG lStyle = GetWindowLongPtr(_mHwnd, GWL_STYLE);
+	lStyle &= ~(WS_THICKFRAME | WS_MAXIMIZEBOX);
+	SetWindowLongPtr(_mHwnd, GWL_STYLE, lStyle);
+
 	GetClientRect(_mHwnd, &rc);
 	const int tableStart = _cY;
 	_tablePos = tableStart;
@@ -67,18 +75,16 @@ void InvoiceWindow::onPaint()
 {
 	PAINTSTRUCT ps;
 	RECT rc;
-	HBRUSH prodBack = CreateSolidBrush(RGB(5, 193, 245));
-	HBRUSH cliBack = CreateSolidBrush(RGB(107, 187, 209));
 
 	HDC hdc = BeginPaint(_mHwnd, &ps);
 	GetClientRect(_mHwnd, &rc);
 
 	FillRect(hdc, &rc, reinterpret_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH)));
 
-	SelectObject(hdc, prodBack);
+	SelectObject(hdc, _prodBack);
 	Rectangle(hdc, _columns.at(0), _tablePos - 22, _columns.at(6) + 80, _tablePos);
 
-	SelectObject(hdc, cliBack);
+	SelectObject(hdc, _cliBack);
 	Rectangle(hdc, rc.left, rc.top, rc.right, _tablePos - 20);
 
 	SetBkMode(hdc, TRANSPARENT);
@@ -90,8 +96,6 @@ void InvoiceWindow::onPaint()
 	TextOut(hdc, _columns.at(5), _tablePos - 20, TEXT("Wholes Pr."), lstrlen(TEXT("Wholes Pr.")));
 	TextOut(hdc, _columns.at(6), _tablePos - 20, TEXT("Discount"), lstrlen(TEXT("Discount")));
 
-	DeleteObject(prodBack);
-	DeleteObject(cliBack);
 	EndPaint(_mHwnd, &ps);
 }
 

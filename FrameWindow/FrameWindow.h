@@ -16,7 +16,7 @@ private:
 	FrameWindow(const FrameWindow &) = delete;
 	FrameWindow & operator=(const FrameWindow &) = delete;
 
-	bool setClientAreaBackground();
+	void setClientAreaBackground();
 	void initilaizeMenu();
 	void onCreate();
 	void onChangeSize(LPARAM lParam);
