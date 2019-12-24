@@ -4,7 +4,6 @@
 #include <Windows.h>
 #include <CommCtrl.h>
 #include "../WindowManager/WindowManager.h"
-#include "../WindowControls/WindowControls.h"
 
 class FrameWindow : public BaseFrameWindow<FrameWindow>
 {

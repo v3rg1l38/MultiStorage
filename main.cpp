@@ -1,7 +1,5 @@
 #define UNICODE
 #include <Windows.h>
-#include <CommCtrl.h>
-#include "WindowManager/WindowManager.h"
 #include "FrameWindow/FrameWindow.h"
 
 #pragma comment(lib, "comctl32.lib")
