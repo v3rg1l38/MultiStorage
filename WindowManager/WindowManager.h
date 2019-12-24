@@ -2,11 +2,6 @@
 #define UNICODE
 
 #include <Windows.h>
-#include <CommCtrl.h>
-#include <map>
-#include <string>
-#include "../WindowControls/WindowControls.h"
-#include <vector>
 
 template<class Window>
 class BaseFrameWindow

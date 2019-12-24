@@ -2,6 +2,7 @@
 #define UNICODE
 
 #include <Windows.h>
+#include <vector>
 #include "../WindowManager/WindowManager.h"
 #include "../WindowControls/WindowControls.h"
 

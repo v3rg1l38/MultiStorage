@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include "../WindowManager/WindowManager.h"
+#include "../WindowControls/WindowControls.h"
 
 #define COLUMN_CODE 0
 #define COLUMN_NAME 1
