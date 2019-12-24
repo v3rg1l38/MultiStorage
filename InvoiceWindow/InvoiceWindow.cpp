@@ -124,6 +124,8 @@ void InvoiceWindow::createInputFields()
 	Edit eInvNumber(_mHwnd, TEXT(""), rc.right - 140, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_NUMBER));
 	StaticText sDate(_mHwnd, TEXT("Date"), rc.right - 140, 60, 120, 20);
 	Edit eDate(_mHwnd, TEXT(""), rc.right - 140, 80, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_DATE));
+	StaticText sPayment(_mHwnd, TEXT("Payment Method"), rc.right - 140, 105, 120, 20);
+	Edit ePayment(_mHwnd, TEXT(""), rc.right - 140, 125, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_PAYMENT));
 
 	StaticText sCode(_mHwnd, TEXT("Code"), 0, _tablePos - 20, 120, 20);
 	StaticText sInvName(_mHwnd, TEXT("Name"), _columns.at(1), _tablePos - 20, 120, 20);
