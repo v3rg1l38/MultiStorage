@@ -78,15 +78,12 @@ void InvoiceWindow::onCreate()
 void InvoiceWindow::onPaint()
 {
 	PAINTSTRUCT ps;
-	RECT rc;
-	GetClientRect(_mHwnd, &rc);
 	HDC hdc = BeginPaint(_mHwnd, &ps);
+
+	FillRect(hdc, &ps.rcPaint, _cliBack);
 
 	SelectObject(hdc, _prodBack);
 	Rectangle(hdc, _columns.at(0), (_tablePos - 22) - _vertPos, _columns.at(6) + 80, _tablePos - _vertPos);
-
-	SelectObject(hdc, _cliBack);
-	Rectangle(hdc, 0, 0, _cX, _tablePos - 20 - _vertPos);
 
 	SetBkMode(hdc, TRANSPARENT);
 	TextOut(hdc, _columns.at(0), _tablePos - 20 - _vertPos, TEXT("Code"), lstrlen(TEXT("Code")));
