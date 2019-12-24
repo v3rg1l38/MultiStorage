@@ -19,6 +19,20 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	return 0;
 
+	case WM_COMMAND:
+	{
+		switch (HIWORD(wParam))
+		{
+			/*	idEditCtrl = (int) LOWORD(wParam); // identifier of edit control
+				wNotifyCode = HIWORD(wParam); // notification code
+				hwndEditCtrl = (HWND) lParam; // handle of edit control
+			*/
+		case EN_KILLFOCUS:
+			break;
+		}
+	}
+	break;
+
 	case WM_MDIACTIVATE:
 	{
 		MenuControl mc;
