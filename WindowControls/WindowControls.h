@@ -26,11 +26,11 @@ class WindowControls
 {
 public:
 	static void setWindowSize(const HWND & hWnd, const int & sX, const int & sY);
-	static std::string getEditText(const HWND & editBox);
-	static bool setEditText(const HWND & editBox, const std::string & text);
+	static std::wstring getEditText(const HWND & editBox);
+	static bool setEditText(const HWND & editBox, const std::wstring & text);
 	static void setSelectedText(const HWND & editBox, const int & start, const int & end);
 	static unsigned long getSelectedPos(const HWND & editBox);
-	static void replaceSelectedText(const HWND & editBox, const std::string & text, bool undo = true);
+	static void replaceSelectedText(const HWND & editBox, const std::wstring & text, bool undo = true);
 };
 
 class MenuControl

@@ -116,20 +116,20 @@ void InvoiceWindow::createInputFields()
 	// Product fields
 	for(int i = 0; i < 20; ++i)
 	{
-		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), 
-			_columns.at(0), _tablePos + (20 * i), 120, 20, reinterpret_cast<HMENU>(COLUMN_ID_CODE + i))); // Code
-		_editBoxes.push_back(Edit(_mHwnd, TEXT(""),
-			_columns.at(1), _tablePos + (20 * i), 320, 20, reinterpret_cast<HMENU>(COLUMN_ID_NAME + i))); // Name
-		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), 
-			_columns.at(2), _tablePos + (20 * i), 60, 20, reinterpret_cast<HMENU>(COLUMN_ID_UNIT + i))); // Unit
-		_editBoxes.push_back(Edit(_mHwnd, TEXT(""),
-			_columns.at(3), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_COUNT + i))); // Count
-		_editBoxes.push_back(Edit(_mHwnd, TEXT(""), 
-			_columns.at(4), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_RETAILPR + i))); // Retail price
-		_editBoxes.push_back(Edit(_mHwnd, TEXT(""),
-			_columns.at(5), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_WHOLEPR + i))); // Wholesale price
-		_editBoxes.push_back(Edit(_mHwnd, TEXT(""),
-			_columns.at(6), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_DISCOUNT + i))); // Discount
+		_editBoxes.emplace_back(_mHwnd, TEXT(""), 
+			_columns.at(0), _tablePos + (20 * i), 120, 20, reinterpret_cast<HMENU>(COLUMN_ID_CODE + i)); // Code
+		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+			_columns.at(1), _tablePos + (20 * i), 320, 20, reinterpret_cast<HMENU>(COLUMN_ID_NAME + i)); // Name
+		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+			_columns.at(2), _tablePos + (20 * i), 60, 20, reinterpret_cast<HMENU>(COLUMN_ID_UNIT + i)); // Unit
+		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+			_columns.at(3), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_COUNT + i)); // Count
+		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+			_columns.at(4), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_RETAILPR + i)); // Retail price
+		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+			_columns.at(5), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_WHOLEPR + i)); // Wholesale price
+		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+			_columns.at(6), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_DISCOUNT + i)); // Discount
 	}
 
 	StaticText sOib(_mHwnd, TEXT("OIB"), 20, 20, 120, 20);
