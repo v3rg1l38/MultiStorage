@@ -150,6 +150,4 @@ void InvoiceWindow::createInputFields()
 	StaticText sRetail(_mHwnd, TEXT("Retail Pr."), _columns.at(4), _tablePos - 20, 120, 20);
 	StaticText sWholes(_mHwnd, TEXT("Wholes Pr."), _columns.at(5), _tablePos - 20, 120, 20);
 	StaticText sDiscount(_mHwnd, TEXT("Discount"), _columns.at(6), _tablePos - 20, 120, 20);
-	Button pButton(_mHwnd, TEXT("Test Me"), rc.right - 140, 150, 120, 20, reinterpret_cast<HMENU>(9009));
-
 }
