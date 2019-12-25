@@ -36,6 +36,7 @@ private:
 	void onCreate();
 	void onPaint();
 	void onResize();
+	void searchForData(WPARAM wParam, LPARAM lParam);
 	void createInputFields();
 	InvoiceWindow(const InvoiceWindow &) = delete;
 	InvoiceWindow & operator=(const InvoiceWindow &) = delete;

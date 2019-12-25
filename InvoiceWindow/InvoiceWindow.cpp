@@ -1,5 +1,5 @@
 #include "InvoiceWindow.h"
-
+#include "../MockingData.h"
 
 LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -18,6 +18,18 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		DestroyWindow(_mHwnd);
 	}
 	return 0;
+
+	case WM_COMMAND:
+	{
+		switch (HIWORD(wParam))
+		{
+		case EN_KILLFOCUS:
+			if (static_cast<int>(LOWORD(wParam)) < 200)
+				searchForData(wParam, lParam);
+			break;
+		}
+	}
+	break;
 
 	//case WM_COMMAND:
 	//{
@@ -107,6 +119,38 @@ void InvoiceWindow::onResize()
 {
 	if(_cY)
 		setVertScroll(_mHwnd, 0, _cY + _editBoxes.size() / 2, 20 / _cY);
+}
+
+void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
+{
+	// Diff between Code edit box and other boxes
+	const int codeBox = static_cast<int>(LOWORD(wParam));
+	const int name = 100;
+	const int unit = 200;
+	const int count = 300;
+	const int retpr = 400;
+	const int wholepr = 500;
+	const int discount = 600;
+
+	int index = -1;
+	std::wstring code = WindowControls::getEditText(reinterpret_cast<HWND>(lParam));
+
+	for (size_t i = 0; i < (sizeof(MockData) / sizeof(MockData[0])); ++i)
+	{
+		if (lstrcmp(code.c_str(), MockData[i][0]) == 0)
+		{
+			index = i;
+			break;
+		}
+	}
+
+	if (index == -1)
+		return;
+
+	SetDlgItemText(_mHwnd, codeBox + name, MockData[index][1]);
+	SetDlgItemText(_mHwnd, codeBox + retpr, MockData[index][6]);
+	SetDlgItemText(_mHwnd, codeBox + wholepr, MockData[index][7]);
+
 }
 
 void InvoiceWindow::createInputFields()

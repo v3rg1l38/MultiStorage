@@ -24,6 +24,11 @@ bool WindowControls::setEditText(const HWND & editBox, const std::wstring & text
 	return SendMessage(editBox, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(text.c_str()));
 }
 
+bool WindowControls::setEditText(const HWND & editBox, const TCHAR * text)
+{
+	return SendMessage(editBox, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(text));
+}
+
 void WindowControls::setSelectedText(const HWND & editBox, const int & start, const int & end)
 {
 	SendMessage(editBox, EM_SETSEL, start, end);
