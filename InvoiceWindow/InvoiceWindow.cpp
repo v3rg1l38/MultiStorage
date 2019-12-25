@@ -110,15 +110,13 @@ void InvoiceWindow::onPaint()
 	HDC hdc = BeginPaint(_mHwnd, &ps);
 
 	FillRect(hdc, &ps.rcPaint, _cliBack);
-	SelectObject(hdc, _prodBack);
-	Rectangle(hdc, 0, _tablePos - 20 - _vertPos, ps.rcPaint.right, _tablePos - _vertPos);
 	EndPaint(_mHwnd, &ps);
 }
 
 void InvoiceWindow::onResize()
 {
 	if(_cY)
-		setVertScroll(_mHwnd, 0, _cY + _editBoxes.size() / 2, 20 / _cY);
+		setVertScroll(_mHwnd, 0, 200, 16 / _cY);
 }
 
 void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
@@ -163,42 +161,42 @@ void InvoiceWindow::createInputFields()
 	GetClientRect(_mHwnd, &rc);
 
 	// Product fields
-	for(int i = 0; i < 20; ++i)
+	for(int i = 0; i < 30; ++i)
 	{
-		_editBoxes.emplace_back(_mHwnd, TEXT(""), 
+		Edit(_mHwnd, TEXT(""), 
 			_columns.at(0), _tablePos + (20 * i), 120, 20, reinterpret_cast<HMENU>(COLUMN_ID_CODE + i)); // Code
-		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+		Edit(_mHwnd, TEXT(""),
 			_columns.at(1), _tablePos + (20 * i), 320, 20, reinterpret_cast<HMENU>(COLUMN_ID_NAME + i)); // Name
-		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+		Edit(_mHwnd, TEXT(""),
 			_columns.at(2), _tablePos + (20 * i), 60, 20, reinterpret_cast<HMENU>(COLUMN_ID_UNIT + i)); // Unit
-		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+		Edit(_mHwnd, TEXT(""),
 			_columns.at(3), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_COUNT + i)); // Count
-		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+		Edit(_mHwnd, TEXT(""),
 			_columns.at(4), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_RETAILPR + i)); // Retail price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+		Edit(_mHwnd, TEXT(""),
 			_columns.at(5), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_WHOLEPR + i)); // Wholesale price
-		_editBoxes.emplace_back(_mHwnd, TEXT(""),
+		Edit(_mHwnd, TEXT(""),
 			_columns.at(6), _tablePos + (20 * i), 80, 20, reinterpret_cast<HMENU>(COLUMN_ID_DISCOUNT + i)); // Discount
 	}
 
-	StaticText sOib(_mHwnd, TEXT("OIB"), 20, 20, 120, 20);
-	Edit eOib(_mHwnd, TEXT(""), 10, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_OIB));
-	StaticText sName(_mHwnd, TEXT("Name"), 20, 65, 120, 20);
-	Edit eName(_mHwnd, TEXT(""), 10, 85, 280, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_NAME));
-	StaticText sInvNumber(_mHwnd, TEXT("Invoice Number"), rc.right - 140, 20, 120, 20);
-	Edit eInvNumber(_mHwnd, TEXT(""), rc.right - 140, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_NUMBER));
-	StaticText sDate(_mHwnd, TEXT("Date"), rc.right - 140, 60, 120, 20);
-	Edit eDate(_mHwnd, TEXT(""), rc.right - 140, 80, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_DATE));
-	StaticText sPayment(_mHwnd, TEXT("Payment Method"), rc.right - 140, 105, 120, 20);
-	Edit ePayment(_mHwnd, TEXT(""), rc.right - 140, 125, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_PAYMENT));
+	StaticText(_mHwnd, TEXT("OIB"), 20, 20, 120, 20);
+	Edit(_mHwnd, TEXT(""), 10, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_OIB));
+	StaticText(_mHwnd, TEXT("Name"), 20, 65, 120, 20);
+	Edit(_mHwnd, TEXT(""), 10, 85, 280, 20, reinterpret_cast<HMENU>(INPUT_CLIENT_NAME));
+	StaticText(_mHwnd, TEXT("Invoice Number"), rc.right - 140, 20, 120, 20);
+	Edit(_mHwnd, TEXT(""), rc.right - 140, 40, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_NUMBER));
+	StaticText(_mHwnd, TEXT("Date"), rc.right - 140, 60, 120, 20);
+	Edit(_mHwnd, TEXT(""), rc.right - 140, 80, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_DATE));
+	StaticText(_mHwnd, TEXT("Payment Method"), rc.right - 140, 105, 120, 20);
+	Edit(_mHwnd, TEXT(""), rc.right - 140, 125, 120, 20, reinterpret_cast<HMENU>(INPUT_INVOICE_PAYMENT));
 
-	StaticText sCode(_mHwnd, TEXT("Code"), 0, _tablePos - 20, 120, 20);
-	StaticText sInvName(_mHwnd, TEXT("Name"), _columns.at(1), _tablePos - 20, 120, 20);
-	StaticText sUnit(_mHwnd, TEXT("Unit"), _columns.at(2), _tablePos - 20, 120, 20);
-	StaticText sCount(_mHwnd, TEXT("Count"), _columns.at(3), _tablePos - 20, 120, 20);
-	StaticText sRetail(_mHwnd, TEXT("Retail Pr."), _columns.at(4), _tablePos - 20, 120, 20);
-	StaticText sWholes(_mHwnd, TEXT("Wholes Pr."), _columns.at(5), _tablePos - 20, 120, 20);
-	StaticText sDiscount(_mHwnd, TEXT("Discount"), _columns.at(6), _tablePos - 20, 120, 20);
-	StaticText sTitle(_mHwnd, TEXT("INVOICE"), rc.right / 2 - 50, 20, 120, 30);
+	StaticText(_mHwnd, TEXT("Code"), 0, _tablePos - 20, 120, 20);
+	StaticText(_mHwnd, TEXT("Name"), _columns.at(1), _tablePos - 20, 120, 20);
+	StaticText(_mHwnd, TEXT("Unit"), _columns.at(2), _tablePos - 20, 120, 20);
+	StaticText(_mHwnd, TEXT("Count"), _columns.at(3), _tablePos - 20, 120, 20);
+	StaticText(_mHwnd, TEXT("Retail Pr."), _columns.at(4), _tablePos - 20, 120, 20);
+	StaticText(_mHwnd, TEXT("Wholes Pr."), _columns.at(5), _tablePos - 20, 120, 20);
+	StaticText(_mHwnd, TEXT("Discount"), _columns.at(6), _tablePos - 20, 120, 20);
+	StaticText(_mHwnd, TEXT("INVOICE"), rc.right / 2 - 50, 20, 120, 30);
 
 }

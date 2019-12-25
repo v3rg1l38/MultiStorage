@@ -357,7 +357,7 @@ void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam) noexcept
 
 	if (_si.nPos != _vertPos)
 	{
-		ScrollWindow(window, 0, _vertPos - _si.nPos, NULL, NULL);
+		ScrollWindow(window, 0, 16 * (_vertPos - _si.nPos), NULL, NULL);
 		UpdateWindow(window);
 	}
 }
@@ -381,12 +381,12 @@ void ScrollBar::onMouseWheelScroll(const HWND & window, WPARAM wParam) noexcept
 	while (_iAcumDelta >= _iDeltaPerLine)
 	{
 		SendMessage(window, WM_VSCROLL, SB_LINEUP, 0);
-		_iAcumDelta -= _iDeltaPerLine / 4;
+		_iAcumDelta -= _iDeltaPerLine;
 	}
 	while (_iAcumDelta <= -_iDeltaPerLine)
 	{
 		SendMessage(window, WM_VSCROLL, SB_LINEDOWN, 0);
-		_iAcumDelta += _iDeltaPerLine / 4;
+		_iAcumDelta += _iDeltaPerLine;
 	}
 }
 
