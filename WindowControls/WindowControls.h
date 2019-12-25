@@ -69,7 +69,6 @@ public:
 	HWND getListHandle() const { return _listHandle; }
 
 private:
-
 	ListView(const ListView &) = delete;
 	ListView & operator=(const ListView &) = delete;
 
@@ -123,7 +122,6 @@ public:
 	int getHeight() const { return _height; }
 
 private:
-
 	HWND _editHandle;
 	int _posX;
 	int _posY;
@@ -134,7 +132,6 @@ private:
 class ScrollBar
 {
 public:
-
 	void setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize);
 	void setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize);
 	void getVertScrollInfo(const HWND & window);
