@@ -123,6 +123,11 @@ void InvoiceWindow::onResize()
 
 void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
 {
+	std::wstring code = WindowControls::getEditText(reinterpret_cast<HWND>(lParam));
+
+	if (code.length() <= 0)
+		return;
+
 	// Diff between Code edit box and other boxes
 	const int codeBox = static_cast<int>(LOWORD(wParam));
 	const int name = 100;
@@ -133,7 +138,6 @@ void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
 	const int discount = 600;
 
 	int index = -1;
-	std::wstring code = WindowControls::getEditText(reinterpret_cast<HWND>(lParam));
 
 	for (size_t i = 0; i < (sizeof(MockData) / sizeof(MockData[0])); ++i)
 	{
