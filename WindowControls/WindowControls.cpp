@@ -88,7 +88,7 @@ HWND ListView::createList(const HWND & parent,
 
 int ListView::insertColumn(const int & colNum,
 	const TCHAR * colName,
-	const int & colWidth)
+	const int & colWidth) noexcept
 {
 	LVCOLUMN lCol;
 	int columnIndex;
@@ -102,7 +102,7 @@ int ListView::insertColumn(const int & colNum,
 	return columnIndex;
 }
 
-int ListView::insertItem(const int & nRow)
+int ListView::insertItem(const int & nRow) noexcept
 {
 	LVITEM lItem;
 	int itemIndex;
@@ -116,7 +116,7 @@ int ListView::insertItem(const int & nRow)
 	return itemIndex;
 }
 
-void ListView::setItemText(const TCHAR * value, const int & nRow, const int & nCol)
+void ListView::setItemText(const TCHAR * value, const int & nRow, const int & nCol) noexcept
 {
 	LVITEM lItem;
 
@@ -130,7 +130,7 @@ void ListView::setItemText(const TCHAR * value, const int & nRow, const int & nC
 	SendMessage(_listHandle, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
-void ListView::setItemInt(const int & val, const int & nRow, const int & nCol)
+void ListView::setItemInt(const int & val, const int & nRow, const int & nCol) noexcept
 {
 	LVITEM lItem;
 	TCHAR buffer[MAX_PATH] = TEXT("");
@@ -147,18 +147,18 @@ void ListView::setItemInt(const int & val, const int & nRow, const int & nCol)
 	SendMessage(_listHandle, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
-void ListView::setFullRowSelect()
+void ListView::setFullRowSelect() noexcept
 {
 	SendMessage(_listHandle, LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT);
 }
 
-void ListView::clearList()
+void ListView::clearList() noexcept
 {
 	SendMessage(_listHandle, LVM_DELETEALLITEMS, 0, 0);
 }
 
-const TCHAR * ListView::getDataFromRow(const int & row, const int & column)
+const TCHAR * ListView::getDataFromRow(const int & row, const int & column) noexcept
 {
 	LVITEM lvItem = { 0 };
 	TCHAR buff[1024] = TEXT(" ");
@@ -170,7 +170,7 @@ const TCHAR * ListView::getDataFromRow(const int & row, const int & column)
 	return lvItem.pszText;
 }
 
-int ListView::getDataFromRowInt(const int & row, const int & column)
+int ListView::getDataFromRowInt(const int & row, const int & column) noexcept
 {
 	LVITEM lvItem = { 0 };
 	TCHAR buff[1024] = TEXT(" ");
@@ -181,12 +181,12 @@ int ListView::getDataFromRowInt(const int & row, const int & column)
 	SendMessage(_listHandle, LVM_GETITEMTEXT, row, reinterpret_cast<LPARAM>(&lvItem));
 	return _wtoi(lvItem.pszText);
 }
-void ListView::setVisible(const int & row)
+void ListView::setVisible(const int & row) noexcept
 {
 	SendMessage(_listHandle, LVM_ENSUREVISIBLE, row, 0);
 }
 
-int ListView::findItem(const TCHAR * code)
+int ListView::findItem(const TCHAR * code) noexcept
 {
 	LVFINDINFO findInfo;
 
@@ -197,13 +197,13 @@ int ListView::findItem(const TCHAR * code)
 	return nIndex;
 }
 
-int ListView::getSelectedRow()
+int ListView::getSelectedRow() noexcept
 {
 	int index = SendMessage(_listHandle, LVM_GETNEXTITEM, static_cast<WPARAM>(-1), static_cast<LPARAM>(LVNI_SELECTED));
 	return index;
 }
 
-void ListView::setSelectedRow(const int & row)
+void ListView::setSelectedRow(const int & row) noexcept
 {
 	LVITEM lvItem;
 	lvItem.stateMask = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
@@ -216,7 +216,7 @@ void ListView::setSelectedRow(const int & row)
 	SendMessage(_listHandle, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
 }
 
-void ListView::unsetSelectedRow(const int & row)
+void ListView::unsetSelectedRow(const int & row) noexcept
 {
 	LVITEM lvItem;
 	lvItem.stateMask = LVIS_SELECTED | LVIS_FOCUSED | LVNI_SELECTED;
@@ -226,18 +226,18 @@ void ListView::unsetSelectedRow(const int & row)
 	SendMessage(_listHandle, LVM_SETITEMSTATE, row, reinterpret_cast<LPARAM>(&lvItem));
 }
 
-int ListView::getItemCount()
+int ListView::getItemCount() noexcept
 {
 	int count = SendMessage(_listHandle, LVM_GETITEMCOUNT, 0, 0);
 	return count;
 }
 
-void ListView::setBkColor(COLORREF col)
+void ListView::setBkColor(COLORREF col) noexcept
 {
 	SendMessage(_listHandle, LVM_SETBKCOLOR, 0, col);
 }
 
-void ListView::setTxtBkColor(COLORREF col)
+void ListView::setTxtBkColor(COLORREF col) noexcept
 {
 	SendMessage(_listHandle, LVM_SETTEXTBKCOLOR, 0, col);
 }
@@ -271,7 +271,7 @@ Edit::Edit(const HWND & parent,
 	_height = sizeY;
 }
 
-void ScrollBar::setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize)
+void ScrollBar::setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept
 {
 	_si.cbSize = sizeof(SCROLLINFO);
 	_si.fMask = SIF_RANGE | SIF_PAGE;
@@ -282,7 +282,7 @@ void ScrollBar::setVertScroll(const HWND & window, const int & min, const int & 
 	SetScrollInfo(window, SB_VERT, &_si, true);
 }
 
-void ScrollBar::setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize)
+void ScrollBar::setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept
 {
 	_si.cbSize = sizeof(SCROLLINFO);
 	_si.fMask = SIF_RANGE | SIF_PAGE;
@@ -293,21 +293,21 @@ void ScrollBar::setHorzScroll(const HWND & window, const int & min, const int & 
 	SetScrollInfo(window, SB_HORZ, &_si, true);
 }
 
-void ScrollBar::getVertScrollInfo(const HWND & window)
+void ScrollBar::getVertScrollInfo(const HWND & window) noexcept
 {
 	_si.cbSize = sizeof(SCROLLBARINFO);
 	_si.fMask = SIF_ALL;
 	GetScrollInfo(window, SB_VERT, &_si);
 }
 
-void ScrollBar::getHorzScrollInfo(const HWND & window)
+void ScrollBar::getHorzScrollInfo(const HWND & window) noexcept
 {
 	_si.cbSize = sizeof(SCROLLBARINFO);
 	_si.fMask = SIF_ALL;
 	GetScrollInfo(window, SB_HORZ, &_si);
 }
 
-void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam)
+void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam) noexcept
 {
 	getVertScrollInfo(window);
 	_vertPos = _si.nPos;
@@ -357,7 +357,7 @@ void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam)
 	}
 }
 
-void ScrollBar::onSettingChange()
+void ScrollBar::onSettingChange() noexcept
 {
 	SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &_ulScrollLines, 0);
 	if (_ulScrollLines)
@@ -366,7 +366,7 @@ void ScrollBar::onSettingChange()
 		_iDeltaPerLine = 0;
 }
 
-void ScrollBar::onMouseWheelScroll(const HWND & window, WPARAM wParam)
+void ScrollBar::onMouseWheelScroll(const HWND & window, WPARAM wParam) noexcept
 {
 	if (_iDeltaPerLine == 0)
 		return;

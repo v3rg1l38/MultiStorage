@@ -50,23 +50,23 @@ public:
 		const int & xSize,
 		const int & ySize,
 		const int & menu);
-	int insertColumn(const int & colNum, const TCHAR * colName, const int & colWidth);
-	int insertItem(const int & nRow);
-	void setItemText(const TCHAR * value, const int & nRow, const int & nCol);
-	void setItemInt(const int & val, const int & nRow, const int & nCol);
-	void setFullRowSelect();
-	void clearList();
-	const TCHAR * getDataFromRow(const int & row, const int & column);
-	int getDataFromRowInt(const int & row, const int & column);
-	void setVisible(const int & row);
-	int findItem(const TCHAR * code);
-	int getSelectedRow();
-	void setSelectedRow(const int & row);
-	void unsetSelectedRow(const int & row);
-	int getItemCount();
-	void setBkColor(COLORREF col);
-	void setTxtBkColor(COLORREF col);
-	HWND getListHandle() const { return _listHandle; }
+	int insertColumn(const int & colNum, const TCHAR * colName, const int & colWidth) noexcept;
+	int insertItem(const int & nRow) noexcept;
+	void setItemText(const TCHAR * value, const int & nRow, const int & nCol) noexcept;
+	void setItemInt(const int & val, const int & nRow, const int & nCol) noexcept;
+	void setFullRowSelect() noexcept;
+	void clearList() noexcept;
+	const TCHAR * getDataFromRow(const int & row, const int & column) noexcept;
+	int getDataFromRowInt(const int & row, const int & column) noexcept;
+	void setVisible(const int & row) noexcept;
+	int findItem(const TCHAR * code) noexcept;
+	int getSelectedRow() noexcept;
+	void setSelectedRow(const int & row) noexcept;
+	void unsetSelectedRow(const int & row) noexcept;
+	int getItemCount() noexcept;
+	void setBkColor(COLORREF col) noexcept;
+	void setTxtBkColor(COLORREF col) noexcept;
+	HWND getListHandle() const noexcept { return _listHandle; }
 
 private:
 	ListView(const ListView &) = delete;
@@ -89,11 +89,11 @@ public:
 		const HMENU & menu = NULL,
 		const long & style = BS_DEFPUSHBUTTON | WS_VISIBLE | WS_CHILD);
 
-	HWND getButtonHandle() const { return _buttonHandle; }
-	int getPosX() const { return _posX; }
-	int getPosY() const { return _posY; }
-	int getWidth() const { return _width; }
-	int getHeight() const { return _height; }
+	inline HWND getButtonHandle() const noexcept { return _buttonHandle; }
+	inline int getPosX() const noexcept { return _posX; }
+	inline int getPosY() const noexcept { return _posY; }
+	inline int getWidth() const noexcept { return _width; }
+	inline int getHeight() const noexcept { return _height; }
 
 private:
 	HWND _buttonHandle;
@@ -115,11 +115,11 @@ public:
 		const HMENU & menu = NULL,
 		const long & style = ES_AUTOHSCROLL | WS_BORDER | WS_CHILD | WS_VISIBLE | WS_TABSTOP);
 
-	HWND getHandle() const { return _editHandle; }
-	int getPosX() const { return _posX; }
-	int getPosY() const { return _posY; }
-	int getWidth() const { return _width; }
-	int getHeight() const { return _height; }
+	inline HWND getHandle() const noexcept { return _editHandle; }
+	inline int getPosX() const noexcept { return _posX; }
+	inline int getPosY() const noexcept { return _posY; }
+	inline int getWidth() const noexcept { return _width; }
+	inline int getHeight() const noexcept { return _height; }
 
 private:
 	HWND _editHandle;
@@ -132,13 +132,13 @@ private:
 class ScrollBar
 {
 public:
-	void setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize);
-	void setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize);
-	void getVertScrollInfo(const HWND & window);
-	void getHorzScrollInfo(const HWND & window);
-	void onVertScroll(const HWND & window, WPARAM wParam);
-	void onSettingChange(); // WM_SETTINGCHANGE
-	void onMouseWheelScroll(const HWND & window, WPARAM wParam);
+	void setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept;
+	void setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept;
+	void getVertScrollInfo(const HWND & window) noexcept;
+	void getHorzScrollInfo(const HWND & window) noexcept;
+	void onVertScroll(const HWND & window, WPARAM wParam) noexcept;
+	void onSettingChange() noexcept; // WM_SETTINGCHANGE
+	void onMouseWheelScroll(const HWND & window, WPARAM wParam) noexcept;
 
 protected:
 	SCROLLINFO _si;
@@ -161,7 +161,7 @@ public:
 		const HMENU & menu = NULL,
 		const long & style = WS_CHILD | WS_VISIBLE);
 
-	HWND getStaticHandle() const { return _staticHandle; }
+	inline HWND getStaticHandle() const noexcept { return _staticHandle; }
 
 private:
 	StaticText(const StaticText &) = delete;
