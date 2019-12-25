@@ -55,18 +55,18 @@ public:
 	void setItemText(const TCHAR * value, const int & nRow, const int & nCol) noexcept;
 	void setItemInt(const int & val, const int & nRow, const int & nCol) noexcept;
 	void setFullRowSelect() noexcept;
-	void clearList() noexcept;
+	inline void clearList() noexcept;
 	const TCHAR * getDataFromRow(const int & row, const int & column) noexcept;
 	int getDataFromRowInt(const int & row, const int & column) noexcept;
 	void setVisible(const int & row) noexcept;
 	int findItem(const TCHAR * code) noexcept;
 	int getSelectedRow() noexcept;
-	void setSelectedRow(const int & row) noexcept;
-	void unsetSelectedRow(const int & row) noexcept;
-	int getItemCount() noexcept;
+	inline void setSelectedRow(const int & row) noexcept;
+	inline void unsetSelectedRow(const int & row) noexcept;
+	inline int getItemCount() noexcept;
 	void setBkColor(COLORREF col) noexcept;
 	void setTxtBkColor(COLORREF col) noexcept;
-	HWND getListHandle() const noexcept { return _listHandle; }
+	inline HWND getListHandle() const noexcept { return _listHandle; }
 
 private:
 	ListView(const ListView &) = delete;

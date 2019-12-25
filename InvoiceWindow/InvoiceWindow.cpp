@@ -98,7 +98,7 @@ void InvoiceWindow::onPaint()
 
 	FillRect(hdc, &ps.rcPaint, _cliBack);
 	SelectObject(hdc, _prodBack);
-	Rectangle(hdc, 0, _tablePos - 20 - _vertPos, ps.rcPaint.right, _tablePos + 20 - _vertPos);
+	Rectangle(hdc, 0, _tablePos - 20 - _vertPos, ps.rcPaint.right, _tablePos - _vertPos);
 	EndPaint(_mHwnd, &ps);
 }
 
@@ -150,4 +150,5 @@ void InvoiceWindow::createInputFields()
 	StaticText sRetail(_mHwnd, TEXT("Retail Pr."), _columns.at(4), _tablePos - 20, 120, 20);
 	StaticText sWholes(_mHwnd, TEXT("Wholes Pr."), _columns.at(5), _tablePos - 20, 120, 20);
 	StaticText sDiscount(_mHwnd, TEXT("Discount"), _columns.at(6), _tablePos - 20, 120, 20);
+	StaticText sTitle(_mHwnd, TEXT("INVOICE"), rc.right / 2 - 50, 20, 120, 30);
 }
