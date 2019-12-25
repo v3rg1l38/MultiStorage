@@ -116,7 +116,7 @@ void InvoiceWindow::onPaint()
 void InvoiceWindow::onResize()
 {
 	if(_cY)
-		setVertScroll(_mHwnd, 0, 200, 16 / _cY);
+		setVertScroll(_mHwnd, 0, _rows + 20, 16 / _cY);
 }
 
 void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
@@ -159,9 +159,10 @@ void InvoiceWindow::createInputFields()
 {
 	RECT rc;
 	GetClientRect(_mHwnd, &rc);
+	_rows = 50;
 
 	// Product fields
-	for(int i = 0; i < 30; ++i)
+	for(int i = 0; i < 50; ++i)
 	{
 		Edit(_mHwnd, TEXT(""), 
 			_columns.at(0), _tablePos + (20 * i), 120, 20, reinterpret_cast<HMENU>(COLUMN_ID_CODE + i)); // Code
@@ -198,5 +199,4 @@ void InvoiceWindow::createInputFields()
 	StaticText(_mHwnd, TEXT("Wholes Pr."), _columns.at(5), _tablePos - 20, 120, 20);
 	StaticText(_mHwnd, TEXT("Discount"), _columns.at(6), _tablePos - 20, 120, 20);
 	StaticText(_mHwnd, TEXT("INVOICE"), rc.right / 2 - 50, 20, 120, 30);
-
 }

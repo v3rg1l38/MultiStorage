@@ -33,6 +33,7 @@ private:
 	HBRUSH _cliBack;
 	int _startTablePos;
 	int _tablePos;
+	int _rows;
 	void onCreate();
 	void onPaint();
 	void onResize();
