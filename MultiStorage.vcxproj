@@ -152,9 +152,13 @@
     <ClInclude Include="InvoiceWindow\InvoiceWindow.h" />
     <ClInclude Include="Invoice\Invoice.h" />
     <ClInclude Include="Product\Product.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="StorageWindow\StorageWindow.h" />
     <ClInclude Include="WindowControls\WindowControls.h" />
     <ClInclude Include="WindowManager\WindowManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MultiStorage.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,25 +1,29 @@
 #pragma once
+#define UNICODE
 
+#include <Windows.h>
 #include <string>
 
 class ClientInfo
 {
-	std::string _name;
-	std::string _oib;
-	std::string _address;
-	std::string _owner;
-	std::string _iban;
-	int _discount;
-
 public:
-	std::string getName() const { return _name; }
-	std::string getOib() const { return _oib; }
-	std::string getAddress() const { return _address; }
-	std::string getOwner() const { return _owner; }
-	std::string getIban() const { return _iban; }
+	std::wstring getName() const { return _name; }
+	std::wstring getOib() const { return _oib; }
+	std::wstring getAddress() const { return _address; }
+	std::wstring getOwner() const { return _owner; }
+	std::wstring getIban() const { return _iban; }
 	int getDiscount() const { return _discount; }
 
 	friend class ClientBuilder;
+
+private:
+
+	std::wstring _name;
+	std::wstring _oib;
+	std::wstring _address;
+	std::wstring _owner;
+	std::wstring _iban;
+	int _discount;
 };
 
 class ClientBuilder
@@ -33,11 +37,16 @@ public:
 
 	static ClientBuilder build() { return ClientBuilder::ClientBuilder(); }
 
-	ClientBuilder & name(const std::string & name) noexcept;
-	ClientBuilder & oib(const std::string & oib) noexcept;
-	ClientBuilder & iban(const std::string & iban) noexcept;
-	ClientBuilder & owner(const std::string & owner) noexcept;
-	ClientBuilder & address(const std::string & address) noexcept;
+	ClientBuilder & name(const std::wstring & name) noexcept;
+	ClientBuilder & name(const TCHAR * name) noexcept;
+	ClientBuilder & oib(const std::wstring & oib) noexcept;
+	ClientBuilder & oib(const TCHAR * oib) noexcept;
+	ClientBuilder & iban(const std::wstring & iban) noexcept;
+	ClientBuilder & iban(const TCHAR * iban) noexcept;
+	ClientBuilder & owner(const std::wstring & owner) noexcept;
+	ClientBuilder & owner(const TCHAR * owner) noexcept;
+	ClientBuilder & address(const std::wstring & address) noexcept;
+	ClientBuilder & address(const TCHAR * address) noexcept;
 
 	operator ClientInfo()
 	{

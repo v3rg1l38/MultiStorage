@@ -1,12 +1,24 @@
 #include "Product.h"
 
-ProductBuilder & ProductBuilder::code(const std::string code) noexcept
+ProductBuilder & ProductBuilder::code(const std::wstring & code) noexcept
 {
 	_product._code = code;
 	return *this;
 }
 
-ProductBuilder & ProductBuilder::name(const std::string & name) noexcept
+ProductBuilder & ProductBuilder::code(const TCHAR * code) noexcept
+{
+	_product._code = code;
+	return *this;
+}
+
+ProductBuilder & ProductBuilder::name(const std::wstring & name) noexcept
+{
+	_product._name = name;
+	return *this;
+}
+
+ProductBuilder & ProductBuilder::name(const TCHAR * name) noexcept
 {
 	_product._name = name;
 	return *this;
@@ -18,7 +30,13 @@ ProductBuilder & ProductBuilder::count(const int & count) noexcept
 	return *this;
 }
 
-ProductBuilder & ProductBuilder::description(const std::string & description) noexcept
+ProductBuilder & ProductBuilder::description(const std::wstring & description) noexcept
+{
+	_product._description = description;
+	return *this;
+}
+
+ProductBuilder & ProductBuilder::description(const TCHAR * description) noexcept
 {
 	_product._description = description;
 	return *this;
