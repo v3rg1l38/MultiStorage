@@ -1,5 +1,6 @@
 #include "InvoiceWindow.h"
 
+
 LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -151,4 +152,5 @@ void InvoiceWindow::createInputFields()
 	StaticText sWholes(_mHwnd, TEXT("Wholes Pr."), _columns.at(5), _tablePos - 20, 120, 20);
 	StaticText sDiscount(_mHwnd, TEXT("Discount"), _columns.at(6), _tablePos - 20, 120, 20);
 	StaticText sTitle(_mHwnd, TEXT("INVOICE"), rc.right / 2 - 50, 20, 120, 30);
+
 }

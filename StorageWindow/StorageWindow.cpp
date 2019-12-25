@@ -1,4 +1,5 @@
 #include "StorageWindow.h"
+#include "../MockingData.h"
 
 LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -62,17 +63,17 @@ void StorageWindow::onCreate()
 	_listView.insertColumn(COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
 	_listView.setFullRowSelect();
 
-	for (size_t i = 0; i < 200; ++i)
+	for (size_t i = 0; i < (sizeof(MockData) / sizeof(MockData[0])); ++i)
 	{
 		_listView.insertItem(9999999);
-		_listView.setItemInt(i + 1, i, COLUMN_CODE);
-		_listView.setItemText(TEXT("Visokootporni lanac FI 10"), i, COLUMN_NAME);
-		_listView.setItemText(TEXT("Lanac FI 10"), i, COLUMN_DESCRIPTION);
-		_listView.setItemInt(i * 20, i, COLUMN_COUNT);
-		_listView.setItemInt(i * 10, i, COLUMN_PACKAGE);
-		_listView.setItemInt(i * 5, i, COLUMN_NEEDED);
-		_listView.setItemText(TEXT("10.02"), i, COLUMN_RETAILPRICE);
-		_listView.setItemText(TEXT("8.50"), i, COLUMN_WHOLESALEPRICE);
+		_listView.setItemText(MockData[i][0], i, COLUMN_CODE);
+		_listView.setItemText(MockData[i][1], i, COLUMN_NAME);
+		_listView.setItemText(MockData[i][2], i, COLUMN_DESCRIPTION);
+		_listView.setItemText(MockData[i][3], i, COLUMN_COUNT);
+		_listView.setItemText(MockData[i][4], i, COLUMN_PACKAGE);
+		_listView.setItemText(MockData[i][5], i, COLUMN_NEEDED);
+		_listView.setItemText(MockData[i][6], i, COLUMN_RETAILPRICE);
+		_listView.setItemText(MockData[i][7], i, COLUMN_WHOLESALEPRICE);
 	}
 }
 
