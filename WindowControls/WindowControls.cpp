@@ -204,8 +204,7 @@ int ListView::findItem(const TCHAR * code) noexcept
 
 int ListView::getSelectedRow() noexcept
 {
-	int index = SendMessage(_listHandle, LVM_GETNEXTITEM, static_cast<WPARAM>(-1), static_cast<LPARAM>(LVNI_SELECTED));
-	return index;
+	return SendMessage(_listHandle, LVM_GETNEXTITEM, static_cast<WPARAM>(-1), static_cast<LPARAM>(LVNI_SELECTED));
 }
 
 void ListView::setSelectedRow(const int & row) noexcept
@@ -233,8 +232,7 @@ void ListView::unsetSelectedRow(const int & row) noexcept
 
 int ListView::getItemCount() noexcept
 {
-	int count = SendMessage(_listHandle, LVM_GETITEMCOUNT, 0, 0);
-	return count;
+	return SendMessage(_listHandle, LVM_GETITEMCOUNT, 0, 0);
 }
 
 void ListView::setBkColor(COLORREF col) noexcept
