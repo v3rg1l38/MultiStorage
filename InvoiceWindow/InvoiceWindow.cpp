@@ -152,7 +152,6 @@ void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
 	SetDlgItemText(_mHwnd, codeBox + name, _prods->at(index).getCName());
 	SetDlgItemInt(_mHwnd, codeBox + retpr, _prods->at(index).getRetailPrice(), true);
 	SetDlgItemInt(_mHwnd, codeBox + wholepr, _prods->at(index).getWholesalePrice(), true);
-
 }
 
 void InvoiceWindow::createInputFields()
