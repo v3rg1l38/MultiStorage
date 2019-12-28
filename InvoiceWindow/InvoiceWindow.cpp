@@ -137,9 +137,9 @@ void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
 
 	int index = -1;
 
-	for (size_t i = 0; i < (sizeof(MockData) / sizeof(MockData[0])); ++i)
+	for (size_t i = 0; i < _prods->size(); ++i)
 	{
-		if (lstrcmp(code.c_str(), MockData[i][0]) == 0)
+		if (lstrcmp(code.c_str(), _prods->at(i).getCCode()) == 0)
 		{
 			index = i;
 			break;
@@ -149,9 +149,9 @@ void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
 	if (index == -1)
 		return;
 
-	SetDlgItemText(_mHwnd, codeBox + name, MockData[index][1]);
-	SetDlgItemText(_mHwnd, codeBox + retpr, MockData[index][6]);
-	SetDlgItemText(_mHwnd, codeBox + wholepr, MockData[index][7]);
+	SetDlgItemText(_mHwnd, codeBox + name, _prods->at(index).getCName());
+	SetDlgItemInt(_mHwnd, codeBox + retpr, _prods->at(index).getRetailPrice(), true);
+	SetDlgItemInt(_mHwnd, codeBox + wholepr, _prods->at(index).getWholesalePrice(), true);
 
 }
 

@@ -5,6 +5,7 @@
 #include <vector>
 #include "../WindowManager/WindowManager.h"
 #include "../WindowControls/WindowControls.h"
+#include "../Product/Product.h"
 
 #define COLUMN_ID_CODE 100
 #define COLUMN_ID_NAME 200
@@ -25,10 +26,12 @@ class InvoiceWindow : public BaseMDIChild<InvoiceWindow>,
 public:
 	InvoiceWindow() {}
 	virtual LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam);
+	void setProds(std::vector<Product> * prods) { _prods = prods; }
 
 private:
 	std::vector<Edit> _editBoxes;
 	std::vector<int> _columns;
+	std::vector<Product> * _prods;
 	HBRUSH _prodBack;
 	HBRUSH _cliBack;
 	int _tablePos;

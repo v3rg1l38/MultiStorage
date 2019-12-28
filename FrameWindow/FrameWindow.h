@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <CommCtrl.h>
 #include "../WindowManager/WindowManager.h"
+#include "../Database/Database.h"
 
 class FrameWindow : public BaseFrameWindow<FrameWindow>
 {
@@ -20,4 +21,5 @@ private:
 	void onCreate();
 	void onChangeSize(LPARAM lParam);
 	void commandHandler(WPARAM wParam, LPARAM lParam);
+	MySql _database;
 };

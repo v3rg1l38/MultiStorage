@@ -48,11 +48,6 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 void StorageWindow::onCreate()
 {
-	//MySql db("192.168.1.96", "vergil", "matija", "3306");
-	//db.setSqlCommand("SELECT * FROM Products");
-	//db.setDbName("Storage");
-	//db.fetchData();
-
 	RECT rc;
 	GetClientRect(_mHwnd, &rc);
 	_listView.createList(_mHwnd, 0, 0, rc.right - rc.left, rc.bottom - rc.top, ID_STORAGE_LIST);
@@ -68,18 +63,18 @@ void StorageWindow::onCreate()
 	_listView.insertColumn(COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
 	_listView.setFullRowSelect();
 
-	//for (size_t i = 0; i < db.getProductList().size(); ++i)
-	//{
-	//	_listView.insertItem(99999999);
-	//	_listView.setItemText(db.getProductList().at(i).getCCode(), i, COLUMN_CODE);
-	//	_listView.setItemText(db.getProductList().at(i).getCName(), i, COLUMN_NAME);
-	//	_listView.setItemText(db.getProductList().at(i).getCDescription(), i, COLUMN_DESCRIPTION);
-	//	_listView.setItemInt(db.getProductList().at(i).getCount(), i, COLUMN_COUNT);
-	//	_listView.setItemInt(db.getProductList().at(i).getPackage(), i, COLUMN_PACKAGE);
-	//	_listView.setItemInt(db.getProductList().at(i).getNeeded(), i, COLUMN_NEEDED);
-	//	_listView.setItemText(L"0.0", i, COLUMN_RETAILPRICE);
-	//	_listView.setItemText(L"0.0", i, COLUMN_WHOLESALEPRICE);
-	//}
+	for (size_t i = 0; i < _prods->size(); ++i)
+	{
+		_listView.insertItem(99999999);
+		_listView.setItemText(_prods->at(i).getCCode(), i, COLUMN_CODE);
+		_listView.setItemText(_prods->at(i).getCName(), i, COLUMN_NAME);
+		_listView.setItemText(_prods->at(i).getCDescription(), i, COLUMN_DESCRIPTION);
+		_listView.setItemInt(_prods->at(i).getCount(), i, COLUMN_COUNT);
+		_listView.setItemInt(_prods->at(i).getPackage(), i, COLUMN_PACKAGE);
+		_listView.setItemInt(_prods->at(i).getNeeded(), i, COLUMN_NEEDED);
+		_listView.setItemText(L"0.0", i, COLUMN_RETAILPRICE);
+		_listView.setItemText(L"0.0", i, COLUMN_WHOLESALEPRICE);
+	}
 }
 
 
