@@ -31,7 +31,6 @@ private:
 	std::vector<int> _columns;
 	HBRUSH _prodBack;
 	HBRUSH _cliBack;
-	int _startTablePos;
 	int _tablePos;
 	int _rows;
 	void onCreate();

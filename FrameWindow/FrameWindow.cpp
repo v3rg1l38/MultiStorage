@@ -164,7 +164,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 		invoiceWind->createMDIChild(TEXT("Invoice"), 
 			TEXT("Invoice"), 
 			_clientArea,
-			WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CHILD | WS_VSCROLL,
+			WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CHILD,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
 			854,
