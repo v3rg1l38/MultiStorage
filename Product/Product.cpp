@@ -65,3 +65,15 @@ ProductBuilder & ProductBuilder::package(const int & package) noexcept
 	_product._package = package;
 	return *this;
 }
+
+ProductBuilder & ProductBuilder::unit(const TCHAR * unit) noexcept
+{
+	_product._unit = unit;
+	return *this;
+}
+
+ProductBuilder & ProductBuilder::unit(const std::wstring & unit) noexcept
+{
+	_product._unit = unit;
+	return *this;
+}

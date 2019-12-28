@@ -7,6 +7,7 @@
 #include <vector>
 #include <winsqlite/winsqlite3.h>
 #include <mysql/jdbc.h>
+#include "../Product/Product.h"
 
 class Database
 {
@@ -44,6 +45,7 @@ public:
 	inline void setHost(const std::string & host) noexcept { _host = "tcp://" + host; }
 	inline void setSqlCommand(const std::string & sql) noexcept { _sql = sql; }
 	inline void setDbName(const std::string & dbName) noexcept { _dbName = dbName; }
+	std::vector<Product> & getProductList() { return _products; }
 	void executeQuery();
 
 private:
@@ -60,5 +62,5 @@ private:
 	std::string _port;
 	std::string _sql;
 	std::string _dbName;
-	std::vector<std::string> _list;
+	std::vector<Product> _products;
 };

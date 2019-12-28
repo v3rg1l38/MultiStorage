@@ -55,7 +55,23 @@ void MySql::executeQuery()
 
 		while (_result->next())
 		{
-			_list.emplace_back(_result->getString("Name"));
+			const std::string code = _result->getString("Code");
+			const std::string name = _result->getString("Name");
+			const std::string note = _result->getString("Note");
+			const int count = _result->getInt("Count2");
+			const int count15 = _result->getInt("Count15");
+			const int need = _result->getInt("Need");
+			const int package = _result->getInt("Package");
+			const std::string unit = _result->getString("Unit");
+
+			Product pr = ProductBuilder::build().code(convertToWString(code.c_str()))
+				.name(convertToWString(name.c_str()))
+				.count(count)
+				.description(convertToWString(note.c_str()))
+				.needed(need)
+				.package(package)
+				.unit(convertToWString(unit.c_str()));
+			_products.emplace_back(pr);
 		}
 
 		delete _result;
