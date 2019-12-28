@@ -96,29 +96,25 @@ int ListView::insertColumn(const int & colNum,
 	const int & colWidth) noexcept
 {
 	LVCOLUMN lCol;
-	int columnIndex;
 
 	memset(&lCol, 0, sizeof(lCol));
 
 	lCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 	lCol.cx = colWidth;
 	lCol.pszText = const_cast<TCHAR*>(colName);
-	columnIndex = SendMessage(_listHandle, LVM_INSERTCOLUMN, colNum, reinterpret_cast<LPARAM>(&lCol));
-	return columnIndex;
+	return SendMessage(_listHandle, LVM_INSERTCOLUMN, colNum, reinterpret_cast<LPARAM>(&lCol));
 }
 
 int ListView::insertItem(const int & nRow) noexcept
 {
 	LVITEM lItem;
-	int itemIndex;
 
 	memset(&lItem, 0, sizeof(lItem));
 	lItem.cchTextMax = 512;
 	lItem.mask = LVCF_TEXT;
 
 	lItem.iItem = nRow;
-	itemIndex = SendMessage(_listHandle, LVM_INSERTITEM, 0, reinterpret_cast<LPARAM>(&lItem));
-	return itemIndex;
+	return SendMessage(_listHandle, LVM_INSERTITEM, 0, reinterpret_cast<LPARAM>(&lItem));
 }
 
 void ListView::setItemText(const TCHAR * value, const int & nRow, const int & nCol) noexcept
@@ -198,8 +194,7 @@ int ListView::findItem(const TCHAR * code) noexcept
 	findInfo.flags = LVFI_STRING;
 	findInfo.psz = code;
 
-	int nIndex = SendMessage(_listHandle, LVM_FINDITEM, static_cast<WPARAM>(-1), reinterpret_cast<LPARAM>(&findInfo));
-	return nIndex;
+	return SendMessage(_listHandle, LVM_FINDITEM, static_cast<WPARAM>(-1), reinterpret_cast<LPARAM>(&findInfo));
 }
 
 int ListView::getSelectedRow() noexcept
