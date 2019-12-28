@@ -46,7 +46,7 @@ public:
 	inline void setSqlCommand(const std::string & sql) noexcept { _sql = sql; }
 	inline void setDbName(const std::string & dbName) noexcept { _dbName = dbName; }
 	std::vector<Product> & getProductList() { return _products; }
-	void executeQuery();
+	void fetchData();
 
 private:
 	MySql(const MySql &) = delete;

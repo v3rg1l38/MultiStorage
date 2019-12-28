@@ -43,7 +43,7 @@ std::string MySql::convertToString(const wchar_t * string)
 	return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(string);
 }
 
-void MySql::executeQuery()
+void MySql::fetchData()
 {
 	try {
 		_driver = get_driver_instance();
@@ -80,6 +80,6 @@ void MySql::executeQuery()
 	} 
 	catch (sql::SQLException & e)
 	{
-		MessageBoxA(NULL, e.what(), "MYSQL Error", MB_OK);
+		MessageBoxA(NULL, e.what(), "MySQL Error", MB_OK);
 	}
 }

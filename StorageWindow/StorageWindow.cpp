@@ -48,10 +48,10 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 void StorageWindow::onCreate()
 {
-	MySql db("192.168.1.96", "vergil", "matija", "3306");
-	db.setSqlCommand("SELECT * FROM Products");
-	db.setDbName("Storage");
-	db.executeQuery();
+	//MySql db("192.168.1.96", "vergil", "matija", "3306");
+	//db.setSqlCommand("SELECT * FROM Products");
+	//db.setDbName("Storage");
+	//db.fetchData();
 
 	RECT rc;
 	GetClientRect(_mHwnd, &rc);
@@ -68,32 +68,18 @@ void StorageWindow::onCreate()
 	_listView.insertColumn(COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
 	_listView.setFullRowSelect();
 
-	for (size_t i = 0; i < db.getProductList().size(); ++i)
-	{
-		_listView.insertItem(99999999);
-		_listView.setItemText(db.getProductList().at(i).getCCode(), i, COLUMN_CODE);
-		_listView.setItemText(db.getProductList().at(i).getCName(), i, COLUMN_NAME);
-		_listView.setItemText(db.getProductList().at(i).getCDescription(), i, COLUMN_DESCRIPTION);
-		_listView.setItemInt(db.getProductList().at(i).getCount(), i, COLUMN_COUNT);
-		_listView.setItemInt(db.getProductList().at(i).getPackage(), i, COLUMN_PACKAGE);
-		_listView.setItemInt(db.getProductList().at(i).getNeeded(), i, COLUMN_NEEDED);
-		_listView.setItemText(L"0.0", i, COLUMN_RETAILPRICE);
-		_listView.setItemText(L"0.0", i, COLUMN_WHOLESALEPRICE);
-	}
-
-	//for (size_t i = 0; i < (sizeof(MockData) / sizeof(MockData[0])); ++i)
+	//for (size_t i = 0; i < db.getProductList().size(); ++i)
 	//{
-	//	_listView.insertItem(9999999);
-	//	_listView.setItemText(MockData[i][0], i, COLUMN_CODE);
-	//	_listView.setItemText(MockData[i][1], i, COLUMN_NAME);
-	//	_listView.setItemText(MockData[i][2], i, COLUMN_DESCRIPTION);
-	//	_listView.setItemText(MockData[i][3], i, COLUMN_COUNT);
-	//	_listView.setItemText(MockData[i][4], i, COLUMN_PACKAGE);
-	//	_listView.setItemText(MockData[i][5], i, COLUMN_NEEDED);
-	//	_listView.setItemText(MockData[i][6], i, COLUMN_RETAILPRICE);
-	//	_listView.setItemText(MockData[i][7], i, COLUMN_WHOLESALEPRICE);
+	//	_listView.insertItem(99999999);
+	//	_listView.setItemText(db.getProductList().at(i).getCCode(), i, COLUMN_CODE);
+	//	_listView.setItemText(db.getProductList().at(i).getCName(), i, COLUMN_NAME);
+	//	_listView.setItemText(db.getProductList().at(i).getCDescription(), i, COLUMN_DESCRIPTION);
+	//	_listView.setItemInt(db.getProductList().at(i).getCount(), i, COLUMN_COUNT);
+	//	_listView.setItemInt(db.getProductList().at(i).getPackage(), i, COLUMN_PACKAGE);
+	//	_listView.setItemInt(db.getProductList().at(i).getNeeded(), i, COLUMN_NEEDED);
+	//	_listView.setItemText(L"0.0", i, COLUMN_RETAILPRICE);
+	//	_listView.setItemText(L"0.0", i, COLUMN_WHOLESALEPRICE);
 	//}
-
 }
 
 
