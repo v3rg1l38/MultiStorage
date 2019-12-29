@@ -90,6 +90,7 @@ private:
 	sql::Driver * _driver;
 	sql::Connection * _connection;
 	sql::Statement * _statement;
+	sql::PreparedStatement * _prepStatement;
 	sql::ResultSet * _result;
 	std::string _host;
 	std::string _username;
