@@ -154,6 +154,7 @@ void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
 	_snwprintf_s(rPrice, 1024, L"%.2f", _prods->at(index).getRetailPrice());
 	_snwprintf_s(wPrice, 1024, L"%.2f", _prods->at(index).getWholesalePrice());
 	SetDlgItemText(_mHwnd, codeBox + name, _prods->at(index).getCName());
+	SetDlgItemText(_mHwnd, codeBox + unit, _prods->at(index).getCUnit());
 	SetDlgItemText(_mHwnd, codeBox + retpr, rPrice);
 	SetDlgItemText(_mHwnd, codeBox + wholepr, wPrice);
 }
