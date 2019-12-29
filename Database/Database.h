@@ -9,6 +9,40 @@
 #include <mysql/jdbc.h>
 #include "../Product/Product.h"
 
+/*
+Database Structure
+
+Tables:
+
+Clients ->	client_id int PRIMARY KEY AUTO_INCREMENT NOT NULL
+			client_name varchar(30) NOT NULL
+			client_oib varchar(20) NOT NULL
+			client_iban varchar(20) NOT NULL
+			client_discount int NOT NULL
+			client_adress varchar(255) NOT NULL
+
+Invoice ->	invoice_id int PRIMARY KEY NOT NULL AUTO_INCREMENT
+			invoice_number int NOT NULL
+			invoice_buyer int FOREIGN KEY Client.client_id NOT NULL
+			invoice_seller int FOREIGN KEY Sellers.seller_id NOT NULL
+			invoice_prodList BLOB
+
+Products ->	product_id int PRIMARY KEY AUTO_INCREMENT NOT NULL
+			product_name varchar(255) NOT NULL
+			product_unit varchar(10) NOT NULL
+			product_count int NOT NULL
+			product_package int NOT NULL
+			product_need int NOT NULL
+			product_retailpr decimal(18,2) NOT NULL
+			product_wholepr decimal(18,2) NOT NULL
+
+Sellers ->	seller_id int PRIMARY KEY AUTO_INCREMENT NOT NULL
+			seller_firstName varchar(30) NOT NULL
+			seller_lastName varchar(30) NOT NULL
+			seller_description text NOT NULL
+
+*/
+
 class Database
 {
 public:
