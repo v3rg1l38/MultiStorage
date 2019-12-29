@@ -9,7 +9,7 @@
 
 #define COLUMN_CODE 0
 #define COLUMN_NAME 1
-#define COLUMN_DESCRIPTION 2
+#define COLUMN_UNIT 2
 #define COLUMN_COUNT 3
 #define COLUMN_PACKAGE 4
 #define COLUMN_NEEDED 5

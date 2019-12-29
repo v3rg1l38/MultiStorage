@@ -12,11 +12,13 @@ public:
 	inline const TCHAR * getCCode() const { return _code.c_str(); }
 	inline std::wstring getDescription() const { return _description; }
 	inline const TCHAR * getCDescription() const { return _description.c_str(); }
+	inline const TCHAR * getCUnit() const { return _unit.c_str(); }
+	inline std::wstring getUnit() const { return _unit; }
 	inline int getCount() const { return _count; }
 	inline int getNeeded() const { return _needed; }
 	inline int getPackage() const { return _package; }
-	inline float getRetailPrice() const { return _retailPrice; }
-	inline float getWholesalePrice() const { return _wholesalePrice; }
+	inline double getRetailPrice() const { return _retailPrice; }
+	inline double getWholesalePrice() const { return _wholesalePrice; }
 
 private:
 
@@ -27,8 +29,8 @@ private:
 	int _count;
 	int _needed;
 	int _package;
-	float _retailPrice;
-	float _wholesalePrice;
+	double _retailPrice;
+	double _wholesalePrice;
 	friend class ProductBuilder;
 };
 
@@ -47,8 +49,8 @@ public:
 	ProductBuilder & count(const int & count) noexcept;
 	ProductBuilder & description(const std::wstring & description) noexcept;
 	ProductBuilder & description(const TCHAR * description) noexcept;
-	ProductBuilder & retailPrice(const float & retPrice) noexcept;
-	ProductBuilder & wholesalePrice(const float & wPrice) noexcept;
+	ProductBuilder & retailPrice(const double & retPrice) noexcept;
+	ProductBuilder & wholesalePrice(const double & wPrice) noexcept;
 	ProductBuilder & needed(const int & needed) noexcept;
 	ProductBuilder & package(const int & package) noexcept;
 	ProductBuilder & unit(const TCHAR * unit) noexcept;

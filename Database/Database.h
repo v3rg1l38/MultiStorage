@@ -35,6 +35,7 @@ Products ->	product_id int PRIMARY KEY AUTO_INCREMENT NOT NULL
 			product_need int NOT NULL
 			product_retailpr decimal(18,2) NOT NULL
 			product_wholepr decimal(18,2) NOT NULL
+			product_code varchar(30) NOT NULL
 
 Sellers ->	seller_id int PRIMARY KEY AUTO_INCREMENT NOT NULL
 			seller_firstName varchar(30) NOT NULL

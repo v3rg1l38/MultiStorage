@@ -55,7 +55,7 @@ void StorageWindow::onCreate()
 	_listView.setBkColor( RGB(179, 248, 255));
 	_listView.insertColumn(COLUMN_CODE, TEXT("Code"), 0x80);
 	_listView.insertColumn(COLUMN_NAME, TEXT("Name"), 0x120);
-	_listView.insertColumn(COLUMN_DESCRIPTION, TEXT("Description"), 0x80);
+	_listView.insertColumn(COLUMN_UNIT, TEXT("Unit"), 0x80);
 	_listView.insertColumn(COLUMN_COUNT, TEXT("Count"), 0x80);
 	_listView.insertColumn(COLUMN_PACKAGE, TEXT("Package"), 0x80);
 	_listView.insertColumn(COLUMN_NEEDED, TEXT("Needed"), 0x80);
@@ -68,12 +68,12 @@ void StorageWindow::onCreate()
 		_listView.insertItem(99999999);
 		_listView.setItemText(_prods->at(i).getCCode(), i, COLUMN_CODE);
 		_listView.setItemText(_prods->at(i).getCName(), i, COLUMN_NAME);
-		_listView.setItemText(_prods->at(i).getCDescription(), i, COLUMN_DESCRIPTION);
+		_listView.setItemText(_prods->at(i).getCUnit(), i, COLUMN_UNIT);
 		_listView.setItemInt(_prods->at(i).getCount(), i, COLUMN_COUNT);
 		_listView.setItemInt(_prods->at(i).getPackage(), i, COLUMN_PACKAGE);
 		_listView.setItemInt(_prods->at(i).getNeeded(), i, COLUMN_NEEDED);
-		_listView.setItemText(L"0.0", i, COLUMN_RETAILPRICE);
-		_listView.setItemText(L"0.0", i, COLUMN_WHOLESALEPRICE);
+		_listView.setItemDouble(_prods->at(i).getRetailPrice(), i, COLUMN_RETAILPRICE);
+		_listView.setItemDouble(_prods->at(i).getWholesalePrice(), i, COLUMN_WHOLESALEPRICE);
 	}
 }
 

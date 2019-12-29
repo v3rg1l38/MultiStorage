@@ -55,6 +55,7 @@ public:
 	int insertItem(const int & nRow) noexcept;
 	void setItemText(const TCHAR * value, const int & nRow, const int & nCol) noexcept;
 	void setItemInt(const int & val, const int & nRow, const int & nCol) noexcept;
+	void setItemDouble(const double & value, const int & nRow, const int & nCol) noexcept;
 	void setFullRowSelect() noexcept;
 	inline void clearList() noexcept;
 	const TCHAR * getDataFromRow(const int & row, const int & column) noexcept;

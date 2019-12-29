@@ -55,22 +55,23 @@ void MySql::fetchData()
 
 		while (_result->next())
 		{
-			const std::string code = _result->getString("Code");
-			const std::string name = _result->getString("Name");
-			const std::string note = _result->getString("Note");
-			const int count = _result->getInt("Count2");
-			const int count15 = _result->getInt("Count15");
-			const int need = _result->getInt("Need");
-			const int package = _result->getInt("Package");
-			const std::string unit = _result->getString("Unit");
+			const std::string code = _result->getString("product_code");
+			const std::string name = _result->getString("product_name");
+			const std::string unit = _result->getString("product_unit");
+			const int count = _result->getInt("product_count");
+			const int need = _result->getInt("product_need");
+			const int package = _result->getInt("product_package");
+			const double retailPr = _result->getDouble("product_retailpr");
+			const double wholePr = _result->getDouble("product_wholepr");
 
 			Product pr = ProductBuilder::build().code(convertToWString(code.c_str()))
 				.name(convertToWString(name.c_str()))
 				.count(count)
-				.description(convertToWString(note.c_str()))
 				.needed(need)
 				.package(package)
-				.unit(convertToWString(unit.c_str()));
+				.unit(convertToWString(unit.c_str()))
+				.retailPrice(retailPr)
+				.wholesalePrice(wholePr);
 			_products.emplace_back(pr);
 		}
 

@@ -42,13 +42,13 @@ ProductBuilder & ProductBuilder::description(const TCHAR * description) noexcept
 	return *this;
 }
 
-ProductBuilder & ProductBuilder::retailPrice(const float & retPrice) noexcept
+ProductBuilder & ProductBuilder::retailPrice(const double & retPrice) noexcept
 {
 	_product._retailPrice = retPrice;
 	return *this;
 }
 
-ProductBuilder & ProductBuilder::wholesalePrice(const float & wPrice) noexcept
+ProductBuilder & ProductBuilder::wholesalePrice(const double & wPrice) noexcept
 {
 	_product._wholesalePrice = wPrice;
 	return *this;

@@ -148,6 +148,23 @@ void ListView::setItemInt(const int & val, const int & nRow, const int & nCol) n
 	SendMessage(_listHandle, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
 }
 
+void ListView::setItemDouble(const double & value, const int & nRow, const int & nCol) noexcept
+{
+	LVITEM lItem;
+	TCHAR buffer[MAX_PATH] = TEXT("");
+
+	memset(&lItem, 0, sizeof(lItem));
+	lItem.cchTextMax = 512;
+	lItem.mask = LVCF_TEXT;
+
+	lItem.iItem = nRow;
+	lItem.iSubItem = nCol;
+
+	_snwprintf_s(buffer, MAX_PATH, TEXT("%.2f"), value);
+	lItem.pszText = buffer;
+	SendMessage(_listHandle, LVM_SETITEMTEXT, nRow, reinterpret_cast<LPARAM>(&lItem));
+}
+
 void ListView::setFullRowSelect() noexcept
 {
 	SendMessage(_listHandle, LVM_SETEXTENDEDLISTVIEWSTYLE,

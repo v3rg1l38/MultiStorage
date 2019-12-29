@@ -149,9 +149,13 @@ void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)
 	if (index == -1)
 		return;
 
+	TCHAR rPrice[1024] = L"";
+	TCHAR wPrice[1024] = L"";
+	_snwprintf_s(rPrice, 1024, L"%.2f", _prods->at(index).getRetailPrice());
+	_snwprintf_s(wPrice, 1024, L"%.2f", _prods->at(index).getWholesalePrice());
 	SetDlgItemText(_mHwnd, codeBox + name, _prods->at(index).getCName());
-	SetDlgItemInt(_mHwnd, codeBox + retpr, _prods->at(index).getRetailPrice(), true);
-	SetDlgItemInt(_mHwnd, codeBox + wholepr, _prods->at(index).getWholesalePrice(), true);
+	SetDlgItemText(_mHwnd, codeBox + retpr, rPrice);
+	SetDlgItemText(_mHwnd, codeBox + wholepr, wPrice);
 }
 
 void InvoiceWindow::createInputFields()
