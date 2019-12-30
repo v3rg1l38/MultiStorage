@@ -20,6 +20,8 @@ public:
 
 	HWND getWindowHandle() const { return _mHwnd; }
 	HWND getClientArea() const { return _clientArea; }
+	operator HWND() const { return _mHwnd; }
+
 protected:
 	virtual LRESULT CALLBACK FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
 	HWND _mHwnd; // Frame window Handle
@@ -127,6 +129,7 @@ public:
 	bool isReady() const { return _isReady; }
 	void setReady() { _isReady = true; }
 	HWND getWindowHandle() const { return _mHwnd; }
+	operator HWND() const { return _mHwnd; }
 
 protected:
 	virtual LRESULT CALLBACK MDICProc(UINT msg, WPARAM wParam, LPARAM lParam) = 0;
