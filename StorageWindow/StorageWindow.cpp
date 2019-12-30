@@ -1,5 +1,6 @@
 #include "StorageWindow.h"
 #include "../MockingData.h"
+#include <Uxtheme.h>
 
 LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -62,6 +63,8 @@ void StorageWindow::onCreate()
 	_listView.insertColumn(COLUMN_RETAILPRICE, TEXT("Retail Price"), 0x80);
 	_listView.insertColumn(COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
 	_listView.setFullRowSelect();
+
+	SetWindowTheme(_listView.getListHandle(), L"Explorer", NULL);
 
 	for (size_t i = 0; i < _prods->size(); ++i)
 	{

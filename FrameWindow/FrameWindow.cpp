@@ -41,6 +41,7 @@ void FrameWindow::setClientAreaBackground()
 
 void FrameWindow::onCreate()
 {
+
 	initilaizeMenu();
 
 	CLIENTCREATESTRUCT css;
@@ -95,9 +96,9 @@ void FrameWindow::onCreate()
 	SendMessage(_toolbar, TB_AUTOSIZE, 0, 0);
 	SendMessage(_toolbar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 
-	_database.Host("192.168.1.96").Port("3306").Username("vergil").Password("matija").DbName("MultiStorage")
-		.SqlCommand("SELECT * FROM Products");
-	_database.fetchData();
+	//_database.Host("192.168.1.96").Port("3306").Username("vergil").Password("matija").DbName("MultiStorage")
+	//	.SqlCommand("SELECT * FROM Products");
+	//_database.fetchData();
 }
 
 void FrameWindow::onChangeSize(LPARAM lParam)
