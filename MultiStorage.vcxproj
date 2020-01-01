@@ -147,6 +147,7 @@
     <ClInclude Include="ClientInfo\ClientInfo.h" />
     <ClInclude Include="CSV\CSV.h" />
     <ClInclude Include="Database\Database.h" />
+    <ClInclude Include="DlgManager\DlgBase.h" />
     <ClInclude Include="FrameWindow\FrameWindow.h" />
     <ClInclude Include="GenericString\GenericString.h" />
     <ClInclude Include="InvoiceWindow\InvoiceWindow.h" />

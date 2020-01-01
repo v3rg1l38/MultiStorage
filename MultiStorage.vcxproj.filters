@@ -89,6 +89,9 @@
     <ClInclude Include="MockingData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DlgManager\DlgBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MultiStorage.rc">

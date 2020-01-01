@@ -12,7 +12,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czCommand, int nShowWindow)
 {
 	FrameWindow * frameWindow = new FrameWindow();
-	frameWindow->createWindow(TEXT("Proba"));
+	frameWindow->createWindow(TEXT("MVX Store"));
 	ShowWindow(*frameWindow, SW_MAXIMIZE);
 
 	MSG msg;
