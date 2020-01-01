@@ -160,12 +160,9 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 
 	case MENU_STORAGE_LIST:
 	{
-		//StorageWindow *storWind = new StorageWindow();
-		//storWind->setProds(&_database.getProductList());
-		//storWind->createMDIChild(TEXT("Storage"), TEXT("Storage"), _clientArea);
-		SettingsDialog * sD = new SettingsDialog();
-		sD->createDialog(IDD_DIALOG1, _mHwnd);
-		delete sD;
+		StorageWindow *storWind = new StorageWindow();
+		storWind->setProds(&_database.getProductList());
+		storWind->createMDIChild(TEXT("Storage"), TEXT("Storage"), _clientArea);
 	}
 	break;
 
