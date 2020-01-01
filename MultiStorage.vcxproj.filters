@@ -54,6 +54,9 @@
     <ClCompile Include="Localization\Localization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AppData\AppData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowControls\WindowControls.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Localization\Localization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AppData\AppData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

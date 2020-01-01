@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppData\AppData.cpp" />
     <ClCompile Include="ClientInfo\ClientInfo.cpp" />
     <ClCompile Include="CSV\CSV.cpp" />
     <ClCompile Include="Database\Database.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="WindowControls\WindowControls.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppData\AppData.h" />
     <ClInclude Include="ClientInfo\ClientInfo.h" />
     <ClInclude Include="CSV\CSV.h" />
     <ClInclude Include="Database\Database.h" />
