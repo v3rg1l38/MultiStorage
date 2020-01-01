@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include "FrameWindow/FrameWindow.h"
+#include "Localization/Localization.h"
 
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "UxTheme.lib")

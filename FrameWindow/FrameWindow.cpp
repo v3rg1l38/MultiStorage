@@ -3,6 +3,7 @@
 #include "../InvoiceWindow/InvoiceWindow.h"
 #include "../resource.h"
 #include "../DialogBoxes/SettingsDialog/SettingsDialog.h"
+#include "../Localization/Localization.h"
 
 void FrameWindow::initilaizeMenu()
 {
@@ -11,26 +12,26 @@ void FrameWindow::initilaizeMenu()
 	hMenu = CreateMenu();
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("&File"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, TEXT("&Open"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, TEXT("&Save"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, TEXT("&Load"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, TEXT("&Close"));
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localString(L"MENU_FILE").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, Localization::localString(L"MENU_OPEN").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, Localization::localString(L"MENU_SAVE").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, Localization::localString(L"MENU_LOAD").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, Localization::localString(L"MENU_CLOSE").c_str());
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("&Invoice"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, TEXT("&New"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, TEXT("&Load"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, TEXT("L&ist"));
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localString(L"MENU_INVOICE").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, Localization::localString(L"MENU_NEW").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, Localization::localString(L"MENU_LOAD").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, Localization::localString(L"MENU_LIST").c_str());
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("&Settings"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, TEXT("&Global Settings"));
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localString(L"MENU_SETTINGS").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, Localization::localString(L"MENU_GLOBALSETTINGS").c_str());
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), TEXT("S&torage"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, TEXT("&List"));
-	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, TEXT("&Export Storage"));
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localString(L"MENU_STORAGE").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, Localization::localString(L"MENU_LIST").c_str());
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, Localization::localString(L"MENU_EXPORTSTORAGE").c_str());
 
 	SetMenu(_mHwnd, hMenu);
 }

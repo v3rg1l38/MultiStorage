@@ -126,8 +126,6 @@ public:
 		const int & cY = CW_USEDEFAULT,
 		const HINSTANCE & hInst = GetModuleHandle(NULL),
 		const HMENU & menu = NULL);
-	bool isReady() const { return _isReady; }
-	void setReady() { _isReady = true; }
 	HWND getWindowHandle() const { return _mHwnd; }
 	operator HWND() const { return _mHwnd; }
 
@@ -137,13 +135,12 @@ protected:
 	HWND _parentFrame; // Parent Frame Window not the MDICLIENT Window
 	int _cX;
 	int _cY;
-	bool _isReady = false;
 };
 
 template<class MDIChild>
 inline LRESULT BaseMDIChild<MDIChild>::ChildWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	MDIChild * pData;
+	MDIChild * pData = nullptr;
 
 	if (msg == WM_NCCREATE)
 	{
@@ -218,10 +215,4 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const TCHAR * className,
 	_mHwnd = mdiChild;
 	_parentFrame = GetParent(parent);
 
-}
-
-template <class Window>
-Window * getWindowData(const HWND & window)
-{
-	return reinterpret_cast<Window*>(GetWindowLongPtr(window, GWLP_USERDATA));
 }
