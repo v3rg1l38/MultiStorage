@@ -1,9 +1,7 @@
 #pragma once
-#define UNICODE
 
 #include <string>
 #include <fstream>
-#include <Windows.h>
 
 namespace Localization
 {
