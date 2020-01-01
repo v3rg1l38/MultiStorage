@@ -1,4 +1,5 @@
 #pragma once
+#define UNICODE
 
 #include <Windows.h>
 
@@ -7,6 +8,7 @@ class DlgBase
 {
 public:
 	static INT_PTR CALLBACK DlgBaseProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	void createDialog(const TCHAR * templateName, const HWND & parent);
 
 protected:
 	HWND _hDlg;
@@ -34,4 +36,10 @@ INT_PTR CALLBACK DlgBase<DLG>::DlgBaseProc(HWND hWnd, UINT msg, WPARAM wParam, L
 		MessageBox(NULL, L"Unable to load Dialog Data", L"Error: DlgBaseProc func", MB_OK | MB_ICONERROR);
 		return 0;
 	}
+}
+
+template <class DLG>
+void DlgBase<DLG>::createDialog(const TCHAR * templateName, const HWND & parent)
+{
+	DialogBoxParam(GetModuleHandle(NULL), templateName, parent, DlgBaseProc, this);
 }
