@@ -4,31 +4,9 @@ namespace Localization
 {
 	std::unordered_map<std::wstring, std::wstring> localization_;
 
-	const std::wstring localString(const std::wstring & string)
+	const TCHAR * getLocalString(const std::wstring & id)
 	{
-		std::wifstream inFile(L"Language.lang");
-		
-		if (!inFile.is_open())
-			return std::wstring();
-		
-		std::wstring line;
-		std::wstring retWord = L"";
-
-		while (std::getline(inFile, line))
-		{
-			size_t index = line.find(L"=");
-			std::wstring id = line.substr(0, index);
-
-			if (id == string)
-			{
-				retWord = line.substr(index + 1, line.length());
-				break;
-			}
-		}
-
-		inFile.close();
-
-		return retWord;
+		return localization_[id].c_str();
 	}
 
 	bool loadLanguage(const TCHAR * filePath)
@@ -44,7 +22,7 @@ namespace Localization
 		std::wstring line;
 		while (std::getline(inFile, line))
 		{
-			size_t index = line.find(L"=");
+			const size_t index = line.find(L"=");
 			const std::wstring id = line.substr(0, index);
 			const std::wstring localString = line.substr(index + 1, line.length());
 

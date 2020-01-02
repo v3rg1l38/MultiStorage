@@ -12,26 +12,26 @@ void FrameWindow::initilaizeMenu()
 	hMenu = CreateMenu();
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localization_[L"MENU_FILE"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, Localization::localization_[L"MENU_OPEN"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, Localization::localization_[L"MENU_SAVE"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, Localization::localization_[L"MENU_LOAD"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, Localization::localization_[L"MENU_CLOSE"].c_str());
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::getLocalString(L"MENU_FILE"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_OPEN, Localization::getLocalString(L"MENU_OPEN"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_SAVE, Localization::getLocalString(L"MENU_SAVE"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_LOAD, Localization::getLocalString(L"MENU_LOAD"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_FILE_CLOSE, Localization::getLocalString(L"MENU_CLOSE"));
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localization_[L"MENU_INVOICE"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, Localization::localization_[L"MENU_NEW"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, Localization::localization_[L"MENU_LOAD"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, Localization::localization_[L"MENU_LIST"].c_str());
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::getLocalString(L"MENU_INVOICE"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_NEW, Localization::getLocalString(L"MENU_NEW"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LOAD, Localization::getLocalString(L"MENU_LOAD"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_INVOICE_LIST, Localization::getLocalString(L"MENU_LIST"));
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localization_[L"MENU_SETTINGS"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, Localization::localization_[L"MENU_GLOBALSETTINGS"].c_str());
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::getLocalString(L"MENU_SETTINGS"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_SETTINGS_GLOBAL, Localization::getLocalString(L"MENU_GLOBALSETTINGS"));
 
 	hSubMenu = CreatePopupMenu();
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::localization_[L"MENU_STORAGE"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, Localization::localization_[L"MENU_LIST"].c_str());
-	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, Localization::localization_[L"MENU_EXPORTSTORAGE"].c_str());
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::getLocalString(L"MENU_STORAGE"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, Localization::getLocalString(L"MENU_LIST"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, Localization::getLocalString(L"MENU_EXPORTSTORAGE"));
 
 	SetMenu(_mHwnd, hMenu);
 }
