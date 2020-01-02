@@ -1,27 +1,57 @@
 #include "Localization.h"
 
-const std::wstring Localization::localString(const std::wstring & string)
+namespace Localization
 {
-	std::wifstream inFile(L"Language.lang");
-	std::wstring line;
-	std::wstring retWord = L"";
+	std::unordered_map<std::wstring, std::wstring> localization_;
 
-	if (!inFile.is_open())
-		return std::wstring();
-
-	while (std::getline(inFile, line))
+	const std::wstring localString(const std::wstring & string)
 	{
-		size_t index = line.find(L"=");
-		std::wstring id = line.substr(0, index);
+		std::wifstream inFile(L"Language.lang");
+		
+		if (!inFile.is_open())
+			return std::wstring();
+		
+		std::wstring line;
+		std::wstring retWord = L"";
 
-		if (id == string)
+		while (std::getline(inFile, line))
 		{
-			retWord = line.substr(index + 1, line.length());
-			break;
+			size_t index = line.find(L"=");
+			std::wstring id = line.substr(0, index);
+
+			if (id == string)
+			{
+				retWord = line.substr(index + 1, line.length());
+				break;
+			}
 		}
+
+		inFile.close();
+
+		return retWord;
 	}
 
-	inFile.close();
+	void loadLanguage(const TCHAR * filePath)
+	{
+		std::wifstream inFile(filePath);
 
-	return retWord;
+		if (!inFile.is_open())
+		{
+			MessageBox(NULL, L"Unable to load Language", L"Error: loadLanguage", MB_OK | MB_ICONERROR);
+			return;
+		}
+
+		std::wstring line;
+		while (std::getline(inFile, line))
+		{
+			size_t index = line.find(L"=");
+			const std::wstring id = line.substr(0, index);
+			const std::wstring localString = line.substr(index + 1, line.length());
+
+			localization_.insert(std::make_pair<std::wstring, std::wstring>(static_cast<std::wstring>(id), 
+				static_cast<std::wstring>(localString)));
+		 }
+
+		inFile.close();
+	}
 }

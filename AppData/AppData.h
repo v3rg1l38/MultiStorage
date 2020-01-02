@@ -20,6 +20,13 @@ namespace AppData
 		AppParams & databaseName(const TCHAR * dbName);
 		AppParams & databasePassword(const TCHAR * password);
 
+		inline const TCHAR * getLanguageFilePath() { return _languageFilePath; }
+		inline const TCHAR * getDbHost() { return _databaseHost; }
+		inline const TCHAR * getDbPort() { return _databasePort; }
+		inline const TCHAR * getDbUser() { return _databaseUser; }
+		inline const TCHAR * getDbPassword() { return _databasePassword; }
+		inline const TCHAR * getDbName() { return _databaseName; }
+
 	private:
 		TCHAR _languageFilePath[MAX_APP_LENGTH] = L"";
 		TCHAR _databaseHost[MAX_APP_LENGTH] = L"";

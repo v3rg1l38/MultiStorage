@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "FrameWindow/FrameWindow.h"
 #include "AppData/AppData.h"
+#include "Localization/Localization.h"
 
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "UxTheme.lib")
@@ -12,6 +13,11 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czCommand, int nShowWindow)
 {
+	AppData::AppParams appParams;
+	AppData::loadAppParams(appParams);
+
+	Localization::loadLanguage(appParams.getLanguageFilePath());
+
 	FrameWindow * frameWindow = new FrameWindow();
 	frameWindow->createWindow(TEXT("MVX Store"));
 	ShowWindow(*frameWindow, SW_MAXIMIZE);
