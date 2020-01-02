@@ -6,6 +6,7 @@
 #include "../WindowManager/WindowManager.h"
 #include "../WindowControls/WindowControls.h"
 #include "../Product/Product.h"
+#include "../Localization/Localization.h"
 
 #define COLUMN_CODE 0
 #define COLUMN_NAME 1

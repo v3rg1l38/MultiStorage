@@ -54,14 +54,14 @@ void StorageWindow::onCreate()
 	_listView.createList(_mHwnd, 0, 0, rc.right - rc.left, rc.bottom - rc.top, ID_STORAGE_LIST);
 	_listView.setTxtBkColor(RGB(179, 248, 255));
 	_listView.setBkColor( RGB(179, 248, 255));
-	_listView.insertColumn(COLUMN_CODE, TEXT("Code"), 0x80);
-	_listView.insertColumn(COLUMN_NAME, TEXT("Name"), 0x120);
-	_listView.insertColumn(COLUMN_UNIT, TEXT("Unit"), 0x80);
-	_listView.insertColumn(COLUMN_COUNT, TEXT("Count"), 0x80);
-	_listView.insertColumn(COLUMN_PACKAGE, TEXT("Package"), 0x80);
-	_listView.insertColumn(COLUMN_NEEDED, TEXT("Needed"), 0x80);
-	_listView.insertColumn(COLUMN_RETAILPRICE, TEXT("Retail Price"), 0x80);
-	_listView.insertColumn(COLUMN_WHOLESALEPRICE, TEXT("Wholesale Price"), 0x80);
+	_listView.insertColumn(COLUMN_CODE, Localization::getLocalString(L"STORAGE_COLUMN_CODE"), 0x80);
+	_listView.insertColumn(COLUMN_NAME, Localization::getLocalString(L"STORAGE_COLUMN_NAME"), 0x120);
+	_listView.insertColumn(COLUMN_UNIT, Localization::getLocalString(L"STORAGE_COLUMN_UNIT"), 0x80);
+	_listView.insertColumn(COLUMN_COUNT, Localization::getLocalString(L"STORAGE_COLUMN_COUNT"), 0x80);
+	_listView.insertColumn(COLUMN_PACKAGE, Localization::getLocalString(L"STORAGE_COLUMN_PACKAGE"), 0x80);
+	_listView.insertColumn(COLUMN_NEEDED, Localization::getLocalString(L"STORAGE_COLUMN_NEEDED"), 0x80);
+	_listView.insertColumn(COLUMN_RETAILPRICE, Localization::getLocalString(L"STORAGE_COLUMN_RETAILPR"), 0x80);
+	_listView.insertColumn(COLUMN_WHOLESALEPRICE, Localization::getLocalString(L"STORAGE_COLUMN_WHOLEPR"), 0x80);
 	_listView.setFullRowSelect();
 
 	SetWindowTheme(_listView.getListHandle(), L"Explorer", NULL);
