@@ -94,9 +94,9 @@ void InvoiceWindow::onCreate()
 {
 	_prodBack = CreateSolidBrush(RGB(5, 193, 245));
 	_cliBack = CreateSolidBrush(RGB(107, 187, 209));
-	LONG lStyle = GetWindowLongPtr(_mHwnd, GWL_STYLE);
-	lStyle &= ~(WS_THICKFRAME | WS_MAXIMIZEBOX);
-	SetWindowLongPtr(_mHwnd, GWL_STYLE, lStyle);
+	//LONG lStyle = GetWindowLongPtr(_mHwnd, GWL_STYLE);
+	//lStyle &= ~(WS_THICKFRAME | WS_MAXIMIZEBOX);
+	//SetWindowLongPtr(_mHwnd, GWL_STYLE, lStyle);
 	RECT rc;
 	GetClientRect(_mHwnd, &rc);
 	_tablePos = rc.bottom - 160;
@@ -163,10 +163,10 @@ void InvoiceWindow::createInputFields()
 {
 	RECT rc;
 	GetClientRect(_mHwnd, &rc);
-	_rows = 50;
+	_rows = 10;
 
 	// Product fields
-	for(int i = 0; i < 50; ++i)
+	for(int i = 0; i < _rows; ++i)
 	{
 		Edit(_mHwnd, TEXT(""), 
 			_columns.at(0), _tablePos + (20 * i), 120, 20, reinterpret_cast<HMENU>(COLUMN_ID_CODE + i)); // Code

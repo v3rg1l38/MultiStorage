@@ -171,14 +171,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	{
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
 		invoiceWind->setProds(&_database.getProductList());
-		invoiceWind->createMDIChild(TEXT("Invoice"), 
-			TEXT("Invoice"), 
-			_clientArea,
-			WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CHILD,
-			CW_USEDEFAULT,
-			CW_USEDEFAULT,
-			854,
-			420);
+		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea);
 	}
 	break;
 
