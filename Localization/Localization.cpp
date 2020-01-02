@@ -7,7 +7,7 @@ const std::wstring Localization::localString(const std::wstring & string)
 	std::wstring retWord = L"";
 
 	if (!inFile.is_open())
-		return nullptr;
+		return std::wstring();
 
 	while (std::getline(inFile, line))
 	{
