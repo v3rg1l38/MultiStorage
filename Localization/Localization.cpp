@@ -31,14 +31,14 @@ namespace Localization
 		return retWord;
 	}
 
-	void loadLanguage(const TCHAR * filePath)
+	bool loadLanguage(const TCHAR * filePath)
 	{
 		std::wifstream inFile(filePath);
 
 		if (!inFile.is_open())
 		{
 			MessageBox(NULL, L"Unable to load Language", L"Error: loadLanguage", MB_OK | MB_ICONERROR);
-			return;
+			return false;
 		}
 
 		std::wstring line;
@@ -53,5 +53,6 @@ namespace Localization
 		 }
 
 		inFile.close();
+		return true;
 	}
 }

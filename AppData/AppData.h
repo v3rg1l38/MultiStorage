@@ -36,6 +36,6 @@ namespace AppData
 		TCHAR _databasePassword[MAX_APP_LENGTH] = L"";
 	};
 
-	void loadAppParams(AppParams & appParams);
-	void saveAppParams(AppParams appParams);
+	bool loadAppParams(AppParams & appParams);
+	bool saveAppParams(AppParams appParams);
 }

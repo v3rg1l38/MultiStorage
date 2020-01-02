@@ -14,9 +14,11 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czCommand, int nShowWindow)
 {
 	AppData::AppParams appParams;
-	AppData::loadAppParams(appParams);
 
-	Localization::loadLanguage(appParams.getLanguageFilePath());
+	if (!AppData::loadAppParams(appParams) || !Localization::loadLanguage(appParams.getLanguageFilePath()))
+	{
+		return 0;
+	}
 
 	FrameWindow * frameWindow = new FrameWindow();
 	frameWindow->createWindow(TEXT("MVX Store"));

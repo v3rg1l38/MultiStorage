@@ -1,6 +1,6 @@
 #include "AppData.h"
 
-void AppData::loadAppParams(AppParams & appParams)
+bool AppData::loadAppParams(AppParams & appParams)
 {
 	std::wifstream appFile;
 	appFile.open(APPDATA_FILE, std::ios::binary | std::ios::in);
@@ -8,15 +8,16 @@ void AppData::loadAppParams(AppParams & appParams)
 	if (!appFile.is_open())
 	{
 		MessageBox(NULL, L"Unable to load App Data", L"Error: loadAppParams", MB_OK | MB_ICONERROR);
-		return;
+		return false;
 	}
 
 	appFile.read(reinterpret_cast<wchar_t*>(&appParams), sizeof(appParams));
 
 	appFile.close();
+	return true;
 }
 
-void AppData::saveAppParams(AppParams appParams)
+bool AppData::saveAppParams(AppParams appParams)
 {
 	std::wofstream appFile;
 	appFile.open(APPDATA_FILE, std::ios::binary | std::ios::out);
@@ -24,11 +25,12 @@ void AppData::saveAppParams(AppParams appParams)
 	if (!appFile.is_open())
 	{
 		MessageBox(NULL, L"Unable to save App Data", L"Error: saveAppParams", MB_OK | MB_ICONERROR);
-		return;
+		return false;
 	}
 	appFile.write(reinterpret_cast<wchar_t*>(&appParams), sizeof(appParams));
 
 	appFile.close();
+	return true;
 }
 
 AppData::AppParams & AppData::AppParams::languageFilePath(const TCHAR * filePath)

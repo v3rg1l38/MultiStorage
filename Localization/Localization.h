@@ -10,5 +10,5 @@ namespace Localization
 {
 	extern std::unordered_map<std::wstring, std::wstring> localization_;
 	const std::wstring localString(const std::wstring & string);
-	void loadLanguage(const TCHAR * filePath);
+	bool loadLanguage(const TCHAR * filePath);
 }
