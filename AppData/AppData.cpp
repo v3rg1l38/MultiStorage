@@ -2,6 +2,8 @@
 
 namespace AppData
 {
+	AppParams g_AppParams;
+
 	bool loadAppParams(AppParams & appParams)
 	{
 		std::wifstream appFile;

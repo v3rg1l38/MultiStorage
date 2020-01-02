@@ -2,11 +2,11 @@
 
 namespace Localization
 {
-	std::unordered_map<std::wstring, std::wstring> localization_;
+	std::unordered_map<std::wstring, std::wstring> g_Localization;
 
 	const TCHAR * getLocalString(const std::wstring & id)
 	{
-		return localization_[id].c_str();
+		return g_Localization[id].c_str();
 	}
 
 	bool loadLanguage(const TCHAR * filePath)
@@ -26,7 +26,7 @@ namespace Localization
 			const std::wstring id = line.substr(0, index);
 			const std::wstring localString = line.substr(index + 1, line.length());
 
-			localization_.insert(std::make_pair<std::wstring, std::wstring>(static_cast<std::wstring>(id), 
+			g_Localization.insert(std::make_pair<std::wstring, std::wstring>(static_cast<std::wstring>(id), 
 				static_cast<std::wstring>(localString)));
 		 }
 

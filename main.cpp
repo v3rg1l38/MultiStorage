@@ -13,9 +13,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czCommand, int nShowWindow)
 {
-	AppData::AppParams appParams;
-
-	if (!AppData::loadAppParams(appParams) || !Localization::loadLanguage(appParams.getLanguageFilePath()))
+	if (!AppData::loadAppParams(AppData::g_AppParams) || !Localization::loadLanguage(AppData::g_AppParams.getLanguageFilePath()))
 	{
 		return 0;
 	}
