@@ -10,23 +10,22 @@
 
 namespace AppData
 {
+	enum APP_PROPS
+	{
+		AP_DB_HOST,
+		AP_DB_PORT,
+		AP_DB_NAME,
+		AP_DB_PASSWORD,
+		AP_DB_USER,
+		AP_LANG
+	};
+
 	class AppParams
 	{
 	public:
 		AppParams() {};
-		AppParams & languageFilePath(const TCHAR * filePath);
-		AppParams & databaseHost(const TCHAR * host);
-		AppParams & databasePort(const TCHAR * port);
-		AppParams & databaseUser(const TCHAR * user);
-		AppParams & databaseName(const TCHAR * dbName);
-		AppParams & databasePassword(const TCHAR * password);
-
-		inline const TCHAR * getLanguageFilePath() { return _languageFilePath; }
-		inline const TCHAR * getDbHost() { return _databaseHost; }
-		inline const TCHAR * getDbPort() { return _databasePort; }
-		inline const TCHAR * getDbUser() { return _databaseUser; }
-		inline const TCHAR * getDbPassword() { return _databasePassword; }
-		inline const TCHAR * getDbName() { return _databaseName; }
+		AppParams & setProp(const TCHAR * propValue, APP_PROPS prop);
+		const TCHAR * getProp(APP_PROPS prop);
 
 	private:
 		AppParams(const AppParams &) = delete;

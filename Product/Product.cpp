@@ -77,3 +77,9 @@ ProductBuilder & ProductBuilder::unit(const std::wstring & unit) noexcept
 	_product._unit = unit;
 	return *this;
 }
+
+ProductBuilder & ProductBuilder::id(const int & nId) noexcept
+{
+	_product._id = nId;
+	return *this;
+}

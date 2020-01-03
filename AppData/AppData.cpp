@@ -37,40 +37,68 @@ namespace AppData
 		return true;
 	}
 
-	AppParams & AppParams::languageFilePath(const TCHAR * filePath)
+	AppParams & AppParams::setProp(const TCHAR * propValue, APP_PROPS prop)
 	{
-		lstrcpyn(_languageFilePath, filePath, sizeof(_languageFilePath));
+		switch (prop)
+		{
+		case AP_DB_HOST:
+			lstrcpyn(_databaseHost, propValue, sizeof(_databaseHost));
+			return *this;
+
+		case AP_DB_PORT:
+			lstrcpyn(_databasePort, propValue, sizeof(_databasePort));
+			return *this;
+
+		case AP_DB_USER:
+			lstrcpyn(_databaseUser, propValue, sizeof(_databaseUser));
+			return *this;
+
+		case AP_DB_PASSWORD:
+			lstrcpyn(_databasePassword, propValue, sizeof(_databasePassword));
+			return *this;
+
+		case AP_DB_NAME:
+			lstrcpyn(_databaseName, propValue, sizeof(_databaseName));
+			return *this;
+
+		case AP_LANG:
+			lstrcpyn(_languageFilePath, propValue, sizeof(_languageFilePath));
+			return *this;
+
+		default:
+			return *this;
+		}
+
 		return *this;
 	}
 
-	AppParams & AppParams::databaseHost(const TCHAR * host)
+	const TCHAR * AppParams::getProp(APP_PROPS prop)
 	{
-		lstrcpyn(_databaseHost, host, sizeof(_databaseHost));
-		return *this;
-	}
+		switch (prop)
+		{
+		case AP_DB_HOST:
+			return _databaseHost;
 
-	AppParams & AppParams::databasePort(const TCHAR * port)
-	{
-		lstrcpyn(_databasePort, port, sizeof(_databasePort));
-		return *this;
-	}
+		case AP_DB_PORT:
+			return _databasePort;
 
-	AppParams & AppParams::databaseUser(const TCHAR * user)
-	{
-		lstrcpyn(_databaseUser, user, sizeof(_databaseUser));
-		return *this;
-	}
+		case AP_DB_NAME:
+			return _databaseName;
 
-	AppParams & AppParams::databaseName(const TCHAR * dbName)
-	{
-		lstrcpyn(_databaseName, dbName, sizeof(_databaseName));
-		return *this;
-	}
+		case AP_DB_USER:
+			return _databaseUser;
 
-	AppParams & AppParams::databasePassword(const TCHAR * password)
-	{
-		lstrcpyn(_databasePassword, password, sizeof(_databasePassword));
-		return *this;
+		case AP_DB_PASSWORD:
+			return _databasePassword;
+
+		case AP_LANG:
+			return _languageFilePath;
+
+		default:
+			return nullptr;
+		}
+
+		return nullptr;
 	}
 }
 

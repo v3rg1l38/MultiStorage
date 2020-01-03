@@ -59,3 +59,15 @@ ClientBuilder & ClientBuilder::address(const TCHAR * address) noexcept
 	_cli._address = address;
 	return *this;
 }
+
+ClientBuilder & ClientBuilder::id(const int & nId) noexcept
+{
+	_cli._id = nId;
+	return *this;
+}
+
+ClientBuilder & ClientBuilder::discount(const int & nDiscount) noexcept
+{
+	_cli._discount = nDiscount;
+	return *this;
+}

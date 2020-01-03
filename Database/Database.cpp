@@ -57,6 +57,7 @@ std::vector<Product> MySql::getProductList()
 
 		while (_result->next())
 		{
+			const int id = _result->getInt("product_id");
 			const std::string code = _result->getString("product_code");
 			const std::string name = _result->getString("product_name");
 			const std::string unit = _result->getString("product_unit");
@@ -66,7 +67,8 @@ std::vector<Product> MySql::getProductList()
 			const double retailPr = _result->getDouble("product_retailpr");
 			const double wholePr = _result->getDouble("product_wholepr");
 
-			Product pr = ProductBuilder::build().code(convertToWString(code.c_str()))
+			Product pr = ProductBuilder::build().id(id)
+				.code(convertToWString(code.c_str()))
 				.name(convertToWString(name.c_str()))
 				.count(count)
 				.needed(need)
@@ -90,13 +92,73 @@ std::vector<Product> MySql::getProductList()
 	}
 }
 
+inline MySql & MySql::setProp(const std::string & propValue, DB_PROPS prop) noexcept
+{
+	switch (prop)
+	{
+	case DB_HOST:
+		{
+			std::string sHost = "tcp://" + propValue;
+			_host = sHost;
+		}
+		return *this;
+
+	case DB_PORT:
+		_port = propValue;
+		return *this;
+
+	case DB_NAME:
+		_dbName = propValue;
+		return *this;
+
+	case DB_PASSWORD:
+		_password = propValue;
+		return *this;
+
+	case DB_USER:
+		_username = propValue;
+		return *this;
+
+	default:
+		return *this;
+	}
+
+	return *this;
+}
+
+inline const std::string MySql::getProp(DB_PROPS prop) noexcept
+{
+	switch (prop)
+	{
+	case DB_HOST:
+		return _host;
+
+	case DB_PORT:
+		return _port;
+
+	case DB_NAME:
+		return _dbName;
+
+	case DB_USER:
+		return _username;
+
+	case DB_PASSWORD:
+		return _password;
+
+	default:
+		return std::string();
+	}
+
+	return std::string();
+}
+
 void MySql::loadDbSettings()
 {
-	std::string host = convertToString(AppData::g_AppParams.getDbHost());
-	std::string port = convertToString(AppData::g_AppParams.getDbPort());
-	std::string user = convertToString(AppData::g_AppParams.getDbUser());
-	std::string db = convertToString(AppData::g_AppParams.getDbName());
-	std::string passwd = convertToString(AppData::g_AppParams.getDbPassword());
+	std::string host = convertToString(AppData::g_AppParams.getProp(AppData::APP_PROPS::AP_DB_HOST));
+	std::string port = convertToString(AppData::g_AppParams.getProp(AppData::APP_PROPS::AP_DB_PORT));
+	std::string user = convertToString(AppData::g_AppParams.getProp(AppData::APP_PROPS::AP_DB_USER));
+	std::string db = convertToString(AppData::g_AppParams.getProp(AppData::APP_PROPS::AP_DB_NAME));
+	std::string passwd = convertToString(AppData::g_AppParams.getProp(AppData::APP_PROPS::AP_DB_PASSWORD));
 
 	_host = host;
 	_port = port;

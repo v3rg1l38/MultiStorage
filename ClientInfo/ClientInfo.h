@@ -13,17 +13,18 @@ public:
 	std::wstring getOwner() const { return _owner; }
 	std::wstring getIban() const { return _iban; }
 	int getDiscount() const { return _discount; }
+	int getId() const { return _id; }
 
 	friend class ClientBuilder;
 
 private:
-
 	std::wstring _name;
 	std::wstring _oib;
 	std::wstring _address;
 	std::wstring _owner;
 	std::wstring _iban;
 	int _discount;
+	int _id;
 };
 
 class ClientBuilder
@@ -47,6 +48,8 @@ public:
 	ClientBuilder & owner(const TCHAR * owner) noexcept;
 	ClientBuilder & address(const std::wstring & address) noexcept;
 	ClientBuilder & address(const TCHAR * address) noexcept;
+	ClientBuilder & id(const int & nId) noexcept;
+	ClientBuilder & discount(const int & nDiscount) noexcept;
 
 	operator ClientInfo()
 	{

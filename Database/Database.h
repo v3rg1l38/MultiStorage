@@ -61,6 +61,15 @@ private:
 		void * data = NULL);
 };
 
+enum DB_PROPS
+{
+	DB_HOST,
+	DB_PORT,
+	DB_USER,
+	DB_PASSWORD,
+	DB_NAME
+};
+
 class MySql
 {
 public:
@@ -75,13 +84,9 @@ public:
 
 	std::wstring convertToWString(const char * string);
 	std::string convertToString(const wchar_t * string);
-	inline MySql & Port(const std::string & port) noexcept { _port = ":" + port; return *this; }
-	inline MySql & Username(const std::string & username) noexcept { _username = username; return *this; }
-	inline MySql & Password(const std::string & password) noexcept { _password = password; return *this; }
-	inline MySql & Host(const std::string & host) noexcept { _host = "tcp://" + host; return *this; }
-	inline MySql & SqlCommand(const std::string & sql) noexcept { _sql = sql; return *this; }
-	inline MySql & DbName(const std::string & dbName) noexcept { _dbName = dbName; return *this; }
 	std::vector<Product>  getProductList();
+	inline MySql & setProp(const std::string & propValue, DB_PROPS prop) noexcept;
+	inline const std::string getProp(DB_PROPS prop) noexcept;
 	void loadDbSettings(); // Load settings from loaded AppData
 
 private:

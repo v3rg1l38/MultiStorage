@@ -19,6 +19,7 @@ public:
 	inline int getPackage() const { return _package; }
 	inline double getRetailPrice() const { return _retailPrice; }
 	inline double getWholesalePrice() const { return _wholesalePrice; }
+	inline int getId() const { return _id; }
 
 private:
 
@@ -26,6 +27,7 @@ private:
 	std::wstring _name;
 	std::wstring _description;
 	std::wstring _unit;
+	int _id;
 	int _count;
 	int _needed;
 	int _package;
@@ -55,6 +57,8 @@ public:
 	ProductBuilder & package(const int & package) noexcept;
 	ProductBuilder & unit(const TCHAR * unit) noexcept;
 	ProductBuilder & unit(const std::wstring & unit) noexcept;
+	ProductBuilder & id(const int & nId) noexcept;
+
 	static ProductBuilder build() { return ProductBuilder::ProductBuilder(); }
 
 	operator Product()
