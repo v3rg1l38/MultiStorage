@@ -97,15 +97,18 @@ inline MySql & MySql::setProp(const std::string & propValue, DB_PROPS prop) noex
 	switch (prop)
 	{
 	case DB_HOST:
-		{
-			std::string sHost = "tcp://" + propValue;
-			_host = sHost;
-		}
-		return *this;
+	{
+		std::string sHost = "tcp://" + propValue;
+		_host = sHost;
+	}
+	return *this;
 
 	case DB_PORT:
-		_port = propValue;
-		return *this;
+	{
+		std::string sPort = ":" + propValue;
+		_port = sPort;
+	}
+	return *this;
 
 	case DB_NAME:
 		_dbName = propValue;
