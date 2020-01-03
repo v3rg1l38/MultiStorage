@@ -80,8 +80,7 @@ public:
 	inline MySql & Host(const std::string & host) noexcept { _host = "tcp://" + host; return *this; }
 	inline MySql & SqlCommand(const std::string & sql) noexcept { _sql = sql; return *this; }
 	inline MySql & DbName(const std::string & dbName) noexcept { _dbName = dbName; return *this; }
-	std::vector<Product> & getProductList() { return _products; }
-	void fetchData();
+	std::vector<Product>  getProductList();
 
 private:
 	MySql(const MySql &) = delete;
@@ -98,5 +97,4 @@ private:
 	std::string _port;
 	std::string _sql;
 	std::string _dbName;
-	std::vector<Product> _products;
 };

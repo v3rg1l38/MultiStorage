@@ -26,6 +26,7 @@ namespace AppData
 		inline const TCHAR * getDbUser() { return _databaseUser; }
 		inline const TCHAR * getDbPassword() { return _databasePassword; }
 		inline const TCHAR * getDbName() { return _databaseName; }
+		inline const std::wstring getSDbPort() { return std::wstring(_databasePort); }
 
 	private:
 		TCHAR _languageFilePath[MAX_APP_LENGTH] = L"";

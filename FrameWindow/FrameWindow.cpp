@@ -99,9 +99,11 @@ void FrameWindow::onCreate()
 	SendMessage(_toolbar, TB_AUTOSIZE, 0, 0);
 	SendMessage(_toolbar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 
-	//_database.Host("192.168.1.96").Port("3306").Username("vergil").Password("matija").DbName("MultiStorage")
-	//	.SqlCommand("SELECT * FROM Products");
-	//_database.fetchData();
+	//MySql db;
+	//db.Host("192.168.43.235").Port(db.convertToString(AppData::g_AppParams.getDbPort()))
+	//	.DbName("MultiStorage").Username("vergil").Password("matija");
+	//_products = db.getProductList();
+
 }
 
 void FrameWindow::onChangeSize(LPARAM lParam)
@@ -162,7 +164,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	case MENU_STORAGE_LIST:
 	{
 		StorageWindow *storWind = new StorageWindow();
-		storWind->setProds(&_database.getProductList());
+		storWind->setProds(&_products);
 		storWind->createMDIChild(TEXT("Storage"), TEXT("Storage"), _clientArea);
 	}
 	break;
@@ -170,7 +172,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	case MENU_INVOICE_LIST:
 	{
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
-		invoiceWind->setProds(&_database.getProductList());
+		invoiceWind->setProds(&_products);
 		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea);
 	}
 	break;

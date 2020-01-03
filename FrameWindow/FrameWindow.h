@@ -3,8 +3,11 @@
 
 #include <Windows.h>
 #include <CommCtrl.h>
+#include <vector>
 #include "../WindowManager/WindowManager.h"
 #include "../Database/Database.h"
+#include "../Product/Product.h"
+#include "../AppData/AppData.h"
 
 class FrameWindow : public BaseFrameWindow<FrameWindow>
 {
@@ -21,5 +24,5 @@ private:
 	void onCreate();
 	void onChangeSize(LPARAM lParam);
 	void commandHandler(WPARAM wParam, LPARAM lParam);
-	MySql _database;
+	std::vector<Product> _products;
 };

@@ -43,15 +43,17 @@ std::string MySql::convertToString(const wchar_t * string)
 	return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(string);
 }
 
-void MySql::fetchData()
+std::vector<Product> MySql::getProductList()
 {
+	std::vector<Product> products;
+
 	try {
 		_driver = get_driver_instance();
 		_connection = _driver->connect(_host + _port, _username, _password);
 		_connection->setSchema(_dbName);
 		
 		_statement = _connection->createStatement();
-		_result = _statement->executeQuery(_sql);
+		_result = _statement->executeQuery("SELECT * FROM Products");
 
 		while (_result->next())
 		{
@@ -72,15 +74,18 @@ void MySql::fetchData()
 				.unit(convertToWString(unit.c_str()))
 				.retailPrice(retailPr)
 				.wholesalePrice(wholePr);
-			_products.emplace_back(pr);
+			products.emplace_back(pr);
 		}
 
 		delete _result;
 		delete _statement;
 		delete _connection;
+
+		return products;
 	} 
 	catch (sql::SQLException & e)
 	{
 		MessageBoxA(NULL, e.what(), "MySQL Error", MB_OK);
+		return std::vector<Product>();
 	}
 }
