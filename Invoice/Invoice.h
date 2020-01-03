@@ -7,12 +7,13 @@
 
 class Invoice
 {
-	std::vector<Product> _products;
-	ClientInfo _client;
-
 public:
 	Invoice() {}
 
 	inline void addProductToList(const Product & product) { _products.emplace_back(product); }
 	void printInvoice();
+
+private:
+	std::vector<Product> _products;
+	ClientInfo _client;
 };

@@ -7,6 +7,7 @@ namespace AppData
 	bool loadAppParams(AppParams & appParams)
 	{
 		std::wifstream appFile;
+
 		appFile.open(APPDATA_FILE, std::ios::binary | std::ios::in);
 
 		if (!appFile.is_open())
@@ -17,7 +18,6 @@ namespace AppData
 
 		appFile.read(reinterpret_cast<wchar_t*>(&appParams), sizeof(appParams));
 
-		appFile.close();
 		return true;
 	}
 
