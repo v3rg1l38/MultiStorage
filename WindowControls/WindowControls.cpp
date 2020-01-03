@@ -322,7 +322,7 @@ void ScrollBar::getHorzScrollInfo(const HWND & window) noexcept
 	GetScrollInfo(window, SB_HORZ, &_si);
 }
 
-void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam) noexcept
+void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam, const int & charHeight) noexcept
 {
 	getVertScrollInfo(window);
 	_vertPos = _si.nPos;
@@ -367,7 +367,7 @@ void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam) noexcept
 
 	if (_si.nPos != _vertPos)
 	{
-		ScrollWindow(window, 0, 16 * (_vertPos - _si.nPos), NULL, NULL);
+		ScrollWindow(window, 0, charHeight * (_vertPos - _si.nPos), NULL, NULL);
 		UpdateWindow(window);
 	}
 }

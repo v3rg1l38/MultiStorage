@@ -74,7 +74,7 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_VSCROLL:
-		onVertScroll(_mHwnd, wParam);
+		onVertScroll(_mHwnd, wParam, _charHeight);
 		break;
 
 	case WM_SIZE:
@@ -92,15 +92,19 @@ LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
 void InvoiceWindow::onCreate()
 {
-	_prodBack = CreateSolidBrush(RGB(5, 193, 245));
-	_cliBack = CreateSolidBrush(RGB(107, 187, 209));
-	//LONG lStyle = GetWindowLongPtr(_mHwnd, GWL_STYLE);
-	//lStyle &= ~(WS_THICKFRAME | WS_MAXIMIZEBOX);
-	//SetWindowLongPtr(_mHwnd, GWL_STYLE, lStyle);
 	RECT rc;
 	GetClientRect(_mHwnd, &rc);
+	HDC hdc = GetDC(_mHwnd);
+	GetTextMetrics(hdc, &_tMetrics);
+	_charHeight = _tMetrics.tmHeight + _tMetrics.tmExternalLeading;
+	_charWidth = _tMetrics.tmAveCharWidth;
+	ReleaseDC(_mHwnd, hdc);
+
+	_prodBack = CreateSolidBrush(RGB(5, 193, 245));
+	_cliBack = CreateSolidBrush(RGB(107, 187, 209));
 	_tablePos = rc.bottom - 160;
 	_columns = { 0, 120, 440, 500, 580, 660, 740 };
+
 	createInputFields();
 }
 
@@ -115,8 +119,7 @@ void InvoiceWindow::onPaint()
 
 void InvoiceWindow::onResize()
 {
-	if(_cY)
-		setVertScroll(_mHwnd, 0, _rows + 20, 16 / _cY);
+	setVertScroll(_mHwnd, 0, _rows -1, _charHeight / _cY);
 }
 
 void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)

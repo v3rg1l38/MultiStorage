@@ -29,6 +29,8 @@ protected:
 	HWND _toolbar;
 	int _cX;
 	int _cY;
+	int _charHeight;
+	int _charWidth;
     TEXTMETRIC _tMetrics;
 };
 
@@ -136,6 +138,8 @@ protected:
 	HWND _parentFrame; // Parent Frame Window not the MDICLIENT Window
 	int _cX;
 	int _cY;
+	int _charHeight;
+	int _charWidth;
     TEXTMETRIC _tMetrics;
 };
 

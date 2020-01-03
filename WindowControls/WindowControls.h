@@ -138,7 +138,7 @@ public:
 	void setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept;
 	void getVertScrollInfo(const HWND & window) noexcept;
 	void getHorzScrollInfo(const HWND & window) noexcept;
-	void onVertScroll(const HWND & window, WPARAM wParam) noexcept;
+	void onVertScroll(const HWND & window, WPARAM wParam, const int & charHeight) noexcept;
 	void onSettingChange() noexcept; // WM_SETTINGCHANGE
 	void onMouseWheelScroll(const HWND & window, WPARAM wParam) noexcept;
 
