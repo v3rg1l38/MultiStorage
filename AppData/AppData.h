@@ -13,6 +13,7 @@ namespace AppData
 	class AppParams
 	{
 	public:
+		AppParams() {};
 		AppParams & languageFilePath(const TCHAR * filePath);
 		AppParams & databaseHost(const TCHAR * host);
 		AppParams & databasePort(const TCHAR * port);
@@ -28,6 +29,9 @@ namespace AppData
 		inline const TCHAR * getDbName() { return _databaseName; }
 
 	private:
+		AppParams(const AppParams &) = delete;
+		AppParams operator=(const AppParams &) = delete;
+
 		TCHAR _languageFilePath[MAX_APP_LENGTH] = L"";
 		TCHAR _databaseHost[MAX_APP_LENGTH] = L"";
 		TCHAR _databasePort[MAX_APP_LENGTH] = L"";

@@ -65,7 +65,7 @@ class MySql
 {
 public:
 	MySql() {}
-	MySql(const sql::SQLString & host, const sql::SQLString & username, const sql::SQLString & password, const sql::SQLString & port)
+	MySql(const std::string & host, const std::string & username, const std::string & password, const std::string & port)
 	{
 		_host = "tcp://" + host;
 		_port = ":" + port;
