@@ -5,6 +5,8 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
+#include <codecvt>
+#include <locale>
 
 namespace Localization
 {
