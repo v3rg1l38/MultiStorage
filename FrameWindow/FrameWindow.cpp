@@ -1,9 +1,4 @@
 #include "FrameWindow.h"
-#include "../StorageWindow/StorageWindow.h"
-#include "../InvoiceWindow/InvoiceWindow.h"
-#include "../resource.h"
-#include "../DialogBoxes/SettingsDialog/SettingsDialog.h"
-#include "../Localization/Localization.h"
 
 void FrameWindow::initilaizeMenu()
 {
@@ -44,7 +39,6 @@ void FrameWindow::setClientAreaBackground()
 
 void FrameWindow::onCreate()
 {
-
 	initilaizeMenu();
 
 	CLIENTCREATESTRUCT css;
@@ -190,16 +184,12 @@ LRESULT FrameWindow::FrameWndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	switch (msg)
 	{
 	case WM_CREATE:
-	{
 		onCreate();
-	}
-	break;
+		break;
 
 	case WM_COMMAND:
-	{
 		commandHandler(wParam, lParam);
-	}
-	break;
+		break;
 
 	case WM_SIZE:
 		onChangeSize(lParam);

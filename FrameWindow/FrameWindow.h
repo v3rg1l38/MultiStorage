@@ -8,6 +8,11 @@
 #include "../Database/Database.h"
 #include "../Product/Product.h"
 #include "../AppData/AppData.h"
+#include "../StorageWindow/StorageWindow.h"
+#include "../InvoiceWindow/InvoiceWindow.h"
+#include "../resource.h"
+#include "../DialogBoxes/SettingsDialog/SettingsDialog.h"
+#include "../Localization/Localization.h"
 
 class FrameWindow : public BaseFrameWindow<FrameWindow>
 {

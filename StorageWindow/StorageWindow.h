@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include <vector>
+#include <Uxtheme.h>
 #include "../WindowManager/WindowManager.h"
 #include "../WindowControls/WindowControls.h"
 #include "../Product/Product.h"

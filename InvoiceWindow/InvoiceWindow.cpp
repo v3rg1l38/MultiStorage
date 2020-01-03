@@ -1,5 +1,4 @@
 #include "InvoiceWindow.h"
-#include "../MockingData.h"
 
 LRESULT InvoiceWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {

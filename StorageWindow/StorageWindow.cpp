@@ -1,6 +1,4 @@
 #include "StorageWindow.h"
-#include "../MockingData.h"
-#include <Uxtheme.h>
 
 LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 {
