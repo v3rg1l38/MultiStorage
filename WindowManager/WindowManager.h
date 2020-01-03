@@ -29,7 +29,7 @@ protected:
 	HWND _toolbar;
 	int _cX;
 	int _cY;
-        TEXTMETRIC _tMetrics;
+    TEXTMETRIC _tMetrics;
 };
 
 template<class Window>
@@ -136,7 +136,7 @@ protected:
 	HWND _parentFrame; // Parent Frame Window not the MDICLIENT Window
 	int _cX;
 	int _cY;
-        TEXTMETRIC _tMetrics;
+    TEXTMETRIC _tMetrics;
 };
 
 template<class MDIChild>

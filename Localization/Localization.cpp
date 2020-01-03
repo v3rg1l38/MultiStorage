@@ -19,7 +19,7 @@ namespace Localization
 			return false;
 		}
 
-                inFile.imbue(std::locale(inFile.getloc(), new std::codecvt_utf16<wchar_t, 0x10ffff, std::consume_header>))
+		inFile.imbue(std::locale(inFile.getloc(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::consume_header>));
 		std::wstring line;
 		while (std::getline(inFile, line))
 		{
