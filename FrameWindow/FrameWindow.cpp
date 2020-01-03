@@ -99,11 +99,9 @@ void FrameWindow::onCreate()
 	SendMessage(_toolbar, TB_AUTOSIZE, 0, 0);
 	SendMessage(_toolbar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 
-	//MySql db;
-	//db.Host("192.168.43.235").Port(db.convertToString(AppData::g_AppParams.getDbPort()))
-	//	.DbName("MultiStorage").Username("vergil").Password("matija");
-	//_products = db.getProductList();
-
+	/*MySql db;
+	db.loadDbSettings();
+	_products = db.getProductList();*/
 }
 
 void FrameWindow::onChangeSize(LPARAM lParam)

@@ -89,3 +89,18 @@ std::vector<Product> MySql::getProductList()
 		return std::vector<Product>();
 	}
 }
+
+void MySql::loadDbSettings()
+{
+	std::string host = convertToString(AppData::g_AppParams.getDbHost());
+	std::string port = convertToString(AppData::g_AppParams.getDbPort());
+	std::string user = convertToString(AppData::g_AppParams.getDbUser());
+	std::string db = convertToString(AppData::g_AppParams.getDbName());
+	std::string passwd = convertToString(AppData::g_AppParams.getDbPassword());
+
+	_host = host;
+	_port = port;
+	_username = user;
+	_dbName = db;
+	_password = passwd;
+}

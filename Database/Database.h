@@ -8,6 +8,7 @@
 #include <winsqlite/winsqlite3.h>
 #include <mysql/jdbc.h>
 #include "../Product/Product.h"
+#include "../AppData/AppData.h"
 
 /*
 Database Structure
@@ -81,6 +82,7 @@ public:
 	inline MySql & SqlCommand(const std::string & sql) noexcept { _sql = sql; return *this; }
 	inline MySql & DbName(const std::string & dbName) noexcept { _dbName = dbName; return *this; }
 	std::vector<Product>  getProductList();
+	void loadDbSettings(); // Load settings from loaded AppData
 
 private:
 	MySql(const MySql &) = delete;
