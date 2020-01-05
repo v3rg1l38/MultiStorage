@@ -111,7 +111,6 @@ void InvoiceWindow::onPaint()
 {
 	PAINTSTRUCT ps;
 	HDC hdc = BeginPaint(_mHwnd, &ps);
-
 	FillRect(hdc, &ps.rcPaint, _cliBack);
 	EndPaint(_mHwnd, &ps);
 }

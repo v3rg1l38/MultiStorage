@@ -1,5 +1,6 @@
 #include "FrameWindow.h"
-
+#include <dwmapi.h>
+#include <Uxtheme.h>
 void FrameWindow::initilaizeMenu()
 {
 	HMENU hMenu, hSubMenu;
@@ -57,7 +58,7 @@ void FrameWindow::onCreate()
 	setClientAreaBackground();
 
 	_toolbar = CreateWindowEx(0,
-		TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE,
+		TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE /*| TBSTYLE_TRANSPARENT*/,
 		0,
 		0,
 		0,
@@ -166,6 +167,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
 		invoiceWind->setProds(&_products);
 		invoiceWind->createMDIChild(TEXT("Invoice"), TEXT("Invoice"), _clientArea);
+		SetWindowTheme(*invoiceWind, L"DarkMode_Explorer", nullptr);
 	}
 	break;
 

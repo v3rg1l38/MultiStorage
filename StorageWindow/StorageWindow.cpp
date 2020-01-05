@@ -62,7 +62,7 @@ void StorageWindow::onCreate()
 	_listView.insertColumn(COLUMN_WHOLESALEPRICE, Localization::getLocalString(L"STORAGE_COLUMN_WHOLEPR"), 0x80);
 	_listView.setFullRowSelect();
 
-	SetWindowTheme(_listView.getListHandle(), L"Explorer", NULL);
+	SetWindowTheme(_listView.getListHandle(), L"DarkMode_Explorer", NULL);
 
 	for (size_t i = 0; i < _prods->size(); ++i)
 	{
@@ -76,6 +76,8 @@ void StorageWindow::onCreate()
 		_listView.setItemDouble(_prods->at(i).getRetailPrice(), i, COLUMN_RETAILPRICE);
 		_listView.setItemDouble(_prods->at(i).getWholesalePrice(), i, COLUMN_WHOLESALEPRICE);
 	}
+
+
 }
 
 

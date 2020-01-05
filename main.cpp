@@ -1,10 +1,13 @@
 #define UNICODE
 
 #include <Windows.h>
+#include <Uxtheme.h>
 #include "FrameWindow/FrameWindow.h"
 #include "AppData/AppData.h"
 #include "Localization/Localization.h"
+#include <dwmapi.h>
 
+#pragma comment(lib, "Dwmapi.lib")
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "UxTheme.lib")
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
@@ -21,6 +24,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR czComma
 
 	FrameWindow * frameWindow = new FrameWindow();
 	frameWindow->createWindow(TEXT("MVX Store"));
+	SetWindowTheme(*frameWindow, L"DarkMode_Explorer", nullptr);
+	const BOOL isD = true;
+	HRESULT p = DwmSetWindowAttribute(*frameWindow, 19, &isD, sizeof(isD));
 	ShowWindow(*frameWindow, SW_MAXIMIZE);
 
 	MSG msg;

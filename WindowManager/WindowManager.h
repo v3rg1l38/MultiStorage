@@ -79,7 +79,7 @@ void BaseFrameWindow<Window>::createWindow(const TCHAR * name,
 {
 	WNDCLASS wc = {};
 
-	wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
+	wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(DKGRAY_BRUSH));
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hInstance = GetModuleHandle(NULL);
 	wc.lpszClassName = TEXT("FrameWindow");
