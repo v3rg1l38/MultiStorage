@@ -314,9 +314,16 @@ const int Edit::getDataInt()
 	const int length = GetWindowTextLength(_editHandle);
 	TCHAR * buffer = new TCHAR[length + 1];
 	GetWindowText(_editHandle, buffer, length + 1);
+	_data = buffer;
 	const int retVal = _wtoi(buffer);
 	delete[] buffer;
 	return retVal;
+}
+
+Edit::operator const TCHAR*()
+{
+	getDataText();
+	return _data.c_str();
 }
 
 void ScrollBar::setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept

@@ -130,6 +130,9 @@ public:
 	const std::wstring getDataText();
 	const int getDataInt();
 	operator HWND() const noexcept { return _editHandle; }
+	operator const TCHAR *();
+	operator int() { return getDataInt(); }
+	operator const std::wstring() { return getDataText(); }
 
 private:
 	HWND _editHandle;
