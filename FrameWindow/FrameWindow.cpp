@@ -161,7 +161,7 @@ void FrameWindow::commandHandler(WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
-	case MENU_INVOICE_LIST:
+	case MENU_INVOICE_NEW:
 	{
 		InvoiceWindow * invoiceWind = new InvoiceWindow();
 		invoiceWind->setProds(&_products);
