@@ -25,6 +25,7 @@ void FrameWindow::initilaizeMenu()
 
 	hSubMenu = CreatePopupMenu();
 	AppendMenu(hMenu, MF_STRING | MF_POPUP, reinterpret_cast<UINT>(hSubMenu), Localization::getLocalString(L"MENU_STORAGE"));
+	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_ADD, Localization::getLocalString(L"MENU_STORAGE_ADD"));
 	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_LIST, Localization::getLocalString(L"MENU_LIST"));
 	AppendMenu(hSubMenu, MF_STRING, MENU_STORAGE_EXPORT, Localization::getLocalString(L"MENU_EXPORTSTORAGE"));
 
