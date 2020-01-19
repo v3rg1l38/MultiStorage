@@ -164,7 +164,7 @@ void MySql::loadDbSettings()
 	std::string passwd = convertToString(AppData::g_AppParams.getProp(AppData::APP_PROPS::AP_DB_PASSWORD));
 
 	_host = host;
-	_port = port;
+	_port = ":" + port;
 	_username = user;
 	_dbName = db;
 	_password = passwd;

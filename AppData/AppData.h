@@ -42,5 +42,5 @@ namespace AppData
 	extern class AppParams g_AppParams;
 
 	bool loadAppParams(AppParams & appParams);
-	bool saveAppParams(AppParams appParams);
+	bool saveAppParams(AppParams & appParams);
 }

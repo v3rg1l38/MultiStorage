@@ -21,7 +21,7 @@ namespace AppData
 		return true;
 	}
 
-	bool saveAppParams(AppParams appParams)
+	bool saveAppParams(AppParams & appParams)
 	{
 		std::wofstream appFile;
 		appFile.open(APPDATA_FILE, std::ios::binary | std::ios::out);

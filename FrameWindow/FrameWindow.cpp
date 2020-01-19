@@ -1,6 +1,5 @@
 #include "FrameWindow.h"
-#include <dwmapi.h>
-#include <Uxtheme.h>
+
 void FrameWindow::initilaizeMenu()
 {
 	HMENU hMenu, hSubMenu;
@@ -94,9 +93,9 @@ void FrameWindow::onCreate()
 	SendMessage(_toolbar, TB_AUTOSIZE, 0, 0);
 	SendMessage(_toolbar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 
-	/*MySql db;
+	MySql db;
 	db.loadDbSettings();
-	_products = db.getProductList();*/
+	_products = db.getProductList();
 }
 
 void FrameWindow::onChangeSize(LPARAM lParam)
