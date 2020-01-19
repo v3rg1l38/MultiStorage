@@ -70,6 +70,7 @@ public:
 	void setBkColor(COLORREF col) noexcept;
 	void setTxtBkColor(COLORREF col) noexcept;
 	inline HWND getListHandle() const noexcept { return _listHandle; }
+	operator HWND() const noexcept { return _listHandle; }
 
 private:
 	ListView(const ListView &) = delete;
@@ -97,6 +98,7 @@ public:
 	inline int getPosY() const noexcept { return _posY; }
 	inline int getWidth() const noexcept { return _width; }
 	inline int getHeight() const noexcept { return _height; }
+	operator HWND() const noexcept { return _buttonHandle; }
 
 private:
 	HWND _buttonHandle;
@@ -123,9 +125,15 @@ public:
 	inline int getPosY() const noexcept { return _posY; }
 	inline int getWidth() const noexcept { return _width; }
 	inline int getHeight() const noexcept { return _height; }
+	void setData(const TCHAR * data);
+	void setData(const int & data);
+	const std::wstring getDataText();
+	const int getDataInt();
+	operator HWND() const noexcept { return _editHandle; }
 
 private:
 	HWND _editHandle;
+	std::wstring _data;
 	int _posX;
 	int _posY;
 	int _width;
@@ -135,13 +143,13 @@ private:
 class ScrollBar
 {
 public:
-	void setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept;
-	void setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept;
-	void getVertScrollInfo(const HWND & window) noexcept;
-	void getHorzScrollInfo(const HWND & window) noexcept;
-	void onVertScroll(const HWND & window, WPARAM wParam, const int & charHeight) noexcept;
-	void onSettingChange() noexcept; // WM_SETTINGCHANGE
-	void onMouseWheelScroll(const HWND & window, WPARAM wParam) noexcept;
+	virtual void setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept;
+	virtual void setHorzScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept;
+	virtual void getVertScrollInfo(const HWND & window) noexcept;
+	virtual void getHorzScrollInfo(const HWND & window) noexcept;
+	virtual void onVertScroll(const HWND & window, WPARAM wParam, const int & charHeight) noexcept;
+	virtual void onSettingChange() noexcept; // WM_SETTINGCHANGE
+	virtual void onMouseWheelScroll(const HWND & window, WPARAM wParam) noexcept;
 
 protected:
 	SCROLLINFO _si;
@@ -165,6 +173,7 @@ public:
 		const long & style = WS_CHILD | WS_VISIBLE);
 
 	inline HWND getStaticHandle() const noexcept { return _staticHandle; }
+	operator HWND() const noexcept { return _staticHandle; }
 
 private:
 	StaticText(const StaticText &) = delete;

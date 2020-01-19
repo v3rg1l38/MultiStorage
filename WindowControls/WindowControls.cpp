@@ -286,6 +286,39 @@ Edit::Edit(const HWND & parent,
 	_height = sizeY;
 }
 
+void Edit::setData(const TCHAR * data)
+{
+	_data = data;
+	SendMessage(_editHandle, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(data));
+}
+
+void Edit::setData(const int & data)
+{
+	TCHAR buffer[1024] = L"";
+	_snwprintf_s(buffer, 1024, L"%d", data);
+	SendMessage(_editHandle, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(buffer));
+}
+
+const std::wstring Edit::getDataText()
+{
+	const int length = GetWindowTextLength(_editHandle);
+	TCHAR * buffer = new TCHAR[length + 1];
+	GetWindowText(_editHandle, buffer, length + 1);
+	_data = buffer;
+	delete[] buffer;
+	return _data;
+}
+
+const int Edit::getDataInt()
+{
+	const int length = GetWindowTextLength(_editHandle);
+	TCHAR * buffer = new TCHAR[length + 1];
+	GetWindowText(_editHandle, buffer, length + 1);
+	const int retVal = _wtoi(buffer);
+	delete[] buffer;
+	return retVal;
+}
+
 void ScrollBar::setVertScroll(const HWND & window, const int & min, const int & max, const int & pageSize) noexcept
 {
 	_si.cbSize = sizeof(SCROLLINFO);
