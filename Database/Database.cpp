@@ -169,3 +169,29 @@ void MySql::loadDbSettings()
 	_dbName = db;
 	_password = passwd;
 }
+
+void MySql::addProductToDb(const Product & product)
+{
+	try {
+		_driver = get_driver_instance();
+		_connection = _driver->connect(_host + _port, _username, _password);
+		_connection->setSchema(_dbName);
+
+		_prepStatement = _connection->prepareStatement(
+			"INSERT INTO Products (product_code, \
+			product_name, \
+			product_unit, \
+			product_count, \
+			product_need, \
+			product_package, \
+			product_retailpr, \
+			product_wholepr) \
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?");
+	//TODO: Set values
+	}
+	catch (sql::SQLException & e)
+	{
+		MessageBoxA(NULL, e.what(), "Mysql Error", MB_OK | MB_ICONERROR);
+		return;
+	}
+}
