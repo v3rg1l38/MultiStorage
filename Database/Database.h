@@ -88,6 +88,7 @@ public:
 	inline MySql & setProp(const std::string & propValue, DB_PROPS prop) noexcept;
 	inline const std::string getProp(DB_PROPS prop) noexcept;
 	void loadDbSettings(); // Load settings from loaded AppData
+	void addProductToDb(const Product & product);
 
 private:
 	MySql(const MySql &) = delete;
