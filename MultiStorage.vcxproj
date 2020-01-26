@@ -135,6 +135,7 @@
     <ClCompile Include="ClientInfo\ClientInfo.cpp" />
     <ClCompile Include="CSV\CSV.cpp" />
     <ClCompile Include="Database\Database.cpp" />
+    <ClCompile Include="DataManagement\DataManagement.cpp" />
     <ClCompile Include="DialogBoxes\SettingsDialog\SettingsDialog.cpp" />
     <ClCompile Include="FrameWindow\FrameWindow.cpp" />
     <ClCompile Include="GenericString\GenericString.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="ClientInfo\ClientInfo.h" />
     <ClInclude Include="CSV\CSV.h" />
     <ClInclude Include="Database\Database.h" />
+    <ClInclude Include="DataManagement\DataManagement.h" />
     <ClInclude Include="DialogBoxes\SettingsDialog\SettingsDialog.h" />
     <ClInclude Include="DlgManager\DlgBase.h" />
     <ClInclude Include="FrameWindow\FrameWindow.h" />

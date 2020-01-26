@@ -57,6 +57,9 @@
     <ClCompile Include="AppData\AppData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataManagement\DataManagement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowControls\WindowControls.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AppData\AppData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManagement\DataManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

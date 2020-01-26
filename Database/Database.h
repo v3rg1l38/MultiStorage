@@ -84,13 +84,11 @@ public:
 
 	std::wstring convertToWString(const char * string);
 	std::string convertToString(const wchar_t * string);
-	std::vector<Product>  getProductList();
-	inline MySql & setProp(const std::string & propValue, DB_PROPS prop) noexcept;
+	MySql & setProp(const std::string & propValue, DB_PROPS prop) noexcept;
 	inline const std::string getProp(DB_PROPS prop) noexcept;
 	void loadDbSettings(); // Load settings from loaded AppData
-	void addProductToDb(const Product & product);
 
-private:
+protected:
 	MySql(const MySql &) = delete;
 	MySql & operator=(const MySql &) = delete;
 
