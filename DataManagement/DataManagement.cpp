@@ -56,8 +56,7 @@ void DataManagement::addProductToDb(const Product & product)
 		_connection = _driver->connect(_host + _port, _username, _password);
 		_connection->setSchema(_dbName);
 
-		_prepStatement = _connection->prepareStatement(
-			"INSERT INTO Products (product_code, \
+		_prepStatement = _connection->prepareStatement("INSERT INTO Products (product_code, \
 		product_name, \
 		product_unit, \
 		product_count, \
@@ -65,8 +64,18 @@ void DataManagement::addProductToDb(const Product & product)
 		product_package, \
 		product_retailpr, \
 		product_wholepr) \
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?");
-		//TODO: Set values
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		
+		_prepStatement->setString(1, convertToString(product.getCCode()));
+		_prepStatement->setString(2, convertToString(product.getCName()));
+		_prepStatement->setString(3, convertToString(product.getCUnit()));
+		_prepStatement->setInt(4, product.getCount());
+		_prepStatement->setInt(5, product.getNeeded());
+		_prepStatement->setInt(6, product.getPackage());
+		_prepStatement->setDouble(7, product.getRetailPrice());
+		_prepStatement->setDouble(8, product.getWholesalePrice());
+
+		_prepStatement->execute();
 	}
 	catch (sql::SQLException & e)
 	{
