@@ -129,9 +129,11 @@ public:
 	void setData(const int & data);
 	const std::wstring getDataText();
 	const int getDataInt();
+	const double getDataDouble();
 	operator HWND() const noexcept { return _editHandle; }
 	operator const TCHAR *();
 	operator int() { return getDataInt(); }
+	operator double() { return getDataDouble(); }
 	operator const std::wstring() { return getDataText(); }
 
 private:

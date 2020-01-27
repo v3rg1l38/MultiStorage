@@ -320,6 +320,17 @@ const int Edit::getDataInt()
 	return retVal;
 }
 
+const double Edit::getDataDouble()
+{
+	const int length = GetWindowTextLength(_editHandle);
+	TCHAR * buffer = new TCHAR[length + 1];
+	GetWindowText(_editHandle, buffer, length + 1);
+	_data = buffer;
+	const double retVal = _wtof(buffer);
+	delete[] buffer;
+	return retVal;
+}
+
 Edit::operator const TCHAR*()
 {
 	getDataText();
