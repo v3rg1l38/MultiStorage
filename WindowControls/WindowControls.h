@@ -125,6 +125,7 @@ public:
 	inline int getPosY() const noexcept { return _posY; }
 	inline int getWidth() const noexcept { return _width; }
 	inline int getHeight() const noexcept { return _height; }
+	inline int getLength() const noexcept;
 	void setData(const TCHAR * data);
 	void setData(const int & data);
 	const std::wstring getDataText();

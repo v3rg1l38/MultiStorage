@@ -286,6 +286,11 @@ Edit::Edit(const HWND & parent,
 	_height = sizeY;
 }
 
+inline int Edit::getLength() const noexcept
+{
+	return SendMessage(_editHandle, WM_GETTEXTLENGTH, 0, 0);
+}
+
 void Edit::setData(const TCHAR * data)
 {
 	_data = data;
