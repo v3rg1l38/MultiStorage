@@ -25,12 +25,12 @@ std::vector<Product> DataManagement::getProductList()
 			const double wholePr = _result->getDouble("product_wholepr");
 
 			Product pr = ProductBuilder::build().id(id)
-				.code(convertToWString(code.c_str()))
-				.name(convertToWString(name.c_str()))
+				.code(code)
+				.name(name)
 				.count(count)
 				.needed(need)
 				.package(package)
-				.unit(convertToWString(unit.c_str()))
+				.unit(unit)
 				.retailPrice(retailPr)
 				.wholesalePrice(wholePr);
 			products.emplace_back(pr);

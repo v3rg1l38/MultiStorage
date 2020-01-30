@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include <string>
+#include <codecvt>
 
 class Product {
 public:
@@ -46,17 +47,21 @@ public:
 
 	ProductBuilder & code(const std::wstring & code) noexcept;
 	ProductBuilder & code(const TCHAR * code) noexcept;
+	ProductBuilder & code(const std::string & code) noexcept;
 	ProductBuilder & name(const std::wstring & name) noexcept;
 	ProductBuilder & name(const TCHAR * name) noexcept;
+	ProductBuilder & name(const std::string & name) noexcept;
 	ProductBuilder & count(const int & count) noexcept;
 	ProductBuilder & description(const std::wstring & description) noexcept;
 	ProductBuilder & description(const TCHAR * description) noexcept;
+	ProductBuilder & description(const std::string & description) noexcept;
 	ProductBuilder & retailPrice(const double & retPrice) noexcept;
 	ProductBuilder & wholesalePrice(const double & wPrice) noexcept;
 	ProductBuilder & needed(const int & needed) noexcept;
 	ProductBuilder & package(const int & package) noexcept;
 	ProductBuilder & unit(const TCHAR * unit) noexcept;
 	ProductBuilder & unit(const std::wstring & unit) noexcept;
+	ProductBuilder & unit(const std::string & unit) noexcept;
 	ProductBuilder & id(const int & nId) noexcept;
 
 	static ProductBuilder build() { return ProductBuilder::ProductBuilder(); }
