@@ -8,14 +8,14 @@ void WindowControls::setWindowSize(const HWND & hWnd, const int & cX, const int 
 std::wstring WindowControls::getEditText(const HWND & editBox)
 {
 	const int textLength = SendMessage(editBox, WM_GETTEXTLENGTH, 0, 0);
-	TCHAR * buffer = static_cast<TCHAR*>(malloc((textLength + 1) * sizeof(TCHAR)));
+	TCHAR * buffer = new TCHAR[textLength + 1];
 	SendMessage(editBox,
 		WM_GETTEXT,
 		static_cast<WPARAM>(textLength + 1),
 		reinterpret_cast<LPARAM>(buffer));
 
 	const std::wstring rText = buffer;
-	free(buffer);
+	delete[] buffer;
 	return rText;
 }
 
