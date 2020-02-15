@@ -13,7 +13,13 @@ LRESULT StorageWindow::MDICProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	//	switch ((reinterpret_cast<LPNMHDR>(lParam))->code)
 	//	{
 	//	case NM_CLICK:
-	//		CList::getDataFromRow(_listHandle, 0, COUNT_COLUMN);
+	//	{
+	//		int index = reinterpret_cast<LPNMITEMACTIVATE>(lParam)->iItem;
+	//		TCHAR buff[1024] = L"";
+	//		_snwprintf_s(buff, 1024, L"%d", index);
+	//		MessageBox(NULL, buff, L"Info", MB_OK);
+	//	}
+	//	break;
 	//	}
 	//	break;
 	//}
