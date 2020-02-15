@@ -304,6 +304,33 @@ void Edit::setData(const int & data)
 	SendMessage(_editHandle, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(buffer));
 }
 
+void Edit::setData(const double & data)
+{
+	TCHAR buffer[1024] = L"";
+	_snwprintf_s(buffer, 1024, L"%.2f", data);
+	SendMessage(_editHandle, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(buffer));
+}
+
+void Edit::operator=(const TCHAR * data)
+{
+	_data = data;
+	SendMessage(_editHandle, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(data));
+}
+
+void Edit::operator=(const int & data)
+{
+	TCHAR buffer[1024] = L"";
+	_snwprintf_s(buffer, 1024, L"%d", data);
+	SendMessage(_editHandle, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(buffer));
+}
+
+void Edit::operator=(const double & data)
+{
+	TCHAR buffer[1024] = L"";
+	_snwprintf_s(buffer, 1024, L"%.2f", data);
+	SendMessage(_editHandle, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(buffer));
+}
+
 const std::wstring Edit::getDataText()
 {
 	const int length = GetWindowTextLength(_editHandle);

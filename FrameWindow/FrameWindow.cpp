@@ -94,9 +94,9 @@ void FrameWindow::onCreate()
 	SendMessage(_toolbar, TB_AUTOSIZE, 0, 0);
 	SendMessage(_toolbar, TB_ADDBUTTONS, sizeof(tbb) / sizeof(TBBUTTON), (LPARAM)&tbb);
 
-	DataManagement dm;
-	dm.loadDbSettings();
-	_products = dm.getProductList();
+	//DataManagement dm;
+	//dm.loadDbSettings();
+	//_products = dm.getProductList();
 }
 
 void FrameWindow::onChangeSize(LPARAM lParam)

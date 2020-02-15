@@ -128,6 +128,10 @@ public:
 	inline int getLength() const noexcept;
 	void setData(const TCHAR * data);
 	void setData(const int & data);
+	void setData(const double & data);
+	void operator=(const TCHAR * data);
+	void operator=(const int & data);
+	void operator=(const double & data);
 	const std::wstring getDataText();
 	const int getDataInt();
 	const double getDataDouble();
