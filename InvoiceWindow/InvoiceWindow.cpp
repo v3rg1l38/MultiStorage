@@ -117,6 +117,9 @@ void InvoiceWindow::onPaint()
 
 void InvoiceWindow::onResize()
 {
+	if (_cY <= 0)
+		return;
+
 	const int diff = _tablePos + (_rows * 20);
 	const int move = (diff - _cY) / _charHeight;
 	if (move >= 0)
