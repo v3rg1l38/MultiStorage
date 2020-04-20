@@ -167,6 +167,7 @@ protected:
 	int _horzPost;
 	int _iDeltaPerLine;
 	int _iAcumDelta;
+	bool _scrollable = false;
 	unsigned long _ulScrollLines;
 };
 

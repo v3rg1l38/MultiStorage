@@ -407,6 +407,9 @@ void ScrollBar::getHorzScrollInfo(const HWND & window) noexcept
 
 void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam, const int & charHeight) noexcept
 {
+	if (!_scrollable)
+		return;
+
 	getVertScrollInfo(window);
 	_vertPos = _si.nPos;
 
@@ -467,6 +470,9 @@ void ScrollBar::onSettingChange() noexcept
 
 void ScrollBar::onMouseWheelScroll(const HWND & window, WPARAM wParam) noexcept
 {
+	if (!_scrollable)
+		return;
+
 	if (_iDeltaPerLine == 0)
 		return;
 
