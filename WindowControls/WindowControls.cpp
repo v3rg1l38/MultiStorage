@@ -451,6 +451,7 @@ void ScrollBar::onVertScroll(const HWND & window, WPARAM wParam, const int & cha
 	if (_si.nPos != _vertPos)
 	{
 		ScrollWindow(window, 0, charHeight * (_vertPos - _si.nPos), NULL, NULL);
+		_vertPos = _si.nPos;
 		UpdateWindow(window);
 	}
 }

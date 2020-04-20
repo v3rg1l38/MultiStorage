@@ -117,7 +117,10 @@ void InvoiceWindow::onPaint()
 
 void InvoiceWindow::onResize()
 {
-	setVertScroll(_mHwnd, 0, _rows -1, _charHeight / _cY);
+	//setVertScroll(_mHwnd, 0, _rows -1, _charHeight / _cY);
+	const int diff = _tablePos + (_rows * 20);
+	const int move = (diff - _cY) / _charHeight;
+	setVertScroll(_mHwnd, 0, move + 5, _charHeight / _cY);
 }
 
 void InvoiceWindow::searchForData(WPARAM wParam, LPARAM lParam)

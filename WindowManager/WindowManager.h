@@ -77,7 +77,7 @@ void BaseFrameWindow<Window>::createWindow(const TCHAR * name,
 	const long & style, 
 	const HMENU & menu)
 {
-	WNDCLASS wc = {};
+	WNDCLASS wc = { 0 };
 
 	wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(GRAY_BRUSH));
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -184,7 +184,7 @@ inline void BaseMDIChild<MDIChild>::createMDIChild(const TCHAR * className,
 	const HINSTANCE & hInst, 
 	const HMENU & menu)
 {
-	WNDCLASS wc = {};
+	WNDCLASS wc = { 0 };
 	if (!GetClassInfo(GetModuleHandle(NULL), className, &wc))
 	{
 		wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
